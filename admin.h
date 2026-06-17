@@ -3,7 +3,7 @@
 #include "candidate.h"
 #include <string>
 #include <cctype>
-//comments
+
 enum login_result{
     login_success,
     not_found,
