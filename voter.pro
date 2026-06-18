@@ -19,6 +19,7 @@ SOURCES += \
     voter_home.cpp \
     voter_login_window.cpp \
     voter_register_window.cpp \
+    voting_page.cpp \
     widget.cpp
 
 HEADERS += \
@@ -33,6 +34,7 @@ HEADERS += \
     voter_home.h \
     voter_login_window.h \
     voter_register_window.h \
+    voting_page.h \
     widget.h
 
 FORMS += \

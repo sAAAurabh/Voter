@@ -9,6 +9,7 @@ release/voter.o
 release/voter_home.o
 release/voter_login_window.o
 release/voter_register_window.o
+release/voting_page.o
 release/widget.o
 release/moc_candidate_home.o
 release/moc_candidate_login_window.o
@@ -16,4 +17,5 @@ release/moc_candidate_register_window.o
 release/moc_voter_home.o
 release/moc_voter_login_window.o
 release/moc_voter_register_window.o
+release/moc_voting_page.o
 release/moc_widget.o

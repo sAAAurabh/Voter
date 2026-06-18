@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "voting_page.h"
 
 struct Voter
 {
@@ -17,4 +18,6 @@ struct Voter
     int attempts_left = 5;
 
     //NID | firstname | lastname | salt | hash | lockstatus | attempts left
+
+
 };

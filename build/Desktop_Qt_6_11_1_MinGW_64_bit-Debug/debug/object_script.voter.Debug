@@ -9,6 +9,7 @@ debug/voter.o
 debug/voter_home.o
 debug/voter_login_window.o
 debug/voter_register_window.o
+debug/voting_page.o
 debug/widget.o
 debug/moc_candidate_home.o
 debug/moc_candidate_login_window.o
@@ -16,4 +17,5 @@ debug/moc_candidate_register_window.o
 debug/moc_voter_home.o
 debug/moc_voter_login_window.o
 debug/moc_voter_register_window.o
+debug/moc_voting_page.o
 debug/moc_widget.o

@@ -32,4 +32,5 @@ private:
 
 private slots:
     void logout();
+    void vote();
 };

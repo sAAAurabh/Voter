@@ -96,7 +96,9 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
 
     //buttons
     view_candidates_btn = new QPushButton("View Candidates", this);
+    view_candidates_btn->setCursor(Qt::PointingHandCursor);
     vote_candidates_btn = new QPushButton("Vote Candidates", this);
+    vote_candidates_btn->setCursor(Qt::PointingHandCursor);
     logout_btn = new QPushButton("Logout", this);
 
     QString base =
@@ -142,8 +144,9 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     logout_btn->setParent(this);
     logout_btn->setGeometry(width() - 70, 5, 60, 25);
 
-    connect(logout_btn, &QPushButton::clicked,
-            this, &VoterHomeWindow::logout);
+    connect(logout_btn, &QPushButton::clicked, this, &VoterHomeWindow::logout);
+
+    connect(vote_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::vote);
 }
 
 
@@ -151,3 +154,13 @@ void VoterHomeWindow::logout()
 {
     this->close();
 }
+
+void VoterHomeWindow::vote(){
+
+    this->hide();
+    VotingPage *w = new VotingPage();
+    w->show();
+
+}
+
+
