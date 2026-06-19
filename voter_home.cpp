@@ -10,7 +10,7 @@
 #include <QFrame>
 
 VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), voter_nid(nid)
 {
     setWindowTitle("Voter Dashboard");
     setFixedSize(600, 480);
@@ -158,7 +158,7 @@ void VoterHomeWindow::logout()
 void VoterHomeWindow::vote(){
 
     this->hide();
-    VotingPage *w = new VotingPage();
+    VotingPage *w = new VotingPage(voter_nid);
     w->show();
 
 }

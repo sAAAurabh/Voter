@@ -8,10 +8,11 @@ class VotingPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit VotingPage(QWidget *parent = nullptr);
+    VotingPage(const QString& voter_nid, QWidget *parent = nullptr);
 
 private:
     QVBoxLayout *main_layout;
+    QString current_voter_nid;
 
     void load_candidates();
 };

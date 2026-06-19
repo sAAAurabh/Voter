@@ -30,6 +30,8 @@ private:
 
     QGridLayout *grid;
 
+    QString voter_nid;
+
 private slots:
     void logout();
     void vote();

@@ -12,8 +12,8 @@
 #include <QFont>
 #include <QDebug>
 
-VotingPage::VotingPage(QWidget *parent)
-    : QWidget(parent)
+VotingPage::VotingPage(const QString& voter_nid, QWidget *parent)
+    : QWidget(parent), current_voter_nid(voter_nid)
 {
     resize(700, 500);
     setWindowTitle("Voting Page");
@@ -147,6 +147,29 @@ void VotingPage::load_candidates()
 
         connect(vote_btn, &QPushButton::clicked, this, [=]()
                 {
+                    QSqlQuery check_voter(Database::db);
+                    check_voter.prepare("Select has_voted from voters WHERE nid = ?");
+                    check_voter.addBindValue(current_voter_nid);
+
+                    if(!check_voter.exec())
+                    {
+                        QMessageBox::critical(this, "Error", check_voter.lastError().text());
+                        return;
+                    }
+
+                    if(!check_voter.next())
+                    {
+                        QMessageBox::critical(this, "Error", "Voter not found.");
+                        return;
+                    }
+
+                    if(check_voter.value(0).toBool())
+                    {
+                        QMessageBox::warning(this, "Blocked", "You have already voted.");
+                        return;
+                    }
+
+
                     auto reply = QMessageBox::question(
                         this,
                         "Confirm Vote",
@@ -160,7 +183,12 @@ void VotingPage::load_candidates()
                         vote.prepare("UPDATE candidates SET votes=votes+1 WHERE nid=?");
                         vote.addBindValue(nid);
 
-                        if(vote.exec())
+                        QSqlQuery updateVoter(Database::db);
+                        updateVoter.prepare("UPDATE voters SET has_voted = 1 WHERE nid = ?");
+                        updateVoter.addBindValue(current_voter_nid);
+
+
+                        if(vote.exec() && updateVoter.exec())
                             QMessageBox::information(this, "Success", "Vote cast successfully.");
                         else
                             QMessageBox::critical(this, "Error", vote.lastError().text());
