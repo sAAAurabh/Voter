@@ -80,7 +80,7 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
         QString::fromStdString("Gender: " + v.gender)
         );
     dob_label = new QLabel(
-        QString::fromStdString("DOB: " + v.dob)
+        QString::fromStdString("Date of Birth: " + v.dob)
         );
 
     name_label->setStyleSheet(info_style);

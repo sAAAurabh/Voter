@@ -70,7 +70,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     dob_warn->setStyleSheet("color:red; font-size:18px");
     dob_warn->setVisible(false);
 
-    dob_input->setDisplayFormat("dd/MM/yyyy");
+    dob_input->setDisplayFormat("yyyy-MM-dd");
     dob_input->setCalendarPopup(true);
     dob_input->setMaximumDate(QDate::currentDate().addYears(-18));
     dob_input->setMinimumDate(QDate(1900, 1, 1));

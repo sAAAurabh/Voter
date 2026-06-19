@@ -339,24 +339,4 @@ pass_val Admin::is_valid_pass(const string pass, string nm){
 }
 
 
-// read the manifesto
-std::string Admin::get_manifesto(const std::string &nid)
-{
-    std::ifstream file("Other files/manifesto.txt");
-
-    if (!file.is_open())
-        return "";
-
-    std::string line;
-
-    while (std::getline(file, line))
-    {
-        if (line.find(nid + "|") == 0)
-        {
-            return line.substr(nid.size() + 1);
-        }
-    }
-
-    return "";
-}
 
