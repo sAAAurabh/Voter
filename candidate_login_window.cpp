@@ -95,7 +95,6 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent) : QWidget(parent)
     grid->addWidget(msg, 5, 0, 1, 2);
 
 
-
     //slots and signal connection
     connect(login_btn, &QPushButton::clicked, this, &CandidateLoginWindow::login);
     connect(reg_btn, &QPushButton::clicked, this, &CandidateLoginWindow::open_register);

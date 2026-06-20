@@ -76,7 +76,7 @@ void VotingPage::load_candidates()
         QString party = q.value(4).toString();
         QString photo_path = q.value(5).toString();
 
-        // CARD (soft separation from background)
+        //candidates card
         QWidget *card = new QWidget;
         card->setMinimumHeight(135);
 

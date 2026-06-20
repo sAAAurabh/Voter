@@ -17,7 +17,6 @@ struct Voter
     bool is_locked = false;
     int attempts_left = 5;
 
-    //NID | firstname | lastname | salt | hash | lockstatus | attempts left
 
 
 };

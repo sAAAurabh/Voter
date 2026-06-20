@@ -11,11 +11,9 @@ bool Database::connect()
     db.setDatabaseName("e_vote.db");
 
     if (!db.open()) {
-        qDebug() << "DB OPEN FAILED:" << db.lastError().text();
+        qDebug() << "Error" << db.lastError().text();
         return false;
     }
-
-    qDebug() << "DB OPEN SUCCESS";
     return true;
 }
 

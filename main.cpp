@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
 
     Database::init();
 
-    //CandidateLoginWindow w;
-    VoterLoginWindow w;
+    CandidateLoginWindow w;
+    //VoterLoginWindow w;
     w.show();
 
     return a.exec();
