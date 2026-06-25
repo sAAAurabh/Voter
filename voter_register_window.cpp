@@ -9,7 +9,7 @@
 VoterRegisterWindow::VoterRegisterWindow(QWidget *parent) : QWidget(parent)
 {
     setWindowTitle("Voter Registration");
-    setFixedSize(550, 680);
+    //setFixedSize(550, 680);
 
     QRect screen = QGuiApplication::primaryScreen()->availableGeometry();
     move(screen.center() - QPoint(width()/2, height()/2));
@@ -202,7 +202,7 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent) : QWidget(parent)
 
     //signals and slots
     connect(reg_btn,  &QPushButton::clicked, this, &VoterRegisterWindow::register_user);
-    connect(back_btn, &QPushButton::clicked, this, &VoterRegisterWindow::close_register);
+    connect(back_btn, &QPushButton::clicked, this, &VoterRegisterWindow::back_login);
     connect(photo_btn, &QPushButton::clicked, this, &VoterRegisterWindow::upload_photo);
 }
 
@@ -290,8 +290,8 @@ void VoterRegisterWindow::register_user()
     }
 }
 
-void VoterRegisterWindow::close_register(){
-    delete this;
+void VoterRegisterWindow::back_login(){
+    emit back_to_login_requested();
 }
 
 void VoterRegisterWindow::clear_fields(){

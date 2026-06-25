@@ -10,7 +10,7 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     : QWidget(parent)
 {
     setWindowTitle("Candidate Dashboard");
-    setFixedSize(600, 480);
+    //setFixedSize(600, 480);
 
     //title
     title = new QLabel("Candidate Dashboard", this);
@@ -141,7 +141,8 @@ void CandidateHomeWindow::edit_manifesto()
     msg->setText("Edit profile clicked");
 }
 
+
 void CandidateHomeWindow::logout()
 {
-    this->close();
+    emit logout_requested();
 }

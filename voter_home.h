@@ -35,4 +35,8 @@ private:
 private slots:
     void logout();
     void vote();
+
+signals:
+    void logout_requested();
+    void vote_page_requested(QString nid);
 };

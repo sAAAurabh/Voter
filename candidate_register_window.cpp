@@ -11,7 +11,7 @@
 CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(parent)
 {
     setWindowTitle("Candidate Registration");
-    setFixedSize(550, 680);
+    //setFixedSize(550, 680);
 
     QRect screen = QGuiApplication::primaryScreen()->availableGeometry();
     move(screen.center() - QPoint(width()/2, height()/2));

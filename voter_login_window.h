@@ -36,4 +36,11 @@ private:
     QGridLayout *grid;
 
     Admin admin;
+
+signals:
+    void register_requested();
+    void login_successful(QString nid);
+
+
+
 };

@@ -10,7 +10,7 @@
 VoterLoginWindow::VoterLoginWindow(QWidget *parent) : QWidget(parent)
 {
     setWindowTitle("Login");
-    setFixedSize(450, 300);
+    //setFixedSize(450, 300);
 
     //title
     title = new QLabel("E-VOTE", this);
@@ -104,12 +104,7 @@ void VoterLoginWindow::login()
     {
     case login_success:
     {
-        VoterHomeWindow *w = new VoterHomeWindow(
-            nid_input->text(),
-            nullptr
-            );
-
-        w->show();
+        emit login_successful(nid_input->text());
         clear_fields();
         break;
     }
@@ -136,8 +131,7 @@ void VoterLoginWindow::login()
 
 void VoterLoginWindow::open_register()
 {
-    VoterRegisterWindow *w = new VoterRegisterWindow();
-    w->show();
+    emit register_requested();
 }
 
 void VoterLoginWindow::clear_fields()

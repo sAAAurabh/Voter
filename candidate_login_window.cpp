@@ -10,7 +10,7 @@
 CandidateLoginWindow::CandidateLoginWindow(QWidget *parent) : QWidget(parent)
 {
     setWindowTitle("Candidate Login");
-    setFixedSize(450, 300);
+    //setFixedSize(450, 300);
 
 
     //title
@@ -128,11 +128,8 @@ void CandidateLoginWindow::login()
     switch(rsp)
     {
     case login_success:{
-        msg->setStyleSheet("color: green;");
-        msg->setText("Login Successful");
-        CandidateHomeWindow *w = new CandidateHomeWindow(nid_input->text());
-        w->show();
-        this->close();
+        emit login_successful(nid_input->text());
+        clear_fields();
         break;
     }
     case not_found:{
@@ -161,8 +158,7 @@ void CandidateLoginWindow::login()
 
 void CandidateLoginWindow::open_register()
 {
-    CandidateRegisterWindow *w = new CandidateRegisterWindow();
-    w->show();
+    emit register_requested();
 }
 
 void CandidateLoginWindow::clear_fields(){

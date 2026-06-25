@@ -39,16 +39,19 @@ template <> constexpr inline auto CandidateHomeWindow::qt_create_metaobjectdata<
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "CandidateHomeWindow",
-        "edit_manifesto",
+        "logout_requested",
         "",
+        "edit_manifesto",
         "logout"
     };
 
     QtMocHelpers::UintData qt_methods {
+        // Signal 'logout_requested'
+        QtMocHelpers::SignalData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'edit_manifesto'
-        QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'logout'
         QtMocHelpers::SlotData<void()>(3, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'logout'
+        QtMocHelpers::SlotData<void()>(4, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -72,12 +75,16 @@ void CandidateHomeWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
     auto *_t = static_cast<CandidateHomeWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->edit_manifesto(); break;
-        case 1: _t->logout(); break;
+        case 0: _t->logout_requested(); break;
+        case 1: _t->edit_manifesto(); break;
+        case 2: _t->logout(); break;
         default: ;
         }
     }
-    (void)_a;
+    if (_c == QMetaObject::IndexOfMethod) {
+        if (QtMocHelpers::indexOfMethod<void (CandidateHomeWindow::*)()>(_a, &CandidateHomeWindow::logout_requested, 0))
+            return;
+    }
 }
 
 const QMetaObject *CandidateHomeWindow::metaObject() const
@@ -99,15 +106,21 @@ int CandidateHomeWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 3)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
+}
+
+// SIGNAL 0
+void CandidateHomeWindow::logout_requested()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 QT_WARNING_POP

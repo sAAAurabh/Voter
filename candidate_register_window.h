@@ -29,7 +29,6 @@ private slots:
     void upload_photo();
 
 private:
-private:
     QLabel *title, *f_name_label, *l_name_label, *nid_label, *pass_label, *msg, *f_name_warn, *l_name_warn;
     QLabel *pass_warn, *nid_warn, *party_label, *party_warn;
     QLineEdit *f_name_input, *l_name_input, *nid_input, *pass_input, *party_input;
@@ -48,4 +47,7 @@ private:
     QPushButton *reg_btn, *back_btn;
     QGridLayout *grid;
     Admin admin;
+
+signals:
+    void back_to_login_requested();
 };

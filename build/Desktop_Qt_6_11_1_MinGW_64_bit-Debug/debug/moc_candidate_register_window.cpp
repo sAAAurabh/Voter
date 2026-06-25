@@ -40,22 +40,25 @@ template <> constexpr inline auto CandidateRegisterWindow::qt_create_metaobjectd
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "CandidateRegisterWindow",
-        "register_user",
+        "back_to_login_requested",
         "",
+        "register_user",
         "close_register",
         "clear_fields",
         "upload_photo"
     };
 
     QtMocHelpers::UintData qt_methods {
+        // Signal 'back_to_login_requested'
+        QtMocHelpers::SignalData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'register_user'
-        QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'close_register'
         QtMocHelpers::SlotData<void()>(3, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'clear_fields'
+        // Slot 'close_register'
         QtMocHelpers::SlotData<void()>(4, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'upload_photo'
+        // Slot 'clear_fields'
         QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'upload_photo'
+        QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -79,14 +82,18 @@ void CandidateRegisterWindow::qt_static_metacall(QObject *_o, QMetaObject::Call 
     auto *_t = static_cast<CandidateRegisterWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->register_user(); break;
-        case 1: _t->close_register(); break;
-        case 2: _t->clear_fields(); break;
-        case 3: _t->upload_photo(); break;
+        case 0: _t->back_to_login_requested(); break;
+        case 1: _t->register_user(); break;
+        case 2: _t->close_register(); break;
+        case 3: _t->clear_fields(); break;
+        case 4: _t->upload_photo(); break;
         default: ;
         }
     }
-    (void)_a;
+    if (_c == QMetaObject::IndexOfMethod) {
+        if (QtMocHelpers::indexOfMethod<void (CandidateRegisterWindow::*)()>(_a, &CandidateRegisterWindow::back_to_login_requested, 0))
+            return;
+    }
 }
 
 const QMetaObject *CandidateRegisterWindow::metaObject() const
@@ -108,15 +115,21 @@ int CandidateRegisterWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
+}
+
+// SIGNAL 0
+void CandidateRegisterWindow::back_to_login_requested()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 QT_WARNING_POP

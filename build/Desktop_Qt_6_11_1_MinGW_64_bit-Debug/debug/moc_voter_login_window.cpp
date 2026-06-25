@@ -40,19 +40,28 @@ template <> constexpr inline auto VoterLoginWindow::qt_create_metaobjectdata<qt_
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "VoterLoginWindow",
-        "login",
+        "register_requested",
         "",
+        "login_successful",
+        "nid",
+        "login",
         "open_register",
         "clear_fields"
     };
 
     QtMocHelpers::UintData qt_methods {
+        // Signal 'register_requested'
+        QtMocHelpers::SignalData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
+        // Signal 'login_successful'
+        QtMocHelpers::SignalData<void(QString)>(3, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 4 },
+        }}),
         // Slot 'login'
-        QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'open_register'
-        QtMocHelpers::SlotData<void()>(3, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'clear_fields'
-        QtMocHelpers::SlotData<void()>(4, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -76,13 +85,20 @@ void VoterLoginWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
     auto *_t = static_cast<VoterLoginWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->login(); break;
-        case 1: _t->open_register(); break;
-        case 2: _t->clear_fields(); break;
+        case 0: _t->register_requested(); break;
+        case 1: _t->login_successful((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 2: _t->login(); break;
+        case 3: _t->open_register(); break;
+        case 4: _t->clear_fields(); break;
         default: ;
         }
     }
-    (void)_a;
+    if (_c == QMetaObject::IndexOfMethod) {
+        if (QtMocHelpers::indexOfMethod<void (VoterLoginWindow::*)()>(_a, &VoterLoginWindow::register_requested, 0))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (VoterLoginWindow::*)(QString )>(_a, &VoterLoginWindow::login_successful, 1))
+            return;
+    }
 }
 
 const QMetaObject *VoterLoginWindow::metaObject() const
@@ -104,15 +120,27 @@ int VoterLoginWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 5;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 3;
+        _id -= 5;
     }
     return _id;
+}
+
+// SIGNAL 0
+void VoterLoginWindow::register_requested()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+}
+
+// SIGNAL 1
+void VoterLoginWindow::login_successful(QString _t1)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 1, nullptr, _t1);
 }
 QT_WARNING_POP

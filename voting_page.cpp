@@ -15,7 +15,7 @@
 VotingPage::VotingPage(const QString& voter_nid, QWidget *parent)
     : QWidget(parent), current_voter_nid(voter_nid)
 {
-    resize(700, 500);
+    //setFixedSize(700, 500);
     setWindowTitle("Voting Page");
 
 
@@ -199,7 +199,6 @@ void VotingPage::load_candidates()
         layout->addLayout(textLayout);
         layout->addStretch();
         layout->addWidget(vote_btn);
-
         main_layout->addWidget(card);
     }
 

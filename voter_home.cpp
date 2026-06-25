@@ -1,5 +1,6 @@
 #include "voter_home.h"
 #include "voter_login_window.h"
+#include "main_window.h"
 
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -13,7 +14,7 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     : QWidget(parent), voter_nid(nid)
 {
     setWindowTitle("Voter Dashboard");
-    setFixedSize(600, 480);
+    //setFixedSize(600, 480);
 
 
 
@@ -51,7 +52,7 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
 
     Voter v;
     Admin a;
-    a.find_voter(nid.toStdString(), v);
+    a.find_voter(voter_nid.toStdString(), v);
 
     QString info_style = "font-size:14px;";
 
@@ -144,23 +145,21 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     logout_btn->setParent(this);
     logout_btn->setGeometry(width() - 70, 5, 60, 25);
 
-    connect(logout_btn, &QPushButton::clicked, this, &VoterHomeWindow::logout);
 
+    connect(logout_btn, &QPushButton::clicked, this, &VoterHomeWindow::logout);
     connect(vote_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::vote);
 }
 
 
 void VoterHomeWindow::logout()
 {
-    this->close();
+    emit logout_requested();
 }
 
 void VoterHomeWindow::vote(){
-
-    this->hide();
-    VotingPage *w = new VotingPage(voter_nid);
-    w->show();
-
+    emit vote_page_requested(voter_nid);
 }
+
+
 
 
