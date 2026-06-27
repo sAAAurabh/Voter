@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     stack->addWidget(candidate_register_page);
 
     setCentralWidget(stack);
-    stack->setCurrentWidget(candidate_login_page);
+    stack->setCurrentWidget(voter_login_page);
     setFixedSize(450,300);
 
 
@@ -83,7 +83,7 @@ MainWindow::MainWindow(QWidget *parent)
                     VotingPage *voting_page = new VotingPage(nid);
                     stack->addWidget(voting_page);
                     stack->setCurrentWidget(voting_page);
-                    setFixedSize(700,500);
+                    setFixedSize(850,600);
                     center_window();
                 }
                 );
