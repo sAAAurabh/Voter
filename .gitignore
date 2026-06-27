@@ -17,3 +17,6 @@ build/
 
 # Debug symbols
 *.pdb
+
+# SQLite databases
+*.db
