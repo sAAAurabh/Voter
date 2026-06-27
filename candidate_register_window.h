@@ -13,6 +13,7 @@
 #include <QComboBox>
 #include <QFileDialog>
 #include <QPixmap>
+#include <QHBoxLayout>
 
 
 class CandidateRegisterWindow : public QWidget
@@ -27,6 +28,7 @@ private slots:
     void close_register();
     void clear_fields();
     void upload_photo();
+    void upload_party_symbol();
 
 private:
 private:
@@ -39,11 +41,21 @@ private:
     QLabel    *gender_label;
     QComboBox *gender_input;
     QLabel    *gender_warn;
+
     QLabel      *photo_label;
     QPushButton *photo_btn;
     QLabel      *photo_warn;
     QLabel      *photo_preview;
     QString      photo_path;
+
+    QLabel *party_symbol_label;
+    QPushButton *party_symbol_btn;
+    QLabel *party_symbol_warn;
+    QLabel *party_symbol_preview;
+    QString party_symbol_path;
+
+    QWidget *uploadWidget;
+    QGridLayout *uploadGrid;
 
     QPushButton *reg_btn, *back_btn;
     QGridLayout *grid;

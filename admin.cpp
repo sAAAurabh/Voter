@@ -3,10 +3,12 @@
 #include <sstream>
 #include <iostream>
 #include <filesystem>
+#include <string>
 #include "picosh.h"
 #include <QDebug>
 #include "database.h"
 #include <QDate>
+#include <QDebug>
 
 
 
@@ -76,6 +78,7 @@ bool Admin::find_candidate(const std::string& nid, Candidate& c)
     c.dob = q.value("dob").toString().toStdString();
     c.gender = q.value("gender").toString().toStdString();
     c.photo_path = q.value("photo_path").toString().toStdString();
+    c.party_symbol_path = q.value("party_symbol_path").toString().toStdString();
     c.hash = q.value("password_hash").toString().toStdString();
     c.salt = q.value("salt").toString().toStdString();
     c.votes = q.value("votes").toInt();
@@ -121,12 +124,14 @@ void Admin::add_voter(const Voter& v)
 
 //add candidate
 void Admin::add_candidate(const Candidate& c)
-{   {
+{
+
+    {
     QSqlQuery q(Database::db);
     q.prepare(
         "INSERT INTO candidates "
-        "(nid, first, last, party, dob, gender, password_hash, salt, photo_path, votes, is_locked, attempts_left) "
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        "(nid, first, last, party, dob, gender, password_hash, salt, photo_path, party_symbol_path, votes, is_locked, attempts_left) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
 
     q.addBindValue(QString::fromStdString(c.nid));
@@ -138,6 +143,7 @@ void Admin::add_candidate(const Candidate& c)
     q.addBindValue(QString::fromStdString(c.hash));
     q.addBindValue(QString::fromStdString(c.salt));
     q.addBindValue(QString::fromStdString(c.photo_path));
+    q.addBindValue(QString::fromStdString(c.party_symbol_path));
     q.addBindValue(0); // votes
     q.addBindValue(0); // islocked
     q.addBindValue(5); // attempts_left
@@ -208,6 +214,7 @@ void Admin::update_candidate(const Candidate& c)
         "dob = ?, "
         "gender = ?, "
         "photo_path = ?, "
+        "party_symbol_path = ?, "
         "party = ?, "
         "votes = ?, "
         "is_locked = ?, "
@@ -222,6 +229,7 @@ void Admin::update_candidate(const Candidate& c)
     q.addBindValue(QString::fromStdString(c.dob));
     q.addBindValue(QString::fromStdString(c.gender));
     q.addBindValue(QString::fromStdString(c.photo_path));
+    q.addBindValue(QString::fromStdString(c.party_symbol_path));
     q.addBindValue(QString::fromStdString(c.party));
     q.addBindValue(c.votes);
     q.addBindValue(c.is_locked ? 1 : 0);
@@ -340,34 +348,27 @@ pass_val Admin::is_valid_pass(const string pass, string nm){
     }
 }
 
-// calculate age 
-int Admin::calculateAge(const std::string& dob)
+// calculate age
+string Admin::calculate_age(const std::string& dob)
 {
-    QString dobString = QString::fromStdString(dob);
+    QString dob_string = QString::fromStdString(dob);
 
-    QDate birthDate = QDate::fromString(dobString, "dd/MM/yyyy");
+    QDate birth_date = QDate::fromString(dob_string, "dd/MM/yyyy");
 
-
-    if (!birthDate.isValid())
-        birthDate = QDate::fromString(dobString, "dd/MM/yy");
-
-
-    if (!birthDate.isValid())
-        return -1;
 
     QDate today = QDate::currentDate();
 
-    int age = today.year() - birthDate.year();
+    int age = today.year() - birth_date.year();
 
 
-    if (today.month() < birthDate.month() ||
-        (today.month() == birthDate.month() &&
-         today.day() < birthDate.day()))
+    if (today.month() < birth_date.month() ||
+        (today.month() == birth_date.month() &&
+         today.day() < birth_date.day()))
     {
         age--;
     }
 
-    return age;
+    return to_string(age);
 }
 
 

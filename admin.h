@@ -46,5 +46,5 @@ public:
 
     pass_val is_valid_pass(std::string pass, std::string nm);
 
-    int calculateAge(const std::string& dob);
+    std::string calculate_age(const std::string& dob);
 };

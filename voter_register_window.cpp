@@ -304,6 +304,7 @@ void VoterRegisterWindow::clear_fields(){
     photo_path.clear();
     photo_preview->clear();
     photo_preview->setText("No Photo");
+
 }
 
 void VoterRegisterWindow::upload_photo()
