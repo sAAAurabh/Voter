@@ -1,0 +1,22 @@
+# Qt Creator user-specific files
+*.pro.user
+*.pro.user.*
+
+# Qt Creator project settings directory
+.qtcreator/
+
+# Build directories
+build/
+
+# Compiled executables
+*.exe
+
+# Object files
+*.o
+*.obj
+
+# Debug symbols
+*.pdb
+
+# SQLite databases
+*.db

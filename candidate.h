@@ -17,6 +17,4 @@ struct Candidate
     bool is_locked = false;
     int attempts_left = 5;
 
-    // NID | firstname | lastname | party | salt | hash | lockstatus | attempsts_left | votes
-
 };

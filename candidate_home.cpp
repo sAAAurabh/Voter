@@ -68,7 +68,7 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     name_label  = new QLabel(QString::fromStdString("Name: " + c.first + " " + c.last));
     nid_label   = new QLabel(QString::fromStdString("NID: " + c.nid));
     party_label = new QLabel(QString::fromStdString("Party: " + c.party));
-    vote_label  = new QLabel("Votes: --");
+    vote_label = new QLabel("Votes: " + QString::number(c.votes));
 
     name_label->setStyleSheet(info_style);
     nid_label->setStyleSheet(info_style);
