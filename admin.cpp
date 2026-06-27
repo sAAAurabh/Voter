@@ -6,14 +6,11 @@
 #include "picosh.h"
 #include <QDebug>
 #include "database.h"
-<<<<<<< HEAD
-#include <Qdate>
-=======
-#include <QDate>
+
 
 //saurabh added this
 >>>>>>> 365b9f5857de7b43f7072dbaf5dc552218681c2c
-
+    //bipin adk
 using namespace std;
 
 // generates salt
