@@ -43,6 +43,8 @@ public:
     login_result login_voter(const std::string& nid, const std::string& pass);
     login_result login_candidate(const std::string& nid, const std::string& pass);
 
+
     pass_val is_valid_pass(std::string pass, std::string nm);
 
+    int calculateAge(const std::string& dob);
 };
