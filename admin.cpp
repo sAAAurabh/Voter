@@ -6,7 +6,13 @@
 #include "picosh.h"
 #include <QDebug>
 #include "database.h"
+<<<<<<< HEAD
 #include <Qdate>
+=======
+#include <QDate>
+
+//saurabh added this
+>>>>>>> 365b9f5857de7b43f7072dbaf5dc552218681c2c
 
 using namespace std;
 
@@ -337,6 +343,37 @@ pass_val Admin::is_valid_pass(const string pass, string nm){
         return is_valid;
     }
 }
+
+// calculate age 
+int Admin::calculateAge(const std::string& dob)
+{
+    QString dobString = QString::fromStdString(dob);
+
+    QDate birthDate = QDate::fromString(dobString, "dd/MM/yyyy");
+
+
+    if (!birthDate.isValid())
+        birthDate = QDate::fromString(dobString, "dd/MM/yy");
+
+
+    if (!birthDate.isValid())
+        return -1;
+
+    QDate today = QDate::currentDate();
+
+    int age = today.year() - birthDate.year();
+
+
+    if (today.month() < birthDate.month() ||
+        (today.month() == birthDate.month() &&
+         today.day() < birthDate.day()))
+    {
+        age--;
+    }
+
+    return age;
+}
+
 
 
 
