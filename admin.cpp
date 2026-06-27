@@ -8,7 +8,7 @@
 #include "database.h"
 #include <QDate>
 
-#include <sas.h>
+
 
 using namespace std;
 
