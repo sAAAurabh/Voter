@@ -6,7 +6,7 @@
 #include "picosh.h"
 #include <QDebug>
 #include "database.h"
-
+#include <Qdate>
 
 using namespace std;
 
