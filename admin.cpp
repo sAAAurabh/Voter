@@ -338,5 +338,36 @@ pass_val Admin::is_valid_pass(const string pass, string nm){
     }
 }
 
+// calculate age 
+int Admin::calculateAge(const std::string& dob)
+{
+    QString dobString = QString::fromStdString(dob);
+
+    QDate birthDate = QDate::fromString(dobString, "dd/MM/yyyy");
+
+
+    if (!birthDate.isValid())
+        birthDate = QDate::fromString(dobString, "dd/MM/yy");
+
+
+    if (!birthDate.isValid())
+        return -1;
+
+    QDate today = QDate::currentDate();
+
+    int age = today.year() - birthDate.year();
+
+
+    if (today.month() < birthDate.month() ||
+        (today.month() == birthDate.month() &&
+         today.day() < birthDate.day()))
+    {
+        age--;
+    }
+
+    return age;
+}
+
+
 
 
