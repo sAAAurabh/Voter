@@ -50,6 +50,7 @@ void Database::init()
            "password_hash TEXT,"
            "salt TEXT,"
            "photo_path TEXT,"
+           "party_symbol_path TEXT,"
            "votes INTEGER DEFAULT 0,"
            "is_locked INTEGER DEFAULT 0,"
            "attempts_left INTEGER DEFAULT 5"

@@ -58,7 +58,6 @@ VotingPage::VotingPage(const QString& voter_nid, QWidget *parent)
     gender_label->setStyleSheet("color:white;");
     age_label->setStyleSheet("color:white;");
 
-    // These should be member variables in voting_page.h
     party_filter = new QComboBox;
     gender_filter = new QComboBox;
     age_filter = new QComboBox;
@@ -206,9 +205,10 @@ VotingPage::VotingPage(const QString& voter_nid, QWidget *parent)
 
 void VotingPage::load_candidates()
 {
+    Admin a;
     QSqlQuery q(Database::db);
 
-    if(!q.exec("SELECT nid, first, last, dob, party, photo_path FROM candidates"))
+    if(!q.exec("SELECT nid, first, last, dob, party, photo_path, party_symbol_path FROM candidates"))
     {
         qDebug() << "Query failed:" << q.lastError().text();
         return;
@@ -221,6 +221,7 @@ void VotingPage::load_candidates()
         QString dob = q.value(3).toString();
         QString party = q.value(4).toString();
         QString photo_path = q.value(5).toString();
+        QString party_symbol_path = q.value(6).toString();
 
         //candidates card
         QWidget *card = new QWidget;
@@ -253,22 +254,38 @@ void VotingPage::load_candidates()
                        Qt::SmoothTransformation)
             );
 
+        // Party Symbol
+        QLabel *party_symbol = new QLabel;
+        party_symbol->setFixedSize(75, 75);
+        party_symbol->setStyleSheet("border:none");
+
+        QPixmap symbolPix(party_symbol_path);
+        party_symbol->setPixmap(
+            symbolPix.scaled(
+                party_symbol->size(),
+                Qt::KeepAspectRatio,
+                Qt::SmoothTransformation)
+            );
+
         // text
         QVBoxLayout *textLayout = new QVBoxLayout;
         textLayout->setSpacing(6);
 
         QLabel *name_label = new QLabel(name);
         name_label->setStyleSheet(
-            "font-size:16px;"
+            "font-size:20px;"
+            "border:none;"
             "font-weight:600;"
             "color:#eaeaea;"
             );
 
-        QLabel *age_label = new QLabel("Age: " + dob);
-        age_label->setStyleSheet("font-size:13px; color:#aaaaaa;");
+        QLabel *age_label = new QLabel(
+            "Age: " + QString::fromStdString(a.calculate_age(dob.toStdString()))
+            );
+        age_label->setStyleSheet("font-size:15px; color:#aaaaaa; font-weight:500; border:none;");
 
         QLabel *party_label = new QLabel("Party: " + party);
-        party_label->setStyleSheet("font-size:13px; color:#aaaaaa;");
+        party_label->setStyleSheet("font-size:15px; color:#aaaaaa; border:none; font-weight:500;");
 
         textLayout->addWidget(name_label);
         textLayout->addWidget(age_label);
@@ -344,6 +361,8 @@ void VotingPage::load_candidates()
         layout->addWidget(photo);
         layout->addLayout(textLayout);
         layout->addStretch();
+        layout->addWidget(party_symbol);
+        layout->addSpacing(10);
         layout->addWidget(vote_btn);
 
         main_layout->addWidget(card);
@@ -357,11 +376,12 @@ void VotingPage::load_candidates()
 
 void VotingPage::load_candidates(QString party, QString gender, QString age )
 {
+    Admin a;
     QSqlQuery q(Database::db);
 
 
     q.prepare(
-            "SELECT nid, first, last, dob, party, photo_path "
+            "SELECT nid, first, last, dob, party, photo_path, party_symbol_path "
             "FROM candidates "
             "WHERE (:p = 'All Parties' OR party = :p) "
             "AND (:g = 'All' OR gender = :g) "
@@ -387,6 +407,7 @@ void VotingPage::load_candidates(QString party, QString gender, QString age )
         QString dob = q.value(3).toString();
         QString party = q.value(4).toString();
         QString photo_path = q.value(5).toString();
+        QString party_symbol_path = q.value(6).toString();
 
         //candidates card
         QWidget *card = new QWidget;
@@ -419,22 +440,42 @@ void VotingPage::load_candidates(QString party, QString gender, QString age )
                        Qt::SmoothTransformation)
             );
 
+        // Party Symbol
+        QLabel *party_symbol = new QLabel;
+        party_symbol->setFixedSize(50, 50);
+        party_symbol->setStyleSheet("border:1px solid #444; border-radius:6px;");
+
+        QPixmap symbolPix(party_symbol_path);
+        party_symbol->setPixmap(
+            symbolPix.scaled(
+                party_symbol->size(),
+                        Qt::KeepAspectRatio,
+                        Qt::SmoothTransformation)
+            );
+        party_symbol->setAlignment(Qt::AlignCenter);
+
+
         // text
         QVBoxLayout *textLayout = new QVBoxLayout;
         textLayout->setSpacing(6);
 
         QLabel *name_label = new QLabel(name);
         name_label->setStyleSheet(
-            "font-size:16px;"
+            "font-size:20px;"
+            "border:none;"
             "font-weight:600;"
             "color:#eaeaea;"
             );
 
-        QLabel *age_label = new QLabel("Age: " + dob);
-        age_label->setStyleSheet("font-size:13px; color:#aaaaaa;");
+
+        QLabel *age_label = new QLabel(
+            "Age: " + QString::fromStdString(a.calculate_age(dob.toStdString()))
+            );
+        age_label->setStyleSheet("font-size:15px; color:#aaaaaa; font-weight:500; border:none;");
+
 
         QLabel *party_label = new QLabel("Party: " + party);
-        party_label->setStyleSheet("font-size:13px; color:#aaaaaa;");
+        party_label->setStyleSheet("font-size:15px; color:#aaaaaa; border:none; font-weight:500;");
 
         textLayout->addWidget(name_label);
         textLayout->addWidget(age_label);
@@ -510,6 +551,8 @@ void VotingPage::load_candidates(QString party, QString gender, QString age )
         layout->addWidget(photo);
         layout->addLayout(textLayout);
         layout->addStretch();
+        layout->addWidget(party_symbol);
+        layout->addSpacing(10);
         layout->addWidget(vote_btn);
 
         main_layout->addWidget(card);

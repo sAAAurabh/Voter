@@ -3,6 +3,8 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include "admin.h"
+
 
 class VotingPage : public QWidget
 {

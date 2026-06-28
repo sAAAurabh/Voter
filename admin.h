@@ -45,7 +45,13 @@ public:
     login_result login_voter(const std::string& nid, const std::string& pass);
     login_result login_candidate(const std::string& nid, const std::string& pass);
 
+
     pass_val is_valid_pass(std::string pass, std::string nm);
 
+<<<<<<< HEAD
     int calculateAge(const std::string& dob);
 };
+=======
+    std::string calculate_age(const std::string& dob);
+};
+>>>>>>> 5094e62d2a962719f5a89bdc0c8262471357a2d8

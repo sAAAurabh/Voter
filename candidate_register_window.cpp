@@ -6,6 +6,7 @@
 #include <QCalendarWidget>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QDebug>
 
 
 CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(parent)
@@ -106,7 +107,10 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     photo_btn = new QPushButton("Upload Photo", this);
     photo_btn->setCursor(Qt::PointingHandCursor);
     photo_btn->setStyleSheet(
-        "background-color:#3498db; color:white; padding:6px; border-radius:6px;"
+        "background-color:#3498db;"
+        "color:white;"
+        "padding:6px;"
+        "border-radius:6px;"
         );
 
     photo_warn = new QLabel("●", this);
@@ -116,12 +120,57 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     photo_preview = new QLabel(this);
     photo_preview->setFixedSize(80, 80);
     photo_preview->setStyleSheet(
-        "border: 2px dashed #aaa;"
-        "border-radius: 6px;"
+        "border:2px dashed #aaa;"
+        "border-radius:6px;"
         );
     photo_preview->setAlignment(Qt::AlignCenter);
     photo_preview->setText("No Photo");
     photo_preview->setScaledContents(true);
+
+
+    //party_symbol
+    party_symbol_label = new QLabel("Party Symbol", this);
+
+    party_symbol_btn = new QPushButton("Upload Symbol", this);
+    party_symbol_btn->setCursor(Qt::PointingHandCursor);
+    party_symbol_btn->setStyleSheet(
+        "background-color:#3498db;"
+        "color:white;"
+        "padding:6px;"
+        "border-radius:6px;"
+        );
+
+    party_symbol_warn = new QLabel("●", this);
+    party_symbol_warn->setStyleSheet("color:red; font-size:18px");
+    party_symbol_warn->setVisible(false);
+
+    party_symbol_preview = new QLabel(this);
+    party_symbol_preview->setFixedSize(80, 80);
+    party_symbol_preview->setStyleSheet(
+        "border:2px dashed #aaa;"
+        "border-radius:6px;"
+        );
+    party_symbol_preview->setAlignment(Qt::AlignCenter);
+    party_symbol_preview->setText("No Symbol");
+    party_symbol_preview->setScaledContents(true);
+
+
+    //upload widget
+    uploadWidget = new QWidget(this);
+
+    uploadGrid = new QGridLayout(uploadWidget);
+    uploadGrid->setHorizontalSpacing(35);
+    uploadGrid->setVerticalSpacing(8);
+    uploadGrid->setContentsMargins(0,0,0,0);
+
+    uploadGrid->addWidget(photo_label, 0, 0);
+    uploadGrid->addWidget(party_symbol_label, 0, 1);
+
+    uploadGrid->addWidget(photo_btn, 1, 0);
+    uploadGrid->addWidget(party_symbol_btn, 1, 1);
+
+    uploadGrid->addWidget(photo_preview, 2, 0, Qt::AlignCenter);
+    uploadGrid->addWidget(party_symbol_preview, 2, 1, Qt::AlignCenter);
 
 
     //pass
@@ -173,7 +222,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     grid = new QGridLayout(this);
     grid->setContentsMargins(50, 30, 50, 30);
     grid->setHorizontalSpacing(20);
-    grid->setVerticalSpacing(14);
+    grid->setVerticalSpacing(10);
 
     grid->addWidget(title,        0, 0, 1, 3);
 
@@ -205,11 +254,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     grid->addWidget(pass_input,    7, 1);
     grid->addWidget(pass_warn,     7, 2);
 
-    grid->addWidget(photo_label,   8, 0);
-    grid->addWidget(photo_btn,     8, 1);
-    grid->addWidget(photo_warn,    8, 2);
-
-    grid->addWidget(photo_preview, 9, 1);
+    grid->addWidget(uploadWidget, 8, 0, 2, 3);
 
     grid->addWidget(msg,           10,  0, 1, 3);
     grid->addWidget(reg_btn,       11, 0, 1, 3);
@@ -219,6 +264,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     connect(reg_btn,  &QPushButton::clicked, this, &CandidateRegisterWindow::register_user);
     connect(back_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::close_register);
     connect(photo_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::upload_photo);
+    connect(party_symbol_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::upload_party_symbol);
 }
 
 void CandidateRegisterWindow::register_user()
@@ -234,6 +280,7 @@ void CandidateRegisterWindow::register_user()
     bool gender_empty = (gender_input->currentIndex() == 0);
     bool p_empty      = pass_input->text().isEmpty();
     bool photo_empty = photo_path.isEmpty();
+    bool party_symbol_empty = party_symbol_path.isEmpty();
 
     f_name_warn->setVisible(f_empty);
     l_name_warn->setVisible(l_empty);
@@ -244,7 +291,7 @@ void CandidateRegisterWindow::register_user()
     pass_warn->setVisible(p_empty);
     photo_warn->setVisible(photo_empty);
 
-    if(f_empty || l_empty || n_empty || dob_default || gender_empty || photo_empty || p_empty) return;
+    if(f_empty || l_empty || n_empty || dob_default || gender_empty || photo_empty || party_symbol_empty|| p_empty) return;
 
     c.nid    = nid_input->text().toStdString();
     c.first  = f_name_input->text().toStdString();
@@ -253,6 +300,7 @@ void CandidateRegisterWindow::register_user()
     c.dob    = dob_input->date().toString("dd/MM/yyyy").toStdString();
     c.gender = gender_input->currentText().toStdString();
     c.photo_path = photo_path.toStdString();
+    c.party_symbol_path = party_symbol_path.toStdString();
 
     switch(a.is_valid_pass(pass_input->text().toStdString(), c.first)){
     case is_valid:
@@ -322,6 +370,9 @@ void CandidateRegisterWindow::clear_fields(){
     photo_path.clear();
     photo_preview->clear();
     photo_preview->setText("No Photo");
+    party_symbol_path.clear();
+    party_symbol_preview->clear();
+    party_symbol_preview->setText("No Photo");
 }
 
 
@@ -342,4 +393,24 @@ void CandidateRegisterWindow::upload_photo()
     QPixmap pixmap(file_path);
     photo_preview->setPixmap(pixmap);
     photo_preview->setText("");
+}
+
+
+void CandidateRegisterWindow::upload_party_symbol()
+{
+    QString file_path = QFileDialog::getOpenFileName(
+        this,
+        "Select Photo",
+        "",
+        "Images (*.*)"
+        );
+
+    if(file_path.isEmpty()) return;
+
+    party_symbol_path = file_path;
+
+    QPixmap pixmap(file_path);
+    party_symbol_preview->setPixmap(pixmap);
+    party_symbol_preview->setText("");
+
 }
