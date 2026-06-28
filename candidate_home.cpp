@@ -1,3 +1,4 @@
+#include "manifesto_edit_window.h"
 #include "candidate_home.h"
 
 #include <QGridLayout>
@@ -7,7 +8,7 @@
 #include <QFrame>
 
 CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent),candidate_nid(nid)
 {
     setWindowTitle("Candidate Dashboard");
     setFixedSize(600, 480);
@@ -137,8 +138,8 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
 
 void CandidateHomeWindow::edit_manifesto()
 {
-    msg->setStyleSheet("color:#2563EB;");
-    msg->setText("Edit profile clicked");
+    ManifestoEditWindow *w = new ManifestoEditWindow(candidate_nid);
+    w->show();
 }
 
 void CandidateHomeWindow::logout()

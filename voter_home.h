@@ -35,4 +35,5 @@ private:
 private slots:
     void logout();
     void vote();
+    void view_candidates();
 };
