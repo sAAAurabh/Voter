@@ -13,9 +13,11 @@ struct Candidate
     std::string dob;
     std::string gender;
     std::string photo_path;
+
+    std::string manifesto;
+
     std::string party_symbol_path;
 
     bool is_locked = false;
     int attempts_left = 5;
-
 };

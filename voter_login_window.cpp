@@ -1,13 +1,14 @@
 #include "voter_login_window.h"
-#include "voter_register_window.h"
 #include "voter_home.h"
+#include "voter_register_window.h"
 
 #include <QGridLayout>
 #include <QLabel>
-#include <QPushButton>
 #include <QLineEdit>
+#include <QPushButton>
 
-VoterLoginWindow::VoterLoginWindow(QWidget *parent) : QWidget(parent)
+VoterLoginWindow::VoterLoginWindow(QWidget *parent)
+    : QWidget(parent)
 {
     setWindowTitle("Login");
     setFixedSize(450, 300);
@@ -41,13 +42,11 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent) : QWidget(parent)
     reg_btn = new QPushButton("Register", this);
 
     login_btn->setStyleSheet(
-        "background-color:#3498db; color:white; padding:8px; border-radius:6px;"
-        );
+        "background-color:#3498db; color:white; padding:8px; border-radius:6px;");
     login_btn->setCursor(Qt::PointingHandCursor);
 
     reg_btn->setStyleSheet(
-        "background-color:#2ecc71; color:white; padding:8px; border-radius:6px;"
-        );
+        "background-color:#2ecc71; color:white; padding:8px; border-radius:6px;");
     reg_btn->setCursor(Qt::PointingHandCursor);
 
     //warning message
@@ -81,33 +80,25 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent) : QWidget(parent)
 
 void VoterLoginWindow::login()
 {
-    if (nid_input->text().isEmpty() && pass_input->text().isEmpty()){
+    if (nid_input->text().isEmpty() && pass_input->text().isEmpty()) {
         msg->setStyleSheet("color: red;");
         msg->setText("enter details!");
         return;
-    } else if (nid_input->text().isEmpty()){
+    } else if (nid_input->text().isEmpty()) {
         msg->setStyleSheet("color: red;");
         msg->setText("nid field : empty");
         return;
-    } else if (pass_input->text().isEmpty()){
+    } else if (pass_input->text().isEmpty()) {
         msg->setStyleSheet("color: red;");
         msg->setText("password field: empty!");
         return;
     }
 
-    int rsp = admin.login_voter(
-        nid_input->text().toStdString(),
-        pass_input->text().toStdString()
-        );
+    int rsp = admin.login_voter(nid_input->text().toStdString(), pass_input->text().toStdString());
 
-    switch(rsp)
-    {
-    case login_success:
-    {
-        VoterHomeWindow *w = new VoterHomeWindow(
-            nid_input->text(),
-            nullptr
-            );
+    switch (rsp) {
+    case login_success: {
+        VoterHomeWindow *w = new VoterHomeWindow(nid_input->text(), nullptr);
 
         w->show();
         clear_fields();

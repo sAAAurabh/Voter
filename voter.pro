@@ -15,12 +15,15 @@ SOURCES += \
     candidate_register_window.cpp \
     database.cpp \
     main.cpp \
+    roleselection.cpp \
     voter.cpp \
     voter_home.cpp \
     voter_login_window.cpp \
     voter_register_window.cpp \
     voting_page.cpp \
-    widget.cpp
+    widget.cpp \
+    manifesto_edit_window.cpp \
+    view_candidates_window.cpp
 
 HEADERS += \
     admin.h \
@@ -30,12 +33,15 @@ HEADERS += \
     candidate_register_window.h \
     database.h \
     picosh.h \
+    roleselection.h \
     voter.h \
     voter_home.h \
     voter_login_window.h \
     voter_register_window.h \
     voting_page.h \
-    widget.h
+    widget.h \
+    manifesto_edit_window.h \
+    view_candidates_window.h
 
 FORMS += \
     widget.ui

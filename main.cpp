@@ -1,7 +1,6 @@
 #include <QApplication>
 #include "database.h"
-#include "voter_login_window.h"
-#include "candidate_login_window.h"
+#include "roleselection.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,8 +13,7 @@ int main(int argc, char *argv[])
 
     Database::init();
 
-    //CandidateLoginWindow w;
-    VoterLoginWindow w;
+    RoleSelection w;
     w.show();
 
     return a.exec();
