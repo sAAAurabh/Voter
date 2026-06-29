@@ -1,26 +1,23 @@
 #include "candidate_register_window.h"
-#include "admin.h"
-#include <QVBoxLayout>
-#include <QDateEdit>
-#include <QComboBox>
 #include <QCalendarWidget>
+#include <QComboBox>
+#include <QDateEdit>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QVBoxLayout>
+#include "admin.h"
 
-
-CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(parent)
+CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
+    : QWidget(parent)
 {
     setWindowTitle("Candidate Registration");
     setFixedSize(550, 680);
 
     QRect screen = QGuiApplication::primaryScreen()->availableGeometry();
-    move(screen.center() - QPoint(width()/2, height()/2));
+    move(screen.center() - QPoint(width() / 2, height() / 2));
 
-    setWindowFlags(Qt::Window |
-                   Qt::WindowCloseButtonHint |
-                   Qt::WindowMinimizeButtonHint |
-                   Qt::WindowMaximizeButtonHint);
-
+    setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint
+                   | Qt::WindowMaximizeButtonHint);
 
     //title
     title = new QLabel("Candidate Registration", this);
@@ -31,7 +28,6 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
 
     title->setFont(title_font);
     title->setAlignment(Qt::AlignCenter);
-
 
     //names
     f_name_label = new QLabel("First Name", this);
@@ -52,7 +48,6 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     l_name_input->setPlaceholderText("Enter Last Name");
     l_name_input->setStyleSheet("padding:6px;");
 
-
     //nid
     nid_label = new QLabel("National ID", this);
     nid_input = new QLineEdit(this);
@@ -61,7 +56,6 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     nid_warn->setVisible(false);
     nid_input->setPlaceholderText("Enter National ID");
     nid_input->setStyleSheet("padding:6px;");
-
 
     //date of birth
     dob_label = new QLabel("Date of Birth", this);
@@ -86,7 +80,6 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     party_input->setPlaceholderText("Enter Your Party");
     party_input->setStyleSheet("padding:6px;");
 
-
     //gender
     gender_label = new QLabel("Gender", this);
     gender_input = new QComboBox(this);
@@ -106,8 +99,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     photo_btn = new QPushButton("Upload Photo", this);
     photo_btn->setCursor(Qt::PointingHandCursor);
     photo_btn->setStyleSheet(
-        "background-color:#3498db; color:white; padding:6px; border-radius:6px;"
-        );
+        "background-color:#3498db; color:white; padding:6px; border-radius:6px;");
 
     photo_warn = new QLabel("●", this);
     photo_warn->setStyleSheet("color:red; font-size:18px");
@@ -115,14 +107,11 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
 
     photo_preview = new QLabel(this);
     photo_preview->setFixedSize(80, 80);
-    photo_preview->setStyleSheet(
-        "border: 2px dashed #aaa;"
-        "border-radius: 6px;"
-        );
+    photo_preview->setStyleSheet("border: 2px dashed #aaa;"
+                                 "border-radius: 6px;");
     photo_preview->setAlignment(Qt::AlignCenter);
     photo_preview->setText("No Photo");
     photo_preview->setScaledContents(true);
-
 
     //pass
     pass_label = new QLabel("Password", this);
@@ -135,14 +124,11 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     pass_input->setStyleSheet("padding:6px");
     pass_input->setEchoMode(QLineEdit::Password);
 
-
     //registration button
     reg_btn = new QPushButton("Register", this);
     reg_btn->setCursor(Qt::PointingHandCursor);
     reg_btn->setStyleSheet(
-        "background-color:#2ecc71; color:white; padding:8px; border-radius:6px;"
-        );
-
+        "background-color:#2ecc71; color:white; padding:8px; border-radius:6px;");
 
     //warning message
     QFont msg_font;
@@ -155,19 +141,15 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     msg->setFont(msg_font);
     msg->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-
     //back to login
     back_btn = new QPushButton("← Back to Login", this);
-    back_btn->setStyleSheet(
-        "background: transparent;"
-        "color: #3498db;"
-        "border: none;"
-        "font-size: 12px;"
-        "text-align: left;"
-        );
+    back_btn->setStyleSheet("background: transparent;"
+                            "color: #3498db;"
+                            "border: none;"
+                            "font-size: 12px;"
+                            "text-align: left;");
     back_btn->setFixedSize(120, 20);
     back_btn->setCursor(Qt::PointingHandCursor);
-
 
     // grid layout
     grid = new QGridLayout(this);
@@ -175,48 +157,48 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent) : QWidget(pare
     grid->setHorizontalSpacing(20);
     grid->setVerticalSpacing(14);
 
-    grid->addWidget(title,        0, 0, 1, 3);
+    grid->addWidget(title, 0, 0, 1, 3);
 
     grid->addWidget(f_name_label, 1, 0);
     grid->addWidget(f_name_input, 1, 1);
-    grid->addWidget(f_name_warn,  1, 2);
+    grid->addWidget(f_name_warn, 1, 2);
 
     grid->addWidget(l_name_label, 2, 0);
     grid->addWidget(l_name_input, 2, 1);
-    grid->addWidget(l_name_warn,  2, 2);
+    grid->addWidget(l_name_warn, 2, 2);
 
-    grid->addWidget(nid_label,    3, 0);
-    grid->addWidget(nid_input,    3, 1);
-    grid->addWidget(nid_warn,     3, 2);
+    grid->addWidget(nid_label, 3, 0);
+    grid->addWidget(nid_input, 3, 1);
+    grid->addWidget(nid_warn, 3, 2);
 
-    grid->addWidget(dob_label,    4, 0);
-    grid->addWidget(dob_input,    4, 1);
-    grid->addWidget(dob_warn,     4, 2);
+    grid->addWidget(dob_label, 4, 0);
+    grid->addWidget(dob_input, 4, 1);
+    grid->addWidget(dob_warn, 4, 2);
 
     grid->addWidget(gender_label, 5, 0);
     grid->addWidget(gender_input, 5, 1);
-    grid->addWidget(gender_warn,  5, 2);
+    grid->addWidget(gender_warn, 5, 2);
 
     grid->addWidget(party_label, 6, 0);
     grid->addWidget(party_input, 6, 1);
-    grid->addWidget(party_warn,  6, 2);
+    grid->addWidget(party_warn, 6, 2);
 
-    grid->addWidget(pass_label,    7, 0);
-    grid->addWidget(pass_input,    7, 1);
-    grid->addWidget(pass_warn,     7, 2);
+    grid->addWidget(pass_label, 7, 0);
+    grid->addWidget(pass_input, 7, 1);
+    grid->addWidget(pass_warn, 7, 2);
 
-    grid->addWidget(photo_label,   8, 0);
-    grid->addWidget(photo_btn,     8, 1);
-    grid->addWidget(photo_warn,    8, 2);
+    grid->addWidget(photo_label, 8, 0);
+    grid->addWidget(photo_btn, 8, 1);
+    grid->addWidget(photo_warn, 8, 2);
 
     grid->addWidget(photo_preview, 9, 1);
 
-    grid->addWidget(msg,           10,  0, 1, 3);
-    grid->addWidget(reg_btn,       11, 0, 1, 3);
-    grid->addWidget(back_btn,      12, 0, 1, 1);
+    grid->addWidget(msg, 10, 0, 1, 3);
+    grid->addWidget(reg_btn, 11, 0, 1, 3);
+    grid->addWidget(back_btn, 12, 0, 1, 1);
 
     //signals and slots
-    connect(reg_btn,  &QPushButton::clicked, this, &CandidateRegisterWindow::register_user);
+    connect(reg_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::register_user);
     connect(back_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::close_register);
     connect(photo_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::upload_photo);
 }
@@ -226,13 +208,13 @@ void CandidateRegisterWindow::register_user()
     Candidate c;
     Admin a;
 
-    bool f_empty      = f_name_input->text().isEmpty();
-    bool l_empty      = l_name_input->text().isEmpty();
-    bool pty_empty    = party_input->text().isEmpty();
-    bool n_empty      = nid_input->text().isEmpty();
-    bool dob_default  = (dob_input->date() == QDate(2000, 1, 1));
+    bool f_empty = f_name_input->text().isEmpty();
+    bool l_empty = l_name_input->text().isEmpty();
+    bool pty_empty = party_input->text().isEmpty();
+    bool n_empty = nid_input->text().isEmpty();
+    bool dob_default = (dob_input->date() == QDate(2000, 1, 1));
     bool gender_empty = (gender_input->currentIndex() == 0);
-    bool p_empty      = pass_input->text().isEmpty();
+    bool p_empty = pass_input->text().isEmpty();
     bool photo_empty = photo_path.isEmpty();
 
     f_name_warn->setVisible(f_empty);
@@ -244,22 +226,23 @@ void CandidateRegisterWindow::register_user()
     pass_warn->setVisible(p_empty);
     photo_warn->setVisible(photo_empty);
 
-    if(f_empty || l_empty || n_empty || dob_default || gender_empty || photo_empty || p_empty) return;
+    if (f_empty || l_empty || n_empty || dob_default || gender_empty || photo_empty || p_empty)
+        return;
 
-    c.nid    = nid_input->text().toStdString();
-    c.first  = f_name_input->text().toStdString();
-    c.last   = l_name_input->text().toStdString();
-    c.party  = party_input->text().toStdString();
-    c.dob    = dob_input->date().toString("dd/MM/yyyy").toStdString();
+    c.nid = nid_input->text().toStdString();
+    c.first = f_name_input->text().toStdString();
+    c.last = l_name_input->text().toStdString();
+    c.party = party_input->text().toStdString();
+    c.dob = dob_input->date().toString("dd/MM/yyyy").toStdString();
     c.gender = gender_input->currentText().toStdString();
     c.photo_path = photo_path.toStdString();
 
-    switch(a.is_valid_pass(pass_input->text().toStdString(), c.first)){
+    switch (a.is_valid_pass(pass_input->text().toStdString(), c.first)) {
     case is_valid:
         c.salt = admin.gen_salt();
         c.hash = admin.hash_pass(pass_input->text().toStdString(), c.salt);
 
-        c.is_locked     = false;
+        c.is_locked = false;
         c.attempts_left = 5;
 
         admin.add_candidate(c);
@@ -267,15 +250,13 @@ void CandidateRegisterWindow::register_user()
         msg->setStyleSheet("color: green;");
         msg->setText("Registered Successfully");
 
-        back_btn->setStyleSheet(
-            "background: transparent;"
-            "color: #3498db;"
-            "border: none;"
-            "font-size: 13px;"
-            "text-align: center;"
-            "font-weight: bold;"
-            "font-style: italic;"
-            );
+        back_btn->setStyleSheet("background: transparent;"
+                                "color: #3498db;"
+                                "border: none;"
+                                "font-size: 13px;"
+                                "text-align: center;"
+                                "font-weight: bold;"
+                                "font-style: italic;");
 
         clear_fields();
         break;
@@ -307,11 +288,13 @@ void CandidateRegisterWindow::register_user()
     }
 }
 
-void CandidateRegisterWindow::close_register(){
+void CandidateRegisterWindow::close_register()
+{
     delete this;
 }
 
-void CandidateRegisterWindow::clear_fields(){
+void CandidateRegisterWindow::clear_fields()
+{
     f_name_input->clear();
     l_name_input->clear();
     nid_input->clear();
@@ -324,18 +307,12 @@ void CandidateRegisterWindow::clear_fields(){
     photo_preview->setText("No Photo");
 }
 
-
-
 void CandidateRegisterWindow::upload_photo()
 {
-    QString file_path = QFileDialog::getOpenFileName(
-        this,
-        "Select Photo",
-        "",
-        "Images (*.*)"
-        );
+    QString file_path = QFileDialog::getOpenFileName(this, "Select Photo", "", "Images (*.*)");
 
-    if(file_path.isEmpty()) return;
+    if (file_path.isEmpty())
+        return;
 
     photo_path = file_path;
 

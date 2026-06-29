@@ -12,7 +12,7 @@ class CandidateHomeWindow : public QWidget
     Q_OBJECT
 
 public:
-    CandidateHomeWindow(const QString& nid, QWidget *parent = nullptr);
+    CandidateHomeWindow(const QString &nid, QWidget *parent = nullptr);
 
 private:
     QLabel *title;

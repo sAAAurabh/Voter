@@ -1,12 +1,12 @@
 #pragma once
 
-#include <QWidget>
+#include <QFont>
 #include <QGridLayout>
+#include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QLabel>
+#include <QWidget>
 #include "admin.h"
-#include <QFont>
 
 class CandidateLoginWindow : public QWidget
 {

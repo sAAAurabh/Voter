@@ -16,5 +16,4 @@ struct Candidate
 
     bool is_locked = false;
     int attempts_left = 5;
-
 };
