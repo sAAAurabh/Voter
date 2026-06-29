@@ -112,13 +112,6 @@ void CandidateLoginWindow::login()
 
     int rsp = admin.login_candidate(nid, pass);
 
-<<<<<<< HEAD
-    switch(rsp)
-    {
-    case login_success:{
-        emit login_successful(nid_input->text());
-        clear_fields();
-=======
     switch (rsp) {
     case login_success: {
         msg->setStyleSheet("color: green;");
@@ -126,7 +119,6 @@ void CandidateLoginWindow::login()
         CandidateHomeWindow *w = new CandidateHomeWindow(nid_input->text());
         w->show();
         this->close();
->>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
         break;
     }
     case not_found: {

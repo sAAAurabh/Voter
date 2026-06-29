@@ -35,12 +35,10 @@ private:
 private slots:
     void logout();
     void vote();
-<<<<<<< HEAD
 
 signals:
     void logout_requested();
     void vote_page_requested(QString nid);
-=======
     void view_candidates();
->>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
+
 };

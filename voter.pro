@@ -15,11 +15,8 @@ SOURCES += \
     candidate_register_window.cpp \
     database.cpp \
     main.cpp \
-<<<<<<< HEAD
     main_window.cpp \
-=======
     roleselection.cpp \
->>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
     voter.cpp \
     voter_home.cpp \
     voter_login_window.cpp \

@@ -38,13 +38,9 @@ private slots:
     void upload_party_symbol();
 
 private:
-<<<<<<< HEAD
-    QLabel *title, *f_name_label, *l_name_label, *nid_label, *pass_label, *msg, *f_name_warn, *l_name_warn;
-=======
+
 private:
-    QLabel *title, *f_name_label, *l_name_label, *nid_label, *pass_label, *msg, *f_name_warn,
-        *l_name_warn;
->>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
+    QLabel *title, *f_name_label, *l_name_label, *nid_label, *pass_label, *msg, *f_name_warn, *l_name_warn;
     QLabel *pass_warn, *nid_warn, *party_label, *party_warn;
     QLineEdit *f_name_input, *l_name_input, *nid_input, *pass_input, *party_input;
     QLabel *dob_label;
