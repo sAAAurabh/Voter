@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include "voting_page.h"
+#include <string>
 
 struct Voter
 {
@@ -16,7 +16,4 @@ struct Voter
     bool has_voted = false;
     bool is_locked = false;
     int attempts_left = 5;
-
-
-
 };

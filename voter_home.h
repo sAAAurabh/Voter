@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QWidget>
 #include <QString>
+#include <QWidget>
 #include "admin.h"
 
 class QLabel;
@@ -13,7 +13,7 @@ class VoterHomeWindow : public QWidget
     Q_OBJECT
 
 public:
-    VoterHomeWindow(const QString& nid, QWidget *parent = nullptr);
+    VoterHomeWindow(const QString &nid, QWidget *parent = nullptr);
 
 private:
     QLabel *title;
@@ -35,8 +35,12 @@ private:
 private slots:
     void logout();
     void vote();
+<<<<<<< HEAD
 
 signals:
     void logout_requested();
     void vote_page_requested(QString nid);
+=======
+    void view_candidates();
+>>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
 };

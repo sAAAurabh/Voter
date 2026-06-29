@@ -15,13 +15,19 @@ SOURCES += \
     candidate_register_window.cpp \
     database.cpp \
     main.cpp \
+<<<<<<< HEAD
     main_window.cpp \
+=======
+    roleselection.cpp \
+>>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
     voter.cpp \
     voter_home.cpp \
     voter_login_window.cpp \
     voter_register_window.cpp \
     voting_page.cpp \
-    widget.cpp
+    widget.cpp \
+    manifesto_edit_window.cpp \
+    view_candidates_window.cpp
 
 HEADERS += \
     admin.h \
@@ -32,12 +38,15 @@ HEADERS += \
     database.h \
     main_window.h \
     picosh.h \
+    roleselection.h \
     voter.h \
     voter_home.h \
     voter_login_window.h \
     voter_register_window.h \
     voting_page.h \
-    widget.h
+    widget.h \
+    manifesto_edit_window.h \
+    view_candidates_window.h
 
 FORMS += \
     widget.ui

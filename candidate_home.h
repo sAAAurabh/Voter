@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+#include <QString>
 #include "admin.h"
 
 class QLabel;
@@ -12,11 +13,12 @@ class CandidateHomeWindow : public QWidget
     Q_OBJECT
 
 public:
-    CandidateHomeWindow(const QString& nid, QWidget *parent = nullptr);
+    CandidateHomeWindow(const QString &nid, QWidget *parent = nullptr);
 
 private:
-    QLabel *title;
+    QString candidate_nid;   // NEW — store nid
 
+    QLabel *title;
     QLabel *name_label;
     QLabel *nid_label;
     QLabel *party_label;

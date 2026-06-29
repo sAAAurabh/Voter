@@ -1,15 +1,17 @@
 #pragma once
 
-#include <QWidget>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include "admin.h"
+#include <QWidget>
+
 
 class VotingPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    VotingPage(const QString& voter_nid, QWidget *parent = nullptr);
+    VotingPage(const QString &voter_nid, QWidget *parent = nullptr);
 
 private:
     QVBoxLayout *main_layout;
@@ -23,4 +25,3 @@ private:
     void load_candidates(QString party, QString gender, QString age);
     void clear_candidate_cards();
 };
-

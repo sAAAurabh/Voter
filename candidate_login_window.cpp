@@ -1,17 +1,17 @@
 #include "candidate_login_window.h"
-#include "candidate_register_window.h"
 #include "candidate_home.h"
+#include "candidate_register_window.h"
 
 #include <QGridLayout>
 #include <QLabel>
-#include <QPushButton>
 #include <QLineEdit>
+#include <QPushButton>
 
-CandidateLoginWindow::CandidateLoginWindow(QWidget *parent) : QWidget(parent)
+CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
+    : QWidget(parent)
 {
     setWindowTitle("Candidate Login");
     //setFixedSize(450, 300);
-
 
     //title
     title = new QLabel("Candidate Login", this);
@@ -23,8 +23,6 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent) : QWidget(parent)
 
     title->setFont(titleFont);
     title->setAlignment(Qt::AlignCenter);
-
-
 
     //nid and password
     nid_label = new QLabel("National ID", this);
@@ -41,24 +39,18 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent) : QWidget(parent)
     pass_input->setEchoMode(QLineEdit::Password);
     pass_input->setStyleSheet("padding:6px;");
 
-
-
     //login and reg button
     login_btn = new QPushButton("Login", this);
     reg_btn = new QPushButton("Register", this);
 
     //login and reg button design
     login_btn->setStyleSheet(
-        "background-color:#3498db; color:white; padding:8px; border-radius:6px;"
-        );
+        "background-color:#3498db; color:white; padding:8px; border-radius:6px;");
     login_btn->setCursor(Qt::PointingHandCursor);
 
     reg_btn->setStyleSheet(
-        "background-color:#2ecc71; color:white; padding:8px; border-radius:6px;"
-        );
+        "background-color:#2ecc71; color:white; padding:8px; border-radius:6px;");
     reg_btn->setCursor(Qt::PointingHandCursor);
-
-
 
     //warning message
     QFont msg_font;
@@ -69,8 +61,6 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent) : QWidget(parent)
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
     msg->setFont(msg_font);
-
-
 
     // layout
     grid = new QGridLayout(this);
@@ -94,45 +84,52 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent) : QWidget(parent)
 
     grid->addWidget(msg, 5, 0, 1, 2);
 
-
     //slots and signal connection
     connect(login_btn, &QPushButton::clicked, this, &CandidateLoginWindow::login);
     connect(reg_btn, &QPushButton::clicked, this, &CandidateLoginWindow::open_register);
-
 }
-
-
 
 void CandidateLoginWindow::login()
 {
-
-    if (nid_input->text().isEmpty() && pass_input->text().isEmpty()){
+    if (nid_input->text().isEmpty() && pass_input->text().isEmpty()) {
         msg->setStyleSheet("color: red;");
         msg->setText("enter details!");
         return;
-    }else if(nid_input->text().isEmpty()){
+    } else if (nid_input->text().isEmpty()) {
         msg->setStyleSheet("color: red;");
         msg->setText("nid field : empty");
         return;
-    }else if(pass_input->text().isEmpty()){
+    } else if (pass_input->text().isEmpty()) {
         msg->setStyleSheet("color: red;");
         msg->setText("password field: empty!");
         return;
     }
 
-    std::string nid =  nid_input->text().toStdString(); //because nid_input has Qstring, it needs to be converted to string explici
+    std::string nid
+        = nid_input->text()
+              .toStdString(); //because nid_input has Qstring, it needs to be converted to string explici
     std::string pass = pass_input->text().toStdString();
 
     int rsp = admin.login_candidate(nid, pass);
 
+<<<<<<< HEAD
     switch(rsp)
     {
     case login_success:{
         emit login_successful(nid_input->text());
         clear_fields();
+=======
+    switch (rsp) {
+    case login_success: {
+        msg->setStyleSheet("color: green;");
+        msg->setText("Login Successful");
+        CandidateHomeWindow *w = new CandidateHomeWindow(nid_input->text());
+        w->show();
+        this->close();
+>>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
         break;
     }
-    case not_found:{
+    case not_found: {
         msg->setStyleSheet("color: red;");
         msg->setText("Candidate Not Found");
         clear_fields();
@@ -150,18 +147,15 @@ void CandidateLoginWindow::login()
         clear_fields();
         break;
     }
-
-
 }
-
-
 
 void CandidateLoginWindow::open_register()
 {
     emit register_requested();
 }
 
-void CandidateLoginWindow::clear_fields(){
+void CandidateLoginWindow::clear_fields()
+{
     nid_input->clear();
     pass_input->clear();
 }

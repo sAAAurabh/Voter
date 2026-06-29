@@ -1,24 +1,28 @@
 #include "voter_home.h"
 #include "voter_login_window.h"
+<<<<<<< HEAD
 #include "main_window.h"
+=======
+#include "voting_page.h"
+#include "view_candidates_window.h"
+>>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
 
-#include <QGridLayout>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QPushButton>
 #include <QFont>
 #include <QFrame>
+#include <QPixmap>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
 
-VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
-    : QWidget(parent), voter_nid(nid)
+
+VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
+    : QWidget(parent)
+    , voter_nid(nid)
 {
     setWindowTitle("Voter Dashboard");
     //setFixedSize(600, 480);
 
-
-
-    // tile
     title = new QLabel("Voter Dashboard", this);
 
     QFont titleFont;
@@ -36,7 +40,6 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
 
     // profile box
     QFrame *profile_box = new QFrame(this);
-
     profile_box->setStyleSheet(
         "QFrame {"
         "border:1px solid #e0e0e0;"
@@ -63,13 +66,9 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     photo_label->setStyleSheet("background: transparent; border: none;");
 
     QPixmap pix(QString::fromStdString(v.photo_path));
-
     photo_label->setPixmap(
-        pix.scaled(photo_label->size(),
-                   Qt::KeepAspectRatio,
-                   Qt::SmoothTransformation)
+        pix.scaled(photo_label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation)
         );
-
 
     name_label = new QLabel(
         QString::fromStdString("Name: " + v.first + " " + v.last)
@@ -81,35 +80,34 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
         QString::fromStdString("Gender: " + v.gender)
         );
     dob_label = new QLabel(
-        QString::fromStdString("Date of Birth: " + v.dob)
+        QString::fromStdString("Date of Birth: " + a.calculate_age(v.dob))
         );
-
     name_label->setStyleSheet(info_style);
     nid_label->setStyleSheet(info_style);
     gender_label->setStyleSheet(info_style);
     dob_label->setStyleSheet(info_style);
 
     profile_layout->addWidget(photo_label, 0, 0, 4, 1, Qt::AlignTop);
-    profile_layout->addWidget(name_label, 0, 1);
-    profile_layout->addWidget(nid_label, 1, 1);
+    profile_layout->addWidget(name_label,   0, 1);
+    profile_layout->addWidget(nid_label,    1, 1);
     profile_layout->addWidget(gender_label, 2, 1);
-    profile_layout->addWidget(dob_label, 3, 1);
+    profile_layout->addWidget(dob_label,    3, 1);
 
-    //buttons
+    // buttons
     view_candidates_btn = new QPushButton("View Candidates", this);
     view_candidates_btn->setCursor(Qt::PointingHandCursor);
+
     vote_candidates_btn = new QPushButton("Vote Candidates", this);
     vote_candidates_btn->setCursor(Qt::PointingHandCursor);
+
     logout_btn = new QPushButton("Logout", this);
 
-    QString base =
-        "padding:8px;"
-        "border-radius:6px;"
-        "font-weight:600;";
+    QString base = "padding:8px;"
+                   "border-radius:6px;"
+                   "font-weight:600;";
 
     view_candidates_btn->setStyleSheet(base + "background:#3498db; color:white;");
     vote_candidates_btn->setStyleSheet(base + "background:#2ecc71; color:white;");
-
 
     logout_btn->setStyleSheet(
         "background:transparent;"
@@ -132,34 +130,52 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     grid->setContentsMargins(30, 20, 30, 20);
     grid->setVerticalSpacing(12);
 
-    grid->addWidget(title, 0, 0, 1, 2);
-    grid->addWidget(divider, 1, 0, 1, 2);
-    grid->addWidget(profile_box, 2, 0, 1, 2);
+    grid->addWidget(title,              0, 0, 1, 2);
+    grid->addWidget(divider,            1, 0, 1, 2);
+    grid->addWidget(profile_box,        2, 0, 1, 2);
+    grid->addWidget(view_candidates_btn,3, 0);
+    grid->addWidget(vote_candidates_btn,3, 1);
+    grid->addWidget(msg,                4, 0, 1, 2);
 
-    grid->addWidget(view_candidates_btn, 3, 0);
-    grid->addWidget(vote_candidates_btn, 3, 1);
-
-    grid->addWidget(msg, 4, 0, 1, 2);
-
-    //lagout button
+    // logout button (top right corner)
     logout_btn->setParent(this);
     logout_btn->setGeometry(width() - 70, 5, 60, 25);
 
+<<<<<<< HEAD
 
     connect(logout_btn, &QPushButton::clicked, this, &VoterHomeWindow::logout);
+=======
+    connect(logout_btn,          &QPushButton::clicked, this, &VoterHomeWindow::logout);
+>>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
     connect(vote_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::vote);
+    connect(view_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::view_candidates);
 }
-
 
 void VoterHomeWindow::logout()
 {
     emit logout_requested();
 }
 
+<<<<<<< HEAD
 void VoterHomeWindow::vote(){
     emit vote_page_requested(voter_nid);
 }
 
 
 
+=======
+void VoterHomeWindow::vote()
+{
+    this->hide();
+    VotingPage *w = new VotingPage(voter_nid);
+    w->show();
+}
+
+
+void VoterHomeWindow::view_candidates()
+{
+    ViewCandidatesWindow *w = new ViewCandidatesWindow();
+    w->show();
+}
+>>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
 
