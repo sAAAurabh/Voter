@@ -1,7 +1,7 @@
 #include "database.h"
-#include <QSqlQuery>
-#include <QSqlError>
 #include <QDebug>
+#include <QSqlError>
+#include <QSqlQuery>
 
 QSqlDatabase Database::db = QSqlDatabase();
 

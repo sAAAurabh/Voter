@@ -3,22 +3,22 @@
 #include "voting_page.h"
 #include "view_candidates_window.h"
 
-#include <QGridLayout>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QPushButton>
 #include <QFont>
 #include <QFrame>
 #include <QPixmap>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
 
-VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
-    : QWidget(parent), voter_nid(nid)
+
+VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
+    : QWidget(parent)
+    , voter_nid(nid)
 {
     setWindowTitle("Voter Dashboard");
     setFixedSize(600, 480);
 
-    // title
     title = new QLabel("Voter Dashboard", this);
 
     QFont titleFont;
@@ -78,7 +78,6 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     dob_label = new QLabel(
         QString::fromStdString("Date of Birth: " + a.calculate_age(v.dob))
         );
-
     name_label->setStyleSheet(info_style);
     nid_label->setStyleSheet(info_style);
     gender_label->setStyleSheet(info_style);
@@ -99,10 +98,9 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
 
     logout_btn = new QPushButton("Logout", this);
 
-    QString base =
-        "padding:8px;"
-        "border-radius:6px;"
-        "font-weight:600;";
+    QString base = "padding:8px;"
+                   "border-radius:6px;"
+                   "font-weight:600;";
 
     view_candidates_btn->setStyleSheet(base + "background:#3498db; color:white;");
     vote_candidates_btn->setStyleSheet(base + "background:#2ecc71; color:white;");
@@ -144,7 +142,6 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     connect(view_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::view_candidates);
 }
 
-
 void VoterHomeWindow::logout()
 {
     this->close();
@@ -157,8 +154,10 @@ void VoterHomeWindow::vote()
     w->show();
 }
 
+
 void VoterHomeWindow::view_candidates()
 {
     ViewCandidatesWindow *w = new ViewCandidatesWindow();
     w->show();
 }
+

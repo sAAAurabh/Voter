@@ -6,7 +6,6 @@
 #include <filesystem>
 #include <string>
 #include "picosh.h"
-#include <QDebug>
 #include "database.h"
 #include <QDate>
 
@@ -19,22 +18,20 @@ string Admin::gen_salt()
     string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
     string salt;
 
-    for(int i = 0; i < 6; i++)
+    for (int i = 0; i < 6; i++)
         salt += chars[rand() % chars.size()];
 
     return salt;
 }
 
-
 // hashes salt + password
-string Admin::hash_pass(const string& pass, const string& salt)
+string Admin::hash_pass(const string &pass, const string &salt)
 {
     return picosha2::hash256_hex_string(salt + pass);
 }
 
-
 // finds voter
-bool Admin::find_voter(const string& nid, Voter& v)
+bool Admin::find_voter(const string &nid, Voter &v)
 {
     {
         QSqlQuery q;
@@ -85,14 +82,13 @@ bool Admin::find_candidate(const std::string& nid, Candidate& c)
         c.attempts_left = q.value("attempts_left").toInt();
         c.party = q.value("party").toString().toStdString();
         c.manifesto = q.value("manifesto").toString().toStdString();
-
     }
 
     return true;
 }
 
-
 // add voter
+
 void Admin::add_voter(const Voter& v)
 {   {
         QSqlQuery q;
@@ -134,21 +130,19 @@ void Admin::add_candidate(const Candidate& c)
         "(nid, first, last, party, dob, gender, password_hash, salt, photo_path, party_symbol_path, votes, is_locked, attempts_left) "
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
-
-    q.addBindValue(QString::fromStdString(c.nid));
-    q.addBindValue(QString::fromStdString(c.first));
-    q.addBindValue(QString::fromStdString(c.last));
-    q.addBindValue(QString::fromStdString(c.party));
-    q.addBindValue(QString::fromStdString(c.dob));
-    q.addBindValue(QString::fromStdString(c.gender));
-    q.addBindValue(QString::fromStdString(c.hash));
-    q.addBindValue(QString::fromStdString(c.salt));
-    q.addBindValue(QString::fromStdString(c.photo_path));
-    q.addBindValue(QString::fromStdString(c.party_symbol_path));
-    q.addBindValue(0); // votes
-    q.addBindValue(0); // islocked
-    q.addBindValue(5); // attempts_left
-
+            q.addBindValue(QString::fromStdString(c.nid));
+            q.addBindValue(QString::fromStdString(c.first));
+            q.addBindValue(QString::fromStdString(c.last));
+            q.addBindValue(QString::fromStdString(c.party));
+            q.addBindValue(QString::fromStdString(c.dob));
+            q.addBindValue(QString::fromStdString(c.gender));
+            q.addBindValue(QString::fromStdString(c.hash));
+            q.addBindValue(QString::fromStdString(c.salt));
+            q.addBindValue(QString::fromStdString(c.photo_path));
+            q.addBindValue(QString::fromStdString(c.party_symbol_path));
+            q.addBindValue(0); // votes
+            q.addBindValue(0); // islocked
+            q.addBindValue(5); // attempts_left
 
         if (!q.exec()) {
             qDebug() << "add_candidate failed:" << q.lastError().text();
@@ -177,6 +171,7 @@ void Admin::update_voter(const Voter& v)
             "attempts_left = ? "
             "WHERE nid = ?"
             );
+
 
         q.addBindValue(QString::fromStdString(v.first));
         q.addBindValue(QString::fromStdString(v.last));
@@ -233,16 +228,14 @@ void Admin::update_candidate(const Candidate& c)
         q.addBindValue(c.attempts_left);
         q.addBindValue(QString::fromStdString(c.manifesto));
 
-
         if (!q.exec()) {
             qDebug() << "update_candidate failed:" << q.lastError().text();
         }
     }
 }
 
-
 // login voter
-login_result Admin::login_voter(const std::string& nid, const std::string& pass)
+login_result Admin::login_voter(const std::string &nid, const std::string &pass)
 {
     Voter v;
 
@@ -254,8 +247,7 @@ login_result Admin::login_voter(const std::string& nid, const std::string& pass)
 
     std::string computed = hash_pass(pass, v.salt);
 
-    if (computed == v.hash)
-    {
+    if (computed == v.hash) {
         update_voter(v);
         return login_success;
     }
@@ -263,8 +255,7 @@ login_result Admin::login_voter(const std::string& nid, const std::string& pass)
     if (v.attempts_left > 0)
         v.attempts_left--;
 
-    if (v.attempts_left <= 0)
-    {
+    if (v.attempts_left <= 0) {
         v.attempts_left = 0;
         v.is_locked = true;
         update_voter(v);
@@ -274,6 +265,7 @@ login_result Admin::login_voter(const std::string& nid, const std::string& pass)
     update_voter(v);
     return wrong_pass;
 }
+
 
 
 // login candidate
@@ -296,8 +288,7 @@ login_result Admin::login_candidate(const std::string& nid, const std::string& p
 
     c.attempts_left--;
 
-    if (c.attempts_left <= 0)
-    {
+    if (c.attempts_left <= 0) {
         c.is_locked = true;
         update_candidate(c);
         return acc_locked;
@@ -306,6 +297,7 @@ login_result Admin::login_candidate(const std::string& nid, const std::string& p
     update_candidate(c);
     return wrong_pass;
 }
+
 
 
 // validates password
@@ -319,8 +311,7 @@ pass_val Admin::is_valid_pass(const string pass, string nm)
         bool has_special = false;
         bool has_capital = false;
 
-        for (unsigned char c : pass)
-        {
+        for (unsigned char c : pass) {
             if (isdigit(c))
                 digits++;
             else if (isupper(c))
@@ -344,6 +335,7 @@ pass_val Admin::is_valid_pass(const string pass, string nm)
         return is_valid;
     }
 }
+
 
 // calculate age
 string Admin::calculate_age(const std::string& dob)
@@ -421,3 +413,4 @@ std::vector<Candidate> Admin::get_all_candidates()
     }
     return candidates;
 }
+

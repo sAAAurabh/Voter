@@ -1,19 +1,20 @@
 #include "voting_page.h"
 #include "database.h"
 
-#include <QLabel>
-#include <QPushButton>
+#include <QDebug>
+#include <QFont>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
+#include <QLabel>
 #include <QMessageBox>
 #include <QPixmap>
-#include <QSqlQuery>
+#include <QPushButton>
 #include <QScrollArea>
-#include <QFont>
-#include <QDebug>
+#include <QSqlQuery>
+#include <QVBoxLayout>
 
-VotingPage::VotingPage(const QString& voter_nid, QWidget *parent)
-    : QWidget(parent), current_voter_nid(voter_nid)
+VotingPage::VotingPage(const QString &voter_nid, QWidget *parent)
+    : QWidget(parent)
+    , current_voter_nid(voter_nid)
 {
     resize(700, 500);
     setWindowTitle("Voting Page");
@@ -201,8 +202,6 @@ VotingPage::VotingPage(const QString& voter_nid, QWidget *parent)
 
 }
 
-
-
 void VotingPage::load_candidates()
 {
     Admin a;
@@ -214,8 +213,7 @@ void VotingPage::load_candidates()
         return;
     }
 
-    while(q.next())
-    {
+    while (q.next()) {
         QString nid = q.value(0).toString();
         QString name = q.value(1).toString() + " " + q.value(2).toString();
         QString dob = q.value(3).toString();
@@ -227,16 +225,14 @@ void VotingPage::load_candidates()
         QWidget *card = new QWidget;
         card->setMinimumHeight(135);
 
-        card->setStyleSheet(
-            "QWidget {"
-            "background:#232323;"
-            "border:1px solid #2f2f2f;"
-            "border-radius:14px;"
-            "}"
-            "QWidget:hover {"
-            "border:1px solid #2ecc71;"
-            "}"
-            );
+        card->setStyleSheet("QWidget {"
+                            "background:#232323;"
+                            "border:1px solid #2f2f2f;"
+                            "border-radius:14px;"
+                            "}"
+                            "QWidget:hover {"
+                            "border:1px solid #2ecc71;"
+                            "}");
 
         QHBoxLayout *layout = new QHBoxLayout(card);
         layout->setContentsMargins(18, 14, 18, 14);
@@ -249,10 +245,7 @@ void VotingPage::load_candidates()
 
         QPixmap pix(photo_path);
         photo->setPixmap(
-            pix.scaled(photo->size(),
-                       Qt::KeepAspectRatioByExpanding,
-                       Qt::SmoothTransformation)
-            );
+            pix.scaled(photo->size(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
 
         // Party Symbol
         QLabel *party_symbol = new QLabel;
@@ -295,68 +288,57 @@ void VotingPage::load_candidates()
         QPushButton *vote_btn = new QPushButton("Vote");
         vote_btn->setFixedSize(85, 34);
 
-        vote_btn->setStyleSheet(
-            "QPushButton {"
-            "border:1px solid #2ecc71;"
-            "color:#2ecc71;"
-            "background:transparent;"
-            "border-radius:8px;"
-            "font-weight:500;"
-            "}"
-            "QPushButton:hover {"
-            "background:rgba(46,204,113,0.15);"
-            "}"
-            );
+        vote_btn->setStyleSheet("QPushButton {"
+                                "border:1px solid #2ecc71;"
+                                "color:#2ecc71;"
+                                "background:transparent;"
+                                "border-radius:8px;"
+                                "font-weight:500;"
+                                "}"
+                                "QPushButton:hover {"
+                                "background:rgba(46,204,113,0.15);"
+                                "}");
 
-        connect(vote_btn, &QPushButton::clicked, this, [=]()
-                {
-                    QSqlQuery check_voter(Database::db);
-                    check_voter.prepare("Select has_voted from voters WHERE nid = ?");
-                    check_voter.addBindValue(current_voter_nid);
+        connect(vote_btn, &QPushButton::clicked, this, [=]() {
+            QSqlQuery check_voter(Database::db);
+            check_voter.prepare("Select has_voted from voters WHERE nid = ?");
+            check_voter.addBindValue(current_voter_nid);
 
-                    if(!check_voter.exec())
-                    {
-                        QMessageBox::critical(this, "Error", check_voter.lastError().text());
-                        return;
-                    }
+            if (!check_voter.exec()) {
+                QMessageBox::critical(this, "Error", check_voter.lastError().text());
+                return;
+            }
 
-                    if(!check_voter.next())
-                    {
-                        QMessageBox::critical(this, "Error", "Voter not found.");
-                        return;
-                    }
+            if (!check_voter.next()) {
+                QMessageBox::critical(this, "Error", "Voter not found.");
+                return;
+            }
 
-                    if(check_voter.value(0).toBool())
-                    {
-                        QMessageBox::warning(this, "Blocked", "You have already voted.");
-                        return;
-                    }
+            if (check_voter.value(0).toBool()) {
+                QMessageBox::warning(this, "Blocked", "You have already voted.");
+                return;
+            }
 
+            auto reply = QMessageBox::question(this,
+                                               "Confirm Vote",
+                                               "Vote for " + name + "?",
+                                               QMessageBox::Yes | QMessageBox::No);
 
-                    auto reply = QMessageBox::question(
-                        this,
-                        "Confirm Vote",
-                        "Vote for " + name + "?",
-                        QMessageBox::Yes | QMessageBox::No
-                        );
+            if (reply == QMessageBox::Yes) {
+                QSqlQuery vote(Database::db);
+                vote.prepare("UPDATE candidates SET votes=votes+1 WHERE nid=?");
+                vote.addBindValue(nid);
 
-                    if(reply == QMessageBox::Yes)
-                    {
-                        QSqlQuery vote(Database::db);
-                        vote.prepare("UPDATE candidates SET votes=votes+1 WHERE nid=?");
-                        vote.addBindValue(nid);
+                QSqlQuery updateVoter(Database::db);
+                updateVoter.prepare("UPDATE voters SET has_voted = 1 WHERE nid = ?");
+                updateVoter.addBindValue(current_voter_nid);
 
-                        QSqlQuery updateVoter(Database::db);
-                        updateVoter.prepare("UPDATE voters SET has_voted = 1 WHERE nid = ?");
-                        updateVoter.addBindValue(current_voter_nid);
-
-
-                        if(vote.exec() && updateVoter.exec())
-                            QMessageBox::information(this, "Success", "Vote cast successfully.");
-                        else
-                            QMessageBox::critical(this, "Error", vote.lastError().text());
-                    }
-                });
+                if (vote.exec() && updateVoter.exec())
+                    QMessageBox::information(this, "Success", "Vote cast successfully.");
+                else
+                    QMessageBox::critical(this, "Error", vote.lastError().text());
+            }
+        });
 
         layout->addWidget(photo);
         layout->addLayout(textLayout);

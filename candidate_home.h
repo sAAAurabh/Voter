@@ -13,7 +13,7 @@ class CandidateHomeWindow : public QWidget
     Q_OBJECT
 
 public:
-    CandidateHomeWindow(const QString& nid, QWidget *parent = nullptr);
+    CandidateHomeWindow(const QString &nid, QWidget *parent = nullptr);
 
 private:
     QString candidate_nid;   // NEW — store nid
