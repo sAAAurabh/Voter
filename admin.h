@@ -4,6 +4,9 @@
 #include <cctype>
 #include <string>
 
+
+#include <QDebug>
+
 enum login_result { login_success, not_found, wrong_pass, acc_locked };
 
 enum pass_val { number, letter, capital, is_valid, name, special };
