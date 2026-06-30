@@ -5,6 +5,7 @@ release/candidate_login_window.o
 release/candidate_register_window.o
 release/database.o
 release/main.o
+release/main_window.o
 release/roleselection.o
 release/voter.o
 release/voter_home.o
@@ -17,6 +18,7 @@ release/view_candidates_window.o
 release/moc_candidate_home.o
 release/moc_candidate_login_window.o
 release/moc_candidate_register_window.o
+release/moc_main_window.o
 release/moc_roleselection.o
 release/moc_voter_home.o
 release/moc_voter_login_window.o

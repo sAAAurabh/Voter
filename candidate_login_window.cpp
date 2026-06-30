@@ -86,7 +86,7 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
 
     //slots and signal connection
     connect(login_btn, &QPushButton::clicked, this, &CandidateLoginWindow::login);
-    connect(reg_btn, &QPushButton::clicked, this, &CandidateLoginWindow::open_register);
+    connect(reg_btn, &QPushButton::clicked, this, [this](){emit register_requested();});
 }
 
 void CandidateLoginWindow::login()
@@ -113,12 +113,10 @@ void CandidateLoginWindow::login()
     int rsp = admin.login_candidate(nid, pass);
 
     switch (rsp) {
-    case login_success: {
-        msg->setStyleSheet("color: green;");
-        msg->setText("Login Successful");
-        CandidateHomeWindow *w = new CandidateHomeWindow(nid_input->text());
-        w->show();
-        this->close();
+    case login_success:
+    {
+        emit login_successful(nid_input->text());
+        clear_fields();
         break;
     }
     case not_found: {
@@ -139,11 +137,6 @@ void CandidateLoginWindow::login()
         clear_fields();
         break;
     }
-}
-
-void CandidateLoginWindow::open_register()
-{
-    emit register_requested();
 }
 
 void CandidateLoginWindow::clear_fields()

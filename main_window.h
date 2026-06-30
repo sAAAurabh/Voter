@@ -11,6 +11,9 @@
 #include "candidate_home.h"
 #include "voter_home.h"
 #include "voting_page.h"
+#include "view_candidates_window.h"
+#include "roleselection.h"
+#include "manifesto_edit_window.h"
 
 class MainWindow : public QMainWindow
 {
@@ -30,6 +33,8 @@ private:
 
     CandidateLoginWindow *candidate_login_page;
     CandidateRegisterWindow *candidate_register_page;
+
+    RoleSelection *role_selection_page;
 
 
 };

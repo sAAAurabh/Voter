@@ -122,7 +122,9 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     //slots and signals
     connect(edit_btn, &QPushButton::clicked, this, &CandidateHomeWindow::edit_manifesto);
 
-    connect(logout_btn, &QPushButton::clicked, this, &CandidateHomeWindow::logout);
+    connect(logout_btn, &QPushButton::clicked, this, [this](){
+        emit logout_requested();
+    });
 }
 
 void CandidateHomeWindow::edit_manifesto()
@@ -132,7 +134,3 @@ void CandidateHomeWindow::edit_manifesto()
 }
 
 
-void CandidateHomeWindow::logout()
-{
-    emit logout_requested();
-}

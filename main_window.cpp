@@ -18,20 +18,50 @@ MainWindow::MainWindow(QWidget *parent)
 {
     stack = new QStackedWidget(this);
 
+    role_selection_page = new RoleSelection;
+
     voter_login_page = new VoterLoginWindow;
     voter_register_page = new VoterRegisterWindow;
 
     candidate_login_page = new CandidateLoginWindow;
     candidate_register_page = new CandidateRegisterWindow;
 
+    stack->addWidget(role_selection_page);
     stack->addWidget(voter_login_page);
     stack->addWidget(voter_register_page);
     stack->addWidget(candidate_login_page);
     stack->addWidget(candidate_register_page);
 
     setCentralWidget(stack);
-    stack->setCurrentWidget(voter_login_page);
-    setFixedSize(450,300);
+    stack->setCurrentWidget(role_selection_page);
+    setFixedSize(400,300);
+
+
+
+    connect(
+        role_selection_page,
+        &RoleSelection::is_voter,
+        this,
+        [this](){
+            stack->setCurrentWidget(voter_login_page);
+            setFixedSize(450,300);
+        }
+        );
+
+    connect(
+        role_selection_page,
+        &RoleSelection::is_candidate,
+        this,
+        [this](){
+            stack->setCurrentWidget(candidate_login_page);
+            setFixedSize(450,300);
+        }
+        );
+
+
+
+
+
 
 
 
@@ -46,7 +76,6 @@ MainWindow::MainWindow(QWidget *parent)
             center_window();
         }
         );
-
 
     connect(
         voter_login_page,
@@ -78,20 +107,62 @@ MainWindow::MainWindow(QWidget *parent)
                 voter_home,
                 &VoterHomeWindow::vote_page_requested,
                 this,
-                [this](QString nid)
+                [this, voter_home](QString nid)
                 {
                     VotingPage *voting_page = new VotingPage(nid);
                     stack->addWidget(voting_page);
                     stack->setCurrentWidget(voting_page);
                     setFixedSize(850,600);
                     center_window();
+
+                    connect(
+                        voting_page,
+                        &VotingPage::back_requested,
+                        this,
+                        [this, voter_home, voting_page](){
+                            stack->setCurrentWidget(voter_home);
+                            setFixedSize(650,480);
+                            stack->removeWidget(voting_page);
+                            voting_page->deleteLater();
+                            center_window();
+                        }
+                        );
+                }
+                );
+
+            connect(
+                voter_home,
+                &VoterHomeWindow::candidate_view_requested,
+                this,
+                [this, voter_home]()
+                {
+                    ViewCandidatesWindow *candidate_view_page = new ViewCandidatesWindow();
+                    stack->addWidget(candidate_view_page);
+                    stack->setCurrentWidget(candidate_view_page);
+                    setFixedSize(700,560);
+                    center_window();
+
+                    connect(
+                        candidate_view_page,
+                        &ViewCandidatesWindow::back_requested,
+                        this,
+                        [this, voter_home, candidate_view_page]()
+                        {
+                            stack->setCurrentWidget(voter_home);
+                            setFixedSize(650,480);
+                            center_window();
+
+                            stack->removeWidget(candidate_view_page);
+                            candidate_view_page->deleteLater();
+
+                        }
+                        );
                 }
                 );
 
 
         }
     );
-
 
     connect(
         voter_register_page,
@@ -105,10 +176,6 @@ MainWindow::MainWindow(QWidget *parent)
 
         }
         );
-
-
-
-
 
 
 
@@ -151,8 +218,10 @@ MainWindow::MainWindow(QWidget *parent)
                 }
                 );
 
+
         }
         );
+
 
 
     connect(
@@ -161,13 +230,11 @@ MainWindow::MainWindow(QWidget *parent)
         this,
         [this]()
         {
-
-            setFixedSize(450,300);
             stack->setCurrentWidget(candidate_login_page);
+            setFixedSize(450,300);
             center_window();
 
         }
         );
-
-
 }
+

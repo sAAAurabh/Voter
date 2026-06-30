@@ -247,7 +247,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
 
     //signals and slots
     connect(reg_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::register_user);
-    connect(back_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::close_register);
+    connect(back_btn, &QPushButton::clicked, this, [this](){emit back_to_login_requested();});
     connect(photo_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::upload_photo);
     connect(party_symbol_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::upload_party_symbol);
 }
@@ -338,10 +338,6 @@ void CandidateRegisterWindow::register_user()
     }
 }
 
-void CandidateRegisterWindow::close_register()
-{
-    delete this;
-}
 
 void CandidateRegisterWindow::clear_fields()
 {

@@ -1,11 +1,8 @@
 #include "voter_home.h"
 #include "voter_login_window.h"
-<<<<<<< HEAD
 #include "main_window.h"
-=======
 #include "voting_page.h"
 #include "view_candidates_window.h"
->>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
 
 #include <QFont>
 #include <QFrame>
@@ -71,16 +68,16 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
         );
 
     name_label = new QLabel(
-        QString::fromStdString("Name: " + v.first + " " + v.last)
+        QString::fromStdString("NAME       :" + v.first + " " + v.last)
         );
     nid_label = new QLabel(
-        QString::fromStdString("NID: " + v.nid)
+        QString::fromStdString("NID           :" + v.nid)
         );
     gender_label = new QLabel(
-        QString::fromStdString("Gender: " + v.gender)
+        QString::fromStdString("GENDER     :" + v.gender)
         );
     dob_label = new QLabel(
-        QString::fromStdString("Date of Birth: " + a.calculate_age(v.dob))
+        QString::fromStdString("AGE           :" + a.calculate_age(v.dob))
         );
     name_label->setStyleSheet(info_style);
     nid_label->setStyleSheet(info_style);
@@ -141,41 +138,9 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     logout_btn->setParent(this);
     logout_btn->setGeometry(width() - 70, 5, 60, 25);
 
-<<<<<<< HEAD
-
-    connect(logout_btn, &QPushButton::clicked, this, &VoterHomeWindow::logout);
-=======
-    connect(logout_btn,          &QPushButton::clicked, this, &VoterHomeWindow::logout);
->>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
-    connect(vote_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::vote);
-    connect(view_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::view_candidates);
+    connect(logout_btn, &QPushButton::clicked, this, [this](){emit logout_requested();});
+    connect(vote_candidates_btn, &QPushButton::clicked, this, [this](){emit vote_page_requested(voter_nid);});
+    connect(view_candidates_btn, &QPushButton::clicked, this, [this](){emit candidate_view_requested();});
 }
 
-void VoterHomeWindow::logout()
-{
-    emit logout_requested();
-}
-
-<<<<<<< HEAD
-void VoterHomeWindow::vote(){
-    emit vote_page_requested(voter_nid);
-}
-
-
-
-=======
-void VoterHomeWindow::vote()
-{
-    this->hide();
-    VotingPage *w = new VotingPage(voter_nid);
-    w->show();
-}
-
-
-void VoterHomeWindow::view_candidates()
-{
-    ViewCandidatesWindow *w = new ViewCandidatesWindow();
-    w->show();
-}
->>>>>>> 66122f6f8cb9dcfdb07fdedad9498476192afe7b
 

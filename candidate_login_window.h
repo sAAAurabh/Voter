@@ -17,7 +17,6 @@ public:
 
 private slots:
     void login();
-    void open_register();
     void clear_fields();
 
 private:

@@ -173,6 +173,29 @@ VotingPage::VotingPage(const QString &voter_nid, QWidget *parent)
     scroll->setWidget(container);
     root_layout->addWidget(scroll);
 
+    QHBoxLayout *top_layout = new QHBoxLayout;
+
+    QPushButton *back_button = new QPushButton("← Back");
+    back_button->setFixedWidth(100);
+
+    back_button->setStyleSheet(
+        "QPushButton {"
+        "background:#444444;"
+        "color:white;"
+        "border:none;"
+        "border-radius:6px;"
+        "padding:6px 12px;"
+        "}"
+        "QPushButton:hover {"
+        "background:#5a5a5a;"
+        "}"
+        );
+
+    top_layout->addWidget(back_button);
+    top_layout->addStretch();
+
+    root_layout->addLayout(top_layout);
+
     //default
     load_candidates();
 
@@ -198,6 +221,10 @@ VotingPage::VotingPage(const QString &voter_nid, QWidget *parent)
                 clear_candidate_cards();
                 load_candidates();
             });
+
+    connect(back_button, &QPushButton::clicked, this, [this]{
+        emit back_requested();
+    });
 
 
 }
@@ -362,17 +389,14 @@ void VotingPage::load_candidates(QString party, QString gender, QString age )
 
 
     q.prepare(
-            "SELECT nid, first, last, dob, party, photo_path, party_symbol_path "
-            "FROM candidates "
-            "WHERE (:p = 'All Parties' OR party = :p) "
-            "AND (:g = 'All' OR gender = :g) "
-            "AND (:dob = 'Any Age' OR (dob BETWEEN :min_age AND :max_age))"
+        "SELECT nid, first, last, dob, party, photo_path, party_symbol_path "
+        "FROM candidates "
+        "WHERE (:p = 'All Parties' OR party = :p) "
+        "AND (:g = 'All' OR gender = :g)"
         );
 
     q.bindValue(":p", party);
     q.bindValue(":g", gender);
-    q.bindValue(":dob", age);
-
 
 
     if(!q.exec())
@@ -383,6 +407,26 @@ void VotingPage::load_candidates(QString party, QString gender, QString age )
 
     while(q.next())
     {
+        bool match = true;
+        if (age != "Any Age")
+        {
+
+            int candidate_age = std::stoi(a.calculate_age(q.value("dob").toString().toStdString()));
+
+            if (age == "18-25")
+                match = (candidate_age >= 18 && candidate_age <= 25);
+            else if (age == "26-35")
+                match = (candidate_age >= 26 && candidate_age <= 35);
+            else if (age == "36-45")
+                match = (candidate_age >= 36 && candidate_age <= 45);
+            else if (age == "46-60")
+                match = (candidate_age >= 46 && candidate_age <= 60);
+            else if (age == "60+")
+                match = (candidate_age >= 60);
+        }
+        if (!match)
+            continue;
+
         QString nid = q.value(0).toString();
         QString name = q.value(1).toString() + " " + q.value(2).toString();
         QString dob = q.value(3).toString();
@@ -423,17 +467,17 @@ void VotingPage::load_candidates(QString party, QString gender, QString age )
 
         // Party Symbol
         QLabel *party_symbol = new QLabel;
-        party_symbol->setFixedSize(50, 50);
-        party_symbol->setStyleSheet("border:1px solid #444; border-radius:6px;");
+        party_symbol->setFixedSize(75, 75);
+        party_symbol->setStyleSheet("border:none");
 
         QPixmap symbolPix(party_symbol_path);
         party_symbol->setPixmap(
             symbolPix.scaled(
                 party_symbol->size(),
-                        Qt::KeepAspectRatio,
-                        Qt::SmoothTransformation)
+                Qt::KeepAspectRatio,
+                Qt::SmoothTransformation)
             );
-        party_symbol->setAlignment(Qt::AlignCenter);
+
 
 
         // text

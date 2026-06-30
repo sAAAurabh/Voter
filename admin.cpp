@@ -209,8 +209,8 @@ void Admin::update_candidate(const Candidate& c)
             "party = ?, "
             "votes = ?, "
             "is_locked = ?, "
-            "attempts_left = ? "
-            "manifesto = ?"
+            "attempts_left = ?, "
+            "manifesto = ? "
             "WHERE nid = ?"
             );
 
@@ -227,6 +227,7 @@ void Admin::update_candidate(const Candidate& c)
         q.addBindValue(c.is_locked ? 1 : 0);
         q.addBindValue(c.attempts_left);
         q.addBindValue(QString::fromStdString(c.manifesto));
+        q.addBindValue(QString::fromStdString(c.nid));
 
         if (!q.exec()) {
             qDebug() << "update_candidate failed:" << q.lastError().text();

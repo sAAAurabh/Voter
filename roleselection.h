@@ -1,5 +1,4 @@
-#ifndef ROLESELECTION_H
-#define ROLESELECTION_H
+#pragma once
 
 #include <QWidget>
 #include <QPushButton>
@@ -13,15 +12,14 @@ public:
     explicit RoleSelection(QWidget *parent = nullptr);
     ~RoleSelection();
 
-private slots:
-    void onVoterBtnClicked();
-    void onCandidateBtnClicked();
-
 private:
     QLabel      *titleLabel;
     QLabel      *subLabel;
     QPushButton *voterBtn;
     QPushButton *candidateBtn;
+
+signals:
+    void is_voter();
+    void is_candidate();
 };
 
-#endif // ROLESELECTION_H

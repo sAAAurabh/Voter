@@ -32,7 +32,6 @@ public:
 
 private slots:
     void register_user();
-    void close_register();
     void clear_fields();
     void upload_photo();
     void upload_party_symbol();
