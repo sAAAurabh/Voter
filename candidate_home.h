@@ -34,5 +34,9 @@ private:
 
 private slots:
     void edit_manifesto();
-    void logout();
+
+
+
+signals:
+    void logout_requested();
 };

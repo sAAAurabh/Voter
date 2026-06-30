@@ -17,7 +17,6 @@ public:
 
 private slots:
     void login();
-    void open_register();
     void clear_fields();
 
 private:
@@ -36,4 +35,9 @@ private:
     QGridLayout *grid;
 
     Admin admin;
+
+
+signals:
+    void register_requested();
+    void login_successful(QString nid);
 };

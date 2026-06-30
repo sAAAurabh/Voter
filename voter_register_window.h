@@ -22,7 +22,7 @@ public:
 
 private slots:
     void register_user();
-    void close_register();
+    void back_login();
     void clear_fields();
     void upload_photo();
 
@@ -44,4 +44,7 @@ private:
     QPushButton *reg_btn, *back_btn;
     QGridLayout *grid;
     Admin admin;
+
+signals:
+    void back_to_login_requested();
 };

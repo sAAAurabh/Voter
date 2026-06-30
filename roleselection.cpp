@@ -9,7 +9,7 @@ RoleSelection::RoleSelection(QWidget *parent)
     : QWidget(parent)
 {
     setWindowTitle("E-Voting System");
-    setFixedSize(400, 300);
+    //setFixedSize(400, 300);
 
     titleLabel = new QLabel("Welcome to E-Voting System", this);
     titleLabel->setAlignment(Qt::AlignCenter);
@@ -43,22 +43,8 @@ RoleSelection::RoleSelection(QWidget *parent)
 
     setLayout(mainLayout);
 
-    connect(voterBtn,     &QPushButton::clicked, this, &RoleSelection::onVoterBtnClicked);
-    connect(candidateBtn, &QPushButton::clicked, this, &RoleSelection::onCandidateBtnClicked);
+    connect(voterBtn,     &QPushButton::clicked, this, [this](){emit is_voter();});
+    connect(candidateBtn, &QPushButton::clicked, this, [this](){emit is_candidate();});
 }
 
 RoleSelection::~RoleSelection() {}
-
-void RoleSelection::onVoterBtnClicked()
-{
-    VoterLoginWindow *w = new VoterLoginWindow();
-    w->show();
-    this->close();
-}
-
-void RoleSelection::onCandidateBtnClicked()
-{
-    CandidateLoginWindow *w = new CandidateLoginWindow();
-    w->show();
-    this->close();
-}

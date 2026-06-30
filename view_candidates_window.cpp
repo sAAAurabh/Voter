@@ -7,12 +7,13 @@
 #include <QFrame>
 #include <QFont>
 #include <QPixmap>
+#include <QPushButton>
 
 ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
     : QWidget(parent)
 {
     setWindowTitle("View Candidates");
-    resize(700, 560);
+    //resize(700, 560);
     setStyleSheet("background:#f5f5f5;");
 
     QVBoxLayout *root = new QVBoxLayout(this);
@@ -68,6 +69,7 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
         photo->setFixedSize(85, 95);
         photo->setAlignment(Qt::AlignCenter);
         photo->setStyleSheet("border:1px solid #ccc; border-radius:4px;");
+
         QPixmap pix(QString::fromStdString(c.photo_path));
         if (!pix.isNull())
             photo->setPixmap(pix.scaled(photo->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -93,7 +95,9 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
                                      : QString::fromStdString(c.manifesto);
 
         QLabel *manifesto_title = new QLabel("Manifesto:");
-        manifesto_title->setStyleSheet("font-weight:bold; font-size:12px; color:#555; border:none; background:transparent;");
+        manifesto_title->setStyleSheet(
+            "font-weight:bold; font-size:12px; color:#555; border:none; background:transparent;"
+            );
 
         QLabel *manifesto = new QLabel(manifesto_text);
         manifesto->setWordWrap(true);
@@ -116,4 +120,32 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
     container_layout->addStretch();
     scroll->setWidget(container);
     root->addWidget(scroll);
+
+    // Back button
+    QPushButton *back_btn = new QPushButton("Back");
+    back_btn->setFixedSize(120, 40);
+    back_btn->setStyleSheet(
+        "QPushButton {"
+        "background-color:#3498db;"
+        "color:white;"
+        "border:none;"
+        "border-radius:6px;"
+        "font-size:14px;"
+        "font-weight:bold;"
+        "}"
+        "QPushButton:hover {"
+        "background-color:#2980b9;"
+        "}"
+        );
+
+    connect(back_btn, &QPushButton::clicked, this, [this]() {
+        emit back_requested();
+    });
+
+    root->addWidget(back_btn, 0, Qt::AlignCenter);
 }
+
+
+
+
+

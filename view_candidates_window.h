@@ -12,4 +12,7 @@ public:
 
 private:
     Admin admin;
+
+signals:
+    void back_requested();
 };

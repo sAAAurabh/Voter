@@ -1,5 +1,6 @@
 #include "voter_home.h"
 #include "voter_login_window.h"
+#include "main_window.h"
 #include "voting_page.h"
 #include "view_candidates_window.h"
 
@@ -17,7 +18,7 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     , voter_nid(nid)
 {
     setWindowTitle("Voter Dashboard");
-    setFixedSize(600, 480);
+    //setFixedSize(600, 480);
 
     title = new QLabel("Voter Dashboard", this);
 
@@ -51,7 +52,7 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
 
     Voter v;
     Admin a;
-    a.find_voter(nid.toStdString(), v);
+    a.find_voter(voter_nid.toStdString(), v);
 
     QString info_style = "font-size:14px;";
 
@@ -67,16 +68,16 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
         );
 
     name_label = new QLabel(
-        QString::fromStdString("Name: " + v.first + " " + v.last)
+        QString::fromStdString("NAME       :" + v.first + " " + v.last)
         );
     nid_label = new QLabel(
-        QString::fromStdString("NID: " + v.nid)
+        QString::fromStdString("NID           :" + v.nid)
         );
     gender_label = new QLabel(
-        QString::fromStdString("Gender: " + v.gender)
+        QString::fromStdString("GENDER     :" + v.gender)
         );
     dob_label = new QLabel(
-        QString::fromStdString("Date of Birth: " + a.calculate_age(v.dob))
+        QString::fromStdString("AGE           :" + a.calculate_age(v.dob))
         );
     name_label->setStyleSheet(info_style);
     nid_label->setStyleSheet(info_style);
@@ -137,27 +138,9 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     logout_btn->setParent(this);
     logout_btn->setGeometry(width() - 70, 5, 60, 25);
 
-    connect(logout_btn,          &QPushButton::clicked, this, &VoterHomeWindow::logout);
-    connect(vote_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::vote);
-    connect(view_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::view_candidates);
+    connect(logout_btn, &QPushButton::clicked, this, [this](){emit logout_requested();});
+    connect(vote_candidates_btn, &QPushButton::clicked, this, [this](){emit vote_page_requested(voter_nid);});
+    connect(view_candidates_btn, &QPushButton::clicked, this, [this](){emit candidate_view_requested();});
 }
 
-void VoterHomeWindow::logout()
-{
-    this->close();
-}
-
-void VoterHomeWindow::vote()
-{
-    this->hide();
-    VotingPage *w = new VotingPage(voter_nid);
-    w->show();
-}
-
-
-void VoterHomeWindow::view_candidates()
-{
-    ViewCandidatesWindow *w = new ViewCandidatesWindow();
-    w->show();
-}
 

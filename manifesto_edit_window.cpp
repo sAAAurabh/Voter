@@ -5,12 +5,14 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QFont>
+#include <QGuiApplication>
+#include <QScreen>
 
 ManifestoEditWindow::ManifestoEditWindow(const QString& nid, QWidget *parent)
     : QWidget(parent), candidate_nid(nid)
 {
     setWindowTitle("Edit Manifesto");
-    setFixedSize(500, 420);
+    //setFixedSize(500, 420);
 
     Candidate c;
     admin.find_candidate(nid.toStdString(), c);

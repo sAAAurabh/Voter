@@ -15,6 +15,7 @@ SOURCES += \
     candidate_register_window.cpp \
     database.cpp \
     main.cpp \
+    main_window.cpp \
     roleselection.cpp \
     voter.cpp \
     voter_home.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     candidate_login_window.h \
     candidate_register_window.h \
     database.h \
+    main_window.h \
     picosh.h \
     roleselection.h \
     voter.h \

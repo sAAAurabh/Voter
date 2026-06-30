@@ -11,7 +11,7 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
     : QWidget(parent)
 {
     setWindowTitle("Login");
-    setFixedSize(450, 300);
+    //setFixedSize(450, 300);
 
     //title
     title = new QLabel("E-VOTE", this);
@@ -75,7 +75,7 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
     grid->addWidget(msg, 5, 0, 1, 2);
 
     connect(login_btn, &QPushButton::clicked, this, &VoterLoginWindow::login);
-    connect(reg_btn, &QPushButton::clicked, this, &VoterLoginWindow::open_register);
+    connect(reg_btn, &QPushButton::clicked, this, [this](){emit register_requested();});
 }
 
 void VoterLoginWindow::login()
@@ -96,11 +96,11 @@ void VoterLoginWindow::login()
 
     int rsp = admin.login_voter(nid_input->text().toStdString(), pass_input->text().toStdString());
 
-    switch (rsp) {
-    case login_success: {
-        VoterHomeWindow *w = new VoterHomeWindow(nid_input->text(), nullptr);
-
-        w->show();
+    switch(rsp)
+    {
+    case login_success:
+    {
+        emit login_successful(nid_input->text());
         clear_fields();
         break;
     }
@@ -125,11 +125,6 @@ void VoterLoginWindow::login()
     }
 }
 
-void VoterLoginWindow::open_register()
-{
-    VoterRegisterWindow *w = new VoterRegisterWindow();
-    w->show();
-}
 
 void VoterLoginWindow::clear_fields()
 {

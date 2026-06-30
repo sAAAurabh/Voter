@@ -32,8 +32,9 @@ private:
 
     QString voter_nid;
 
-private slots:
-    void logout();
-    void vote();
-    void view_candidates();
+signals:
+    void logout_requested();
+    void vote_page_requested(QString nid);
+    void candidate_view_requested();
+
 };

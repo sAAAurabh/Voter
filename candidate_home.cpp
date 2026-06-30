@@ -13,7 +13,7 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     : QWidget(parent),candidate_nid(nid)
 {
     setWindowTitle("Candidate Dashboard");
-    setFixedSize(600, 480);
+    //setFixedSize(600, 480);
 
     //title
     title = new QLabel("Candidate Dashboard", this);
@@ -122,7 +122,9 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     //slots and signals
     connect(edit_btn, &QPushButton::clicked, this, &CandidateHomeWindow::edit_manifesto);
 
-    connect(logout_btn, &QPushButton::clicked, this, &CandidateHomeWindow::logout);
+    connect(logout_btn, &QPushButton::clicked, this, [this](){
+        emit logout_requested();
+    });
 }
 
 void CandidateHomeWindow::edit_manifesto()
@@ -131,7 +133,4 @@ void CandidateHomeWindow::edit_manifesto()
     w->show();
 }
 
-void CandidateHomeWindow::logout()
-{
-    this->close();
-}
+

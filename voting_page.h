@@ -24,4 +24,8 @@ private:
     void load_candidates();
     void load_candidates(QString party, QString gender, QString age);
     void clear_candidate_cards();
+
+signals:
+    void back_requested();
+
 };
