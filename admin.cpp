@@ -57,6 +57,22 @@ bool Admin::find_voter(const string &nid, Voter &v)
 }
 
 
+bool Admin::find_voter(const string &nid)
+{
+
+        QSqlQuery q;
+        q.prepare("SELECT * FROM voters WHERE nid=?");
+        q.addBindValue(QString::fromStdString(nid));
+
+        if (!q.exec() || !q.next())
+            return false;
+        else return true;
+}
+
+
+
+
+
 // finds candidate
 bool Admin::find_candidate(const std::string& nid, Candidate& c)
 {   {
@@ -86,6 +102,21 @@ bool Admin::find_candidate(const std::string& nid, Candidate& c)
 
     return true;
 }
+
+
+bool Admin::find_candidate(const string &nid)
+{
+
+    QSqlQuery q;
+    q.prepare("SELECT * FROM candidates WHERE nid=?");
+    q.addBindValue(QString::fromStdString(nid));
+
+    if (!q.exec() || !q.next())
+        return false;
+    else return true;
+}
+
+
 
 // add voter
 
@@ -299,6 +330,21 @@ login_result Admin::login_candidate(const std::string& nid, const std::string& p
     return wrong_pass;
 }
 
+
+//nid valid
+nid_val Admin::is_valid_nid_voter(const string nid){
+
+    if (nid.length() != 8 ) return length;
+    if (find_voter(nid)) return not_unique;
+    return is_valid_nid;
+}
+
+nid_val Admin::is_valid_nid_candidate(const string nid){
+
+    if (nid.length() != 8 ) return length;
+    if (find_candidate(nid)) return not_unique;
+    return is_valid_nid;
+}
 
 
 // validates password

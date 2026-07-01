@@ -13,6 +13,8 @@ enum login_result { login_success, not_found, wrong_pass, acc_locked };
 
 enum pass_val { number, letter, capital, is_valid, name, special };
 
+enum nid_val {length, not_unique, is_valid_nid};
+
 class Admin
 {
 private:
@@ -24,7 +26,9 @@ public:
     std::string hash_pass(const std::string &pass, const std::string &salt);
 
     bool find_voter(const std::string &nid, Voter &v);
+    bool find_voter(const std::string &nid);
     bool find_candidate(const std::string &nid, Candidate &c);
+    bool find_candidate(const std::string &nid);
 
     bool all_empty(Voter obj);
 
@@ -45,6 +49,8 @@ public:
 
 
     pass_val is_valid_pass(std::string pass, std::string nm);
+    nid_val is_valid_nid_voter(std::string nid);
+    nid_val is_valid_nid_candidate(std::string nid);
 
     std::string calculate_age(const std::string& dob);
 };

@@ -278,7 +278,22 @@ void CandidateRegisterWindow::register_user()
 
 
     if(f_empty || l_empty || n_empty || dob_default || gender_empty || photo_empty || party_symbol_empty|| p_empty) return;
-    c.nid = nid_input->text().toStdString();
+
+    switch(a.is_valid_nid_candidate(nid_input->text().toStdString())){
+    case is_valid_nid:
+        c.nid = nid_input->text().toStdString();
+        break;
+    case length:
+        msg->setStyleSheet("color: red;");
+        msg->setText("NID must be 8 characters long!!");
+        return;
+    case not_unique:
+        msg->setStyleSheet("color: red;");
+        msg->setText("Candidate already registetered!!");
+        return;
+
+    }
+
     c.first = f_name_input->text().toStdString();
     c.last = l_name_input->text().toStdString();
     c.party = party_input->text().toStdString();
@@ -354,6 +369,21 @@ void CandidateRegisterWindow::clear_fields()
     party_symbol_path.clear();
     party_symbol_preview->clear();
     party_symbol_preview->setText("No Photo");
+
+
+    f_name_warn->hide();
+    l_name_warn->hide();
+    nid_warn->hide();
+    dob_warn->hide();
+    gender_warn->hide();
+    pass_warn->hide();
+    photo_warn->hide();
+    party_warn->hide();
+    party_symbol_warn->hide();
+}
+
+void CandidateRegisterWindow::clear_msg(){
+    msg->clear();
 }
 
 void CandidateRegisterWindow::upload_photo()

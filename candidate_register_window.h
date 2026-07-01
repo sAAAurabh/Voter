@@ -32,11 +32,13 @@ public:
 
 private slots:
     void register_user();
-    void clear_fields();
     void upload_photo();
     void upload_party_symbol();
 
-private:
+
+public slots:
+    void clear_fields();
+    void clear_msg();
 
 private:
     QLabel *title, *f_name_label, *l_name_label, *nid_label, *pass_label, *msg, *f_name_warn, *l_name_warn;
