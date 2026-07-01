@@ -213,7 +213,23 @@ void VoterRegisterWindow::register_user()
     if (f_empty || l_empty || n_empty || dob_default || gender_empty || photo_empty || p_empty)
         return;
 
-    v.nid = nid_input->text().toStdString();
+
+
+    switch(a.is_valid_nid_voter(nid_input->text().toStdString())){
+    case is_valid_nid:
+        v.nid = nid_input->text().toStdString();
+        break;
+    case length:
+        msg->setStyleSheet("color: red;");
+        msg->setText("NID must be 8 characters long!!");
+        return;
+    case not_unique:
+        msg->setStyleSheet("color: red;");
+        msg->setText("Voter already registetered!!");
+        return;
+
+    }
+
     v.first = f_name_input->text().toStdString();
     v.last = l_name_input->text().toStdString();
     v.dob = dob_input->date().toString("dd/MM/yyyy").toStdString();
@@ -288,6 +304,18 @@ void VoterRegisterWindow::clear_fields()
     photo_preview->clear();
     photo_preview->setText("No Photo");
 
+    f_name_warn->hide();
+    l_name_warn->hide();
+    nid_warn->hide();
+    dob_warn->hide();
+    gender_warn->hide();
+    pass_warn->hide();
+    photo_warn->hide();
+
+}
+
+void VoterRegisterWindow::clear_msg(){
+    msg->clear();
 }
 
 void VoterRegisterWindow::upload_photo()
