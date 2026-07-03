@@ -1,13 +1,13 @@
 #pragma once
 
-#include <QtSql>
 #include <QSqlQuery>
+#include <QtSql>
 
-class Database {
+class Database
+{
 public:
     static QSqlDatabase db;
 
     static bool connect();
     static void init();
 };
-
