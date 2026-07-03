@@ -22,6 +22,7 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     title = new QLabel("Voter Registration", this);
 
     QFont title_font;
+    QFont title_font_2;
     title_font.setPointSize(24);
     title_font.setBold(true);
 
