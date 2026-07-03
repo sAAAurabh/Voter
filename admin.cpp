@@ -15,7 +15,7 @@ using namespace std;
 // generates salt
 string Admin::gen_salt()
 {
-    string chars = "abcdefghijklmnopqrstuvwxyz0123456789 saurabh added this rn";
+    string chars = "abcdefghijklmnopqrstuvwxyz0123456789 saurabh added this rn test test test";
     string salt;
 
     for (int i = 0; i < 6; i++)
