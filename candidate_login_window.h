@@ -1,12 +1,12 @@
 #pragma once
 
-#include <QWidget>
+#include <QFont>
 #include <QGridLayout>
+#include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QLabel>
+#include <QWidget>
 #include "admin.h"
-#include <QFont>
 
 class CandidateLoginWindow : public QWidget
 {
@@ -17,7 +17,6 @@ public:
 
 private slots:
     void login();
-    void open_register();
     void clear_fields();
 
 private:
@@ -36,4 +35,9 @@ private:
     QGridLayout *grid;
 
     Admin admin;
+
+
+signals:
+    void register_requested();
+    void login_successful(QString nid);
 };

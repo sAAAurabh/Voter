@@ -1,7 +1,7 @@
 #include "database.h"
-#include <QSqlQuery>
-#include <QSqlError>
 #include <QDebug>
+#include <QSqlError>
+#include <QSqlQuery>
 
 QSqlDatabase Database::db = QSqlDatabase();
 
@@ -50,8 +50,12 @@ void Database::init()
            "password_hash TEXT,"
            "salt TEXT,"
            "photo_path TEXT,"
+           "party_symbol_path TEXT,"
            "votes INTEGER DEFAULT 0,"
            "is_locked INTEGER DEFAULT 0,"
-           "attempts_left INTEGER DEFAULT 5"
+           "attempts_left INTEGER DEFAULT 5,"
+           "manifesto TEXT"
            ")");
+
+    q.exec("ALTER TABLE candidates ADD COLUMN manifesto TEXT");
 }
