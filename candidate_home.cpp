@@ -13,7 +13,7 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     : QWidget(parent),candidate_nid(nid)
 {
     setWindowTitle("Candidate Dashboard");
-    //setFixedSize(600, 480);
+    setFixedSize(700, 480);
 
     //title
     title = new QLabel("Candidate Dashboard", this);
