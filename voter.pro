@@ -57,3 +57,6 @@ DISTFILES += \
     candidate \
     manifesto \
     voter
+
+RESOURCES += \
+    icons.qrc

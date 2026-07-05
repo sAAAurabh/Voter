@@ -116,14 +116,14 @@ VotingPage::VotingPage(const QString &voter_nid, QWidget *parent)
 
     apply_button->setStyleSheet(
         "QPushButton {"
-        "background:#4b7bec;"
+        "background:#10b981;"
         "color:white;"
         "border:none;"
         "border-radius:6px;"
         "padding:6px 14px;"
         "}"
         "QPushButton:hover {"
-        "background:#6797ff;"
+        "background:#16a34a;"
         "}"
         );
 
@@ -180,14 +180,14 @@ VotingPage::VotingPage(const QString &voter_nid, QWidget *parent)
 
     back_button->setStyleSheet(
         "QPushButton {"
-        "background:#444444;"
+        "background:#3b82f6;"
         "color:white;"
         "border:none;"
         "border-radius:6px;"
         "padding:6px 12px;"
         "}"
         "QPushButton:hover {"
-        "background:#5a5a5a;"
+        "background:#0284c7;"
         "}"
         );
 
