@@ -14,6 +14,7 @@ class VoterHomeWindow : public QWidget
 
 public:
     VoterHomeWindow(const QString &nid, QWidget *parent = nullptr);
+    void refreshVoteStatus();
 
 private:
     QLabel *title;
