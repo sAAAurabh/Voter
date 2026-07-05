@@ -15,6 +15,7 @@ release/voting_page.o
 release/widget.o
 release/manifesto_edit_window.o
 release/view_candidates_window.o
+release/qrc_icons.o
 release/moc_candidate_home.o
 release/moc_candidate_login_window.o
 release/moc_candidate_register_window.o
