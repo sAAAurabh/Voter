@@ -14,23 +14,23 @@ RoleSelection::RoleSelection(QWidget *parent)
     setFixedSize(720, 630);
 
     this->setAttribute(Qt::WA_StyledBackground, true);
-    this->setStyleSheet("background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, "
-                        "stop:0 #e0f2fe, stop:1 #e6fbf7);");
+    //this->setStyleSheet("background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, "
+     //                   "stop:0 #e0f2fe, stop:1 #e6fbf7);");
 
     titleLabel = new QLabel("Welcome to the Electronic Voting Portal.", this);
     titleLabel->setAlignment(Qt::AlignCenter);
-    titleLabel->setStyleSheet("font-size: 36px; font-weight: 600; color: #1e293b; font-family: 'Segoe UI', Arial;");
+    titleLabel->setStyleSheet("font-size: 36px; font-weight: 600; color: white; font-family: 'Segoe UI', Arial;");
 
     subLabel = new QLabel("Please select your role to proceed.", this);
     subLabel->setAlignment(Qt::AlignCenter);
-    subLabel->setStyleSheet("font-size: 20px; color: #475569; font-family: 'Segoe UI', Arial;");
+    subLabel->setStyleSheet("font-size: 20px; color: white; font-family: 'Segoe UI', Arial;");
 
     QFrame *voterCard = new QFrame(this);
     voterCard->setFixedSize(270, 320);
     voterCard->setStyleSheet(
         "QFrame { "
-        "   background-color: white; "
-        "   border: 1px solid #e2e8f0; "
+        "   background-color: #0B1849; "
+        "   border: none; "
         "   border-top: 5px solid #0084ff; "
         "   border-radius: 12px; "
         "}"
@@ -38,12 +38,12 @@ RoleSelection::RoleSelection(QWidget *parent)
 
     QLabel *voterIcon = new QLabel(voterCard);
     voterIcon->setAlignment(Qt::AlignCenter);
-voterIcon->setPixmap(QPixmap("C:/Users/Lenovo/Desktop/final/Voter/icons/vot.png").scaled(180, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    voterIcon->setPixmap(QPixmap("C:/Users/Saurav/Desktop/vottter/icons/vot.png").scaled(180, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     voterIcon->setStyleSheet("border: none; background: transparent;");
 
     QLabel *voterTitle = new QLabel("I AM A VOTER", voterCard);
     voterTitle->setAlignment(Qt::AlignCenter);
-    voterTitle->setStyleSheet("font-size: 24px; font-weight: bold; color: #0f172a; border: none; background: transparent;");
+    voterTitle->setStyleSheet("font-size: 24px; font-weight: bold; color: white; border: none; background: transparent;");
 
     QLabel *voterDesc = new QLabel(
         "Register, view candidates, and cast your vote",
@@ -51,7 +51,7 @@ voterIcon->setPixmap(QPixmap("C:/Users/Lenovo/Desktop/final/Voter/icons/vot.png"
         );
     voterDesc->setAlignment(Qt::AlignCenter);
     voterDesc->setWordWrap(true);
-    voterDesc->setStyleSheet("font-size: 17px; color: #64748b; border: none; background: transparent; font-family: 'Calibri';");
+    voterDesc->setStyleSheet("font-size: 17px; color: white; border: none; background: transparent; font-family: 'Calibri';");
 
     voterBtn = new QPushButton("Proceed as Voter", voterCard);
     voterBtn->setFixedHeight(36);
@@ -73,8 +73,8 @@ voterIcon->setPixmap(QPixmap("C:/Users/Lenovo/Desktop/final/Voter/icons/vot.png"
     candidateCard->setFixedSize(270, 320);
     candidateCard->setStyleSheet(
         "QFrame { "
-        "   background-color: white; "
-        "   border: 1px solid #e2e8f0; "
+        "   background-color: #458393; "
+        "   border: none; "
         "   border-top: 5px solid #00a878; "
         "   border-radius: 12px; "
         "}"
@@ -82,12 +82,12 @@ voterIcon->setPixmap(QPixmap("C:/Users/Lenovo/Desktop/final/Voter/icons/vot.png"
 
     QLabel *candidateIcon = new QLabel(candidateCard);
     candidateIcon->setAlignment(Qt::AlignCenter);
-    candidateIcon->setPixmap(QPixmap("C:/Users/Lenovo/Desktop/final/Voter/icons/can.png").scaled(180, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    candidateIcon->setPixmap(QPixmap("C:/Users/Saurav/Desktop/vottter/icons/can.png").scaled(180, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     candidateIcon->setStyleSheet("border: none; background: transparent;");
 
     QLabel *candidateTitle = new QLabel("I AM A CANDIDATE", candidateCard);
     candidateTitle->setAlignment(Qt::AlignCenter);
-    candidateTitle->setStyleSheet("font-size: 24px; font-weight: bold; color: #0f172a; border: none; background: transparent;");
+    candidateTitle->setStyleSheet("font-size: 24px; font-weight: bold; color: white; border: none; background: transparent;");
 
     QLabel *candidateDesc = new QLabel(
         "Register candidacy, manage profile, and view results",
@@ -95,7 +95,7 @@ voterIcon->setPixmap(QPixmap("C:/Users/Lenovo/Desktop/final/Voter/icons/vot.png"
         );
     candidateDesc->setAlignment(Qt::AlignCenter);
     candidateDesc->setWordWrap(true);
-    candidateDesc->setStyleSheet("font-size: 17px; color: #64748b; border: none; background: transparent; font-family: 'Calibri';");
+    candidateDesc->setStyleSheet("font-size: 17px; color: white; border: none; background: transparent; font-family: 'Calibri';");
 
     candidateBtn = new QPushButton("Proceed as Candidate", candidateCard);
     candidateBtn->setFixedHeight(36);
