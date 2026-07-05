@@ -16,7 +16,7 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
 {
     setWindowTitle("Login");
 
-    this->setAttribute(Qt::WA_StyledBackground, true);
+    //this->setAttribute(Qt::WA_StyledBackground, true);
     this->setObjectName("loginWindow");
 
     this->setStyleSheet(
@@ -25,7 +25,7 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
         );
 
     QLabel *logo = new QLabel(this);
-    QPixmap pix("C:/Users/Users/Desktop/final/Voter/icons/evote.png");
+    QPixmap pix("C:/Users/Saurav/Desktop/vottter/icons/evote.png");
     logo->setPixmap(pix.scaled(110, 110, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     logo->setAlignment(Qt::AlignCenter);
 
@@ -55,10 +55,10 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
 
     login_btn = new QPushButton("Login", this);
     reg_btn = new QPushButton("Register", this);
-login_btn->setStyleSheet("background-color: #3b82f6; color: white; padding: 12px; border-radius: 5px; font-size: 15px; font-weight: bold; border: 2px solid #ffffff;");;
+    login_btn->setStyleSheet("background-color: #3b82f6; color: white; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold;");;
     login_btn->setCursor(Qt::PointingHandCursor);
 
-    reg_btn->setStyleSheet("background-color: #10b981; color: white; padding: 12px; border-radius: 5px; font-size: 15px; font-weight: bold; border: 2px solid #ffffff;");
+    reg_btn->setStyleSheet("background-color: #10b981; color: white; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold;");
     reg_btn->setCursor(Qt::PointingHandCursor);
 
     QFont msg_font;

@@ -123,6 +123,7 @@ MainWindow::MainWindow(QWidget *parent)
                         this,
                         [this, voter_home, voting_page](){
                             stack->addWidget(voter_home);
+                            voter_home->refreshVoteStatus();
                             stack->setCurrentWidget(voter_home);
                             setFixedSize(720,630);
                             stack->removeWidget(voting_page);
@@ -152,6 +153,7 @@ MainWindow::MainWindow(QWidget *parent)
                         [this, voter_home, candidate_view_page]()
                         {
                             stack->addWidget(voter_home);
+                            voter_home->refreshVoteStatus();
                             stack->setCurrentWidget(voter_home);
                             setFixedSize(720,630);
                             center_window();
@@ -206,7 +208,7 @@ MainWindow::MainWindow(QWidget *parent)
             CandidateHomeWindow *candidate_home = new CandidateHomeWindow(nid);
             stack->addWidget(candidate_home);
             stack->setCurrentWidget(candidate_home);
-            setFixedSize(650,480);
+            setFixedSize(700,480);
             center_window();
 
             connect(

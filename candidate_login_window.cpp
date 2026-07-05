@@ -11,82 +11,154 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
     : QWidget(parent)
 {
     setWindowTitle("Candidate Login");
-    //setFixedSize(450, 300);
 
-    //title
-    title = new QLabel("Candidate Login", this);
+    this->setAttribute(Qt::WA_StyledBackground, true);
 
-    //title design
+    this->setObjectName("candidateLoginWindow");
+
+    this->setStyleSheet(
+        "#candidateLoginWindow {"
+        "background-color: none;"
+        "}"
+        "QLabel {"
+        "color: white;"
+        "font-weight: bold;"
+        "}"
+        );
+
+    // Logo
+    QLabel *logo = new QLabel(this);
+    QPixmap pix("C:/Users/Saurav/Desktop/vottter/icons/candidate.png");
+    logo->setPixmap(pix.scaled(110,110,
+                               Qt::KeepAspectRatio,
+                               Qt::SmoothTransformation));
+    logo->setAlignment(Qt::AlignCenter);
+
+    // Title
+    title = new QLabel("CANDIDATE PORTAL", this);
+
     QFont titleFont;
-    titleFont.setPointSize(24);
+    titleFont.setPointSize(26);
     titleFont.setBold(true);
 
     title->setFont(titleFont);
     title->setAlignment(Qt::AlignCenter);
 
-    //nid and password
+    // Subtitle
+    QLabel *subtitle =
+        new QLabel("Manage Your Campaign Securely", this);
+
+    subtitle->setAlignment(Qt::AlignCenter);
+    subtitle->setStyleSheet(
+        "color:#ede9fe;"
+        "font-size:20px;"
+        "font-weight:600;"
+        "margin-bottom:20px;"
+        );
+
+    // National ID
     nid_label = new QLabel("National ID", this);
+    nid_label->setStyleSheet(
+        "margin-top:10px;"
+        "font-size:16px;"
+        );
+
     nid_input = new QLineEdit(this);
-
-    pass_label = new QLabel("Password", this);
-    pass_input = new QLineEdit(this);
-
-    //nid and password design
     nid_input->setPlaceholderText("Enter National ID");
-    nid_input->setStyleSheet("padding:6px;");
+    nid_input->setStyleSheet(
+        "font-size:16px;"
+        "padding:15px;"
+        "background:white;"
+        "color:#1e293b;"
+        "border:none;"
+        "border-radius:5px;"
+        "font-weight:normal;"
+        );
 
+    // Password
+    pass_label = new QLabel("Password", this);
+    pass_label->setStyleSheet(
+        "margin-top:10px;"
+        "font-size:16px;"
+        );
+
+    pass_input = new QLineEdit(this);
     pass_input->setPlaceholderText("Enter Password");
     pass_input->setEchoMode(QLineEdit::Password);
-    pass_input->setStyleSheet("padding:6px;");
+    pass_input->setStyleSheet(
+        "font-size:16px;"
+        "padding:15px;"
+        "background:white;"
+        "color:#1e293b;"
+        "border:none;"
+        "border-radius:5px;"
+        "font-weight:normal;"
+        "margin-bottom:20px;"
+        );
 
-    //login and reg button
+    // Buttons
     login_btn = new QPushButton("Login", this);
     reg_btn = new QPushButton("Register", this);
 
-    //login and reg button design
     login_btn->setStyleSheet(
-        "background-color:#3498db; color:white; padding:8px; border-radius:6px;");
+        "background-color:#3b82f6;"
+        "color:white;"
+        "padding:12px;"
+        "border-radius:10px;"
+        "font-size:15px;"
+        "font-weight:bold;"
+        );
     login_btn->setCursor(Qt::PointingHandCursor);
 
     reg_btn->setStyleSheet(
-        "background-color:#2ecc71; color:white; padding:8px; border-radius:6px;");
+        "background-color:#10b981;"
+        "color:white;"
+        "padding:12px;"
+        "border-radius:10px;"
+        "font-size:15px;"
+        "font-weight:bold;"
+        );
     reg_btn->setCursor(Qt::PointingHandCursor);
 
-    //warning message
-    QFont msg_font;
-    msg_font.setPointSize(13);
-    msg_font.setBold(true);
-    msg_font.setItalic(true);
+    // Message
+    QFont msgFont;
+    msgFont.setPointSize(11);
+    msgFont.setItalic(true);
 
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
-    msg->setFont(msg_font);
+    msg->setFont(msgFont);
 
-    // layout
+    // Layout
     grid = new QGridLayout(this);
 
-    //layout design
-    grid->setContentsMargins(40, 20, 40, 20);
-    grid->setHorizontalSpacing(10);
-    grid->setVerticalSpacing(10);
+    grid->setContentsMargins(50,30,50,30);
+    grid->setHorizontalSpacing(15);
+    grid->setVerticalSpacing(5);
 
-    //adding other objects to layout
-    grid->addWidget(title, 0, 0, 1, 2);
+    grid->addWidget(logo,      0,0,1,2);
+    grid->addWidget(title,     1,0,1,2);
+    grid->addWidget(subtitle,  2,0,1,2);
 
-    grid->addWidget(nid_label, 1, 0);
-    grid->addWidget(nid_input, 1, 1);
+    grid->addWidget(nid_label, 3,0,1,2);
+    grid->addWidget(nid_input, 4,0,1,2);
 
-    grid->addWidget(pass_label, 2, 0);
-    grid->addWidget(pass_input, 2, 1);
+    grid->addWidget(pass_label,5,0,1,2);
+    grid->addWidget(pass_input,6,0,1,2);
 
-    grid->addWidget(login_btn, 3, 0, 1, 2);
-    grid->addWidget(reg_btn, 4, 0, 1, 2);
+    grid->addWidget(login_btn,7,0);
+    grid->addWidget(reg_btn,7,1);
 
-    grid->addWidget(msg, 5, 0, 1, 2);
+    grid->addWidget(msg,8,0,1,2);
 
-    //slots and signal connection
-    connect(login_btn, &QPushButton::clicked, this, &CandidateLoginWindow::login);
-    connect(reg_btn, &QPushButton::clicked, this, [this](){emit register_requested();});
+    connect(login_btn, &QPushButton::clicked,
+            this, &CandidateLoginWindow::login);
+
+    connect(reg_btn, &QPushButton::clicked,
+            this, [this]()
+            {
+                emit register_requested();
+            });
 }
 
 void CandidateLoginWindow::login()
@@ -144,3 +216,5 @@ void CandidateLoginWindow::clear_fields()
     nid_input->clear();
     pass_input->clear();
 }
+
+

@@ -15,10 +15,7 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
     setWindowTitle("View Candidates");
 
     setAttribute(Qt::WA_StyledBackground, true);
-    setStyleSheet(
-        "background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, "
-        "stop:0 #0f0c29, stop:0.5 #1a1a2e, stop:1 #24243e);"
-        );
+    setStyleSheet("background-color:#211f26;");
 
     QVBoxLayout *root = new QVBoxLayout(this);
     root->setContentsMargins(20, 20, 20, 20);
@@ -48,7 +45,7 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
     if (candidates.empty()) {
         QLabel *empty = new QLabel("No candidates registered yet.");
         empty->setAlignment(Qt::AlignCenter);
-        empty->setStyleSheet("color:#dcdde1; font-size:14px; background:transparent;");
+        empty->setStyleSheet("color:#9891a3; font-size:14px; background:transparent;");
         container_layout->addWidget(empty);
     }
 
@@ -57,8 +54,8 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
         QFrame *card = new QFrame;
         card->setStyleSheet(
             "QFrame {"
-            "background-color:white;"
-            "border:none;"
+            "background-color:#2b2833;"
+            "border:1px solid #3a3644;"
             "border-radius:12px;"
             "}"
             );
@@ -71,7 +68,7 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
         QLabel *photo = new QLabel;
         photo->setFixedSize(85, 95);
         photo->setAlignment(Qt::AlignCenter);
-        photo->setStyleSheet("border:2px dashed #dcdde1; border-radius:8px; background:#f1f2f6;");
+        photo->setStyleSheet("border:1px solid #453f52; border-radius:8px; background:#332f3d;");
 
         QPixmap pix(QString::fromStdString(c.photo_path));
         if (!pix.isNull())
@@ -79,17 +76,20 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
         else
             photo->setText("No Photo");
 
-        QString info_style = "font-size:13px; border:none; background:transparent; color:#2f3640; font-family:'Segoe UI';";
+        QString info_style = "font-size:13px; border:none; background:transparent; color:#cdc8d6; font-family:'Segoe UI';";
 
-        QLabel *name   = new QLabel(QString::fromStdString("Name: " + c.first + " " + c.last));
+        QLabel *name   = new QLabel(QString::fromStdString(c.first + " " + c.last));
         QLabel *party  = new QLabel(QString::fromStdString("Party: " + c.party));
         QLabel *gender = new QLabel(QString::fromStdString("Gender: " + c.gender));
-        QLabel *votes  = new QLabel("Votes: " + QString::number(c.votes));
 
-        name->setStyleSheet(info_style + "font-weight:bold; font-size:15px;");
+        // If Candidate has a direct age field, use this line instead:
+        // QLabel *age = new QLabel("Age: " + QString::number(c.age));
+        QLabel *age = new QLabel("Age: " + QString::fromStdString(admin.calculate_age(c.dob)));
+
+        name->setStyleSheet(info_style + "font-weight:bold; font-size:15px; color:#ffffff;");
         party->setStyleSheet(info_style);
         gender->setStyleSheet(info_style);
-        votes->setStyleSheet(info_style + "color:#00a878; font-weight:bold;");
+        age->setStyleSheet(info_style);
 
         QString manifesto_text = c.manifesto.empty()
                                      ? "No manifesto added yet."
@@ -97,21 +97,21 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
 
         QLabel *manifesto_title = new QLabel("Manifesto:");
         manifesto_title->setStyleSheet(
-            "font-weight:bold; font-size:12px; color:#636e72; border:none; background:transparent;"
+            "font-weight:bold; font-size:12px; color:#9891a3; border:none; background:transparent;"
             );
 
         QLabel *manifesto = new QLabel(manifesto_text);
         manifesto->setWordWrap(true);
         manifesto->setStyleSheet(
-            "font-size:12px; color:#2f3640; border:none;"
-            "background:#f1f2f6; padding:8px; border-radius:6px;"
+            "font-size:12px; color:#cdc8d6; border:none;"
+            "background:#332f3d; padding:8px; border-radius:6px;"
             );
 
         card_layout->addWidget(photo,           0, 0, 4, 1, Qt::AlignTop);
         card_layout->addWidget(name,            0, 1);
         card_layout->addWidget(party,           1, 1);
         card_layout->addWidget(gender,          2, 1);
-        card_layout->addWidget(votes,           3, 1);
+        card_layout->addWidget(age,             3, 1);
         card_layout->addWidget(manifesto_title, 4, 0, 1, 2);
         card_layout->addWidget(manifesto,       5, 0, 1, 2);
 
@@ -127,16 +127,16 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
     back_btn->setCursor(Qt::PointingHandCursor);
     back_btn->setStyleSheet(
         "QPushButton {"
-        "background-color:#4facfe;"
-        "color:white;"
-        "border:none;"
+        "background-color:#3b82f6;"
+        "color:#f5f6fa;"
+        "border:1px solid #453f52;"
         "border-radius:8px;"
         "font-size:14px;"
         "font-weight:bold;"
         "font-family:'Segoe UI';"
         "}"
-        "QPushButton:hover { background-color:#0084ff; }"
-        "QPushButton:pressed { background-color:#0066cc; }"
+        "QPushButton:hover { background-color:#3d3849; }"
+        "QPushButton:pressed { background-color:#2b2833; }"
         );
 
     connect(back_btn, &QPushButton::clicked, this, [this]() {

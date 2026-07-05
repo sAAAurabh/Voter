@@ -10,123 +10,140 @@
 
 
 CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
-    : QWidget(parent),candidate_nid(nid)
+    : QWidget(parent), candidate_nid(nid)
 {
     setWindowTitle("Candidate Dashboard");
-    setFixedSize(700, 480);
+    //setFixedSize(700, 480);
 
-    //title
+    setAttribute(Qt::WA_StyledBackground, true);
+    setStyleSheet("background-color:#131a24;");
+
     title = new QLabel("Candidate Dashboard", this);
 
     QFont titleFont;
-    titleFont.setPointSize(24);
+    titleFont.setPointSize(22);
     titleFont.setBold(true);
 
     title->setFont(titleFont);
-    title->setAlignment(Qt::AlignCenter);
+    title->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+    title->setStyleSheet("color:#f5f6fa; background:transparent; font-family:'Segoe UI';");
 
-    //divider
+    logout_btn = new QPushButton("Logout", this);
+    logout_btn->setCursor(Qt::PointingHandCursor);
+    logout_btn->setFixedSize(90, 38);
+    logout_btn->setStyleSheet(
+        "QPushButton {"
+        "background-color:#e74c3c;"
+        "color:#ffffff;"
+        "border: none;"
+        "border-radius:8px;"
+        "font-size:13px;"
+        "font-weight:600;"
+        "font-family:'Segoe UI';"
+        "}"
+        "QPushButton:hover { background-color:#d43a2c; }"
+        "QPushButton:pressed { background-color:#b8321f; }"
+        );
+
+    QHBoxLayout *header_layout = new QHBoxLayout;
+    header_layout->setSpacing(14);
+    header_layout->addWidget(title, 1, Qt::AlignVCenter);
+    header_layout->addWidget(logout_btn, 0, Qt::AlignVCenter);
+
     QFrame *divider = new QFrame(this);
     divider->setFrameShape(QFrame::HLine);
     divider->setFixedHeight(1);
-    divider->setStyleSheet("border:none; margin:0px 20px;");
+    divider->setStyleSheet("background-color: rgba(255,255,255,30); border:none;");
 
-    //profile box
     QFrame *profile_box = new QFrame(this);
-
-    profile_box->setStyleSheet("QFrame {"
-                               "border:1px solid #e0e0e0;"
-                               "border-radius:8px;"
-                               "padding:12px;"
-                               "}");
+    profile_box->setStyleSheet(
+        "QFrame {"
+        "background-color:#1a2532;"
+        "border:1px solid #263344;"
+        "border-radius:16px;"
+        "}"
+        );
 
     QGridLayout *profile_layout = new QGridLayout(profile_box);
-    profile_layout->setContentsMargins(12, 12, 12, 12);
-    profile_layout->setHorizontalSpacing(18);
-    profile_layout->setVerticalSpacing(8);
+    profile_layout->setContentsMargins(24, 22, 24, 22);
+    profile_layout->setHorizontalSpacing(24);
+    profile_layout->setVerticalSpacing(10);
 
     Candidate c;
     Admin a;
     a.find_candidate(nid.toStdString(), c);
 
-    QString info_style = "font-size:13px";
+    QString info_style =
+        "font-size:14px; color:#a9b8cc; font-family:'Segoe UI'; background:transparent;";
+    QString info_style_bold =
+        "font-size:17px; font-weight:600; color:#ffffff; font-family:'Segoe UI'; background:transparent;";
 
-    //photo
     photo_label = new QLabel(this);
     photo_label->setAlignment(Qt::AlignCenter);
     photo_label->setFixedSize(120, 140);
-    photo_label->setStyleSheet("background: transparent; border: none;");
+    photo_label->setStyleSheet(
+        "background:#22334a; border:1px solid #2f4258; border-radius:10px;"
+        );
 
     QPixmap pix(QString::fromStdString(c.photo_path));
-
     photo_label->setPixmap(
-        pix.scaled(photo_label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        pix.scaled(photo_label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation)
+        );
 
-    //information about the candidates
-    name_label = new QLabel(QString::fromStdString("Name: " + c.first + " " + c.last));
-    nid_label = new QLabel(QString::fromStdString("NID: " + c.nid));
-    party_label = new QLabel(QString::fromStdString("Party: " + c.party));
-    vote_label = new QLabel("Votes: " + QString::number(c.votes));
+    name_label = new QLabel(QString::fromStdString(c.first + " " + c.last));
+    nid_label = new QLabel(QString::fromStdString("NID   :  " + c.nid));
+    party_label = new QLabel(QString::fromStdString("Party  :  " + c.party));
+    vote_label = new QLabel("Votes  :  " + QString::number(c.votes));
 
-    name_label->setStyleSheet(info_style);
+    name_label->setStyleSheet(info_style_bold);
     nid_label->setStyleSheet(info_style);
     party_label->setStyleSheet(info_style);
-    vote_label->setStyleSheet(info_style);
+    vote_label->setStyleSheet(info_style + "color:#4fc3f7; font-weight:600;");
 
     profile_layout->addWidget(photo_label, 0, 0, 4, 1, Qt::AlignTop);
-    profile_layout->addWidget(name_label, 0, 1);
-    profile_layout->addWidget(nid_label, 1, 1);
+    profile_layout->addWidget(name_label,  0, 1);
+    profile_layout->addWidget(nid_label,   1, 1);
     profile_layout->addWidget(party_label, 2, 1);
-    profile_layout->addWidget(vote_label, 3, 1);
+    profile_layout->addWidget(vote_label,  3, 1);
 
-    //buttons
     edit_btn = new QPushButton("Edit Manifesto", this);
-
-    edit_btn->setStyleSheet("padding:9px;"
-                            "border-radius:6px;"
-                            "font-weight:600;"
-                            "background:#3498db;"
-                            "color:white;");
-
-    edit_btn->setMinimumHeight(40);
     edit_btn->setCursor(Qt::PointingHandCursor);
+    edit_btn->setMinimumHeight(46);
+    edit_btn->setStyleSheet(
+        "QPushButton {"
+        "background-color:#2f9bda;"
+        "color:#ffffff;"
+        "padding:12px;"
+        "border-radius:10px;"
+        "font-weight:600;"
+        "font-size:15px;"
+        "font-family:'Segoe UI';"
+        "border:none;"
+        "}"
+        "QPushButton:hover { background-color:#2585bd; }"
+        "QPushButton:pressed { background-color:#1c6c9c; }"
+        );
 
-    //message
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
-    msg->setStyleSheet("color:#27ae60; font-weight:600; font-size:13px;");
+    msg->setStyleSheet("color:#4fc3f7; font-weight:bold; background:transparent; font-family:'Segoe UI';");
 
-    //layout
     grid = new QGridLayout(this);
-    grid->setContentsMargins(25, 18, 25, 18);
-    grid->setVerticalSpacing(10);
+    grid->setContentsMargins(40, 24, 40, 24);
+    grid->setVerticalSpacing(20);
 
-    grid->addWidget(title, 0, 0, 1, 2);
-    grid->addWidget(divider, 1, 0, 1, 2);
-    grid->addWidget(profile_box, 2, 0, 1, 2);
-    grid->addWidget(edit_btn, 3, 0, 1, 2);
-    grid->addWidget(msg, 4, 0, 1, 2);
+    grid->addLayout(header_layout, 0, 0, 1, 2);
+    grid->addWidget(divider,       1, 0, 1, 2);
+    grid->addWidget(profile_box,   2, 0, 1, 2);
+    grid->addWidget(edit_btn,      3, 0, 1, 2);
+    grid->addWidget(msg,           4, 0, 1, 2);
 
-    logout_btn = new QPushButton("Logout", this);
-
-    logout_btn->setStyleSheet("background:transparent;"
-                              "color:#e74c3c;"
-                              "border:none;"
-                              "font-size:11px;"
-                              "padding:2px;");
-
-    logout_btn->setCursor(Qt::PointingHandCursor);
-
-    logout_btn->setGeometry(width() - 65, 6, 60, 20);
-
-    //slots and signals
     connect(edit_btn, &QPushButton::clicked, this, &CandidateHomeWindow::edit_manifesto);
 
     connect(logout_btn, &QPushButton::clicked, this, [this](){
         emit logout_requested();
     });
 }
-
 void CandidateHomeWindow::edit_manifesto()
 {
     ManifestoEditWindow *w = new ManifestoEditWindow(candidate_nid);
