@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/icons">
         <file>icons.qrc</file>
+        <file>icons/can.png</file>
+        <file>icons/evote.png</file>
+        <file>icons/vot.png</file>
     </qresource>
 </RCC>

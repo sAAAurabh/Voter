@@ -142,7 +142,7 @@ MainWindow::MainWindow(QWidget *parent)
                     ViewCandidatesWindow *candidate_view_page = new ViewCandidatesWindow();
                     stack->addWidget(candidate_view_page);
                     stack->setCurrentWidget(candidate_view_page);
-                    setFixedSize(700,560);
+                    setFixedSize(815,690);
                     center_window();
 
                     connect(
@@ -206,7 +206,7 @@ MainWindow::MainWindow(QWidget *parent)
             CandidateHomeWindow *candidate_home = new CandidateHomeWindow(nid);
             stack->addWidget(candidate_home);
             stack->setCurrentWidget(candidate_home);
-            setFixedSize(650,480);
+            setFixedSize(720,630);
             center_window();
 
             connect(

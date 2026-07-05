@@ -12,110 +12,96 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     setWindowTitle("Voter Registration");
     setObjectName("VoterRegisterWindow");
 
-    setStyleSheet(
-        "#VoterRegisterWindow {"
-        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #0f2027, stop:0.5 #203a43, stop:1 #2c5364);"
-        "}"
-        "QLabel {"
-        "   color: #ffffff;"
-        "}"
-        "QLineEdit, QDateEdit, QComboBox {"
-        "   background-color: rgba(20, 30, 48, 150);"
-        "   color: #ffffff;"
-        "   border: 1px solid #555555;"
-        "   border-radius: 5px;"
-        "   padding: 6px;"
-        "}"
-        "QLineEdit:focus, QDateEdit:focus, QComboBox:focus {"
-        "   border: 1px solid #3498db;"
-        "}"
-        );
-
     QRect screen = QGuiApplication::primaryScreen()->availableGeometry();
     move(screen.center() - QPoint(width() / 2, height() / 2));
 
     setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint
                    | Qt::WindowMaximizeButtonHint);
 
+    setAttribute(Qt::WA_StyledBackground, true);
+
+    setStyleSheet(
+        "#VoterRegisterWindow { "
+        "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
+        "stop:0 #1c1c22,"
+        "stop:0.5 #14161a,"
+        "stop:1 #0f1115);"
+        "}"
+        "QLabel { color: #ffffff; font-weight: bold; }"
+        );
+
+    QString inputStyle = "padding: 8px; font-size: 14px; background-color: #ffffff; color: #1e293b; border-radius: 5px; border: none; font-weight: normal;";
+
     title = new QLabel("Voter Registration", this);
 
-    QFont title_font;
-    title_font.setPointSize(24);
-    title_font.setBold(true);
-
+    QFont title_font("Segoe UI", 30, QFont::Bold);
     title->setFont(title_font);
     title->setAlignment(Qt::AlignCenter);
+    title->setStyleSheet(
+        "color: white;"
+        "font-size: 26px;"
+        "font-weight: bold;"
+        );
 
     f_name_label = new QLabel("First Name", this);
     f_name_input = new QLineEdit(this);
     f_name_warn = new QLabel("●", this);
-    f_name_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
+    f_name_warn->setStyleSheet("color:#ff4c4c; font-size:18px");
     f_name_warn->setVisible(false);
+    f_name_input->setPlaceholderText("Enter First Name");
+    f_name_input->setStyleSheet(inputStyle);
 
     l_name_label = new QLabel("Last Name", this);
     l_name_input = new QLineEdit(this);
     l_name_warn = new QLabel("●", this);
-    l_name_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
+    l_name_warn->setStyleSheet("color:#ff4c4c; font-size:18px");
     l_name_warn->setVisible(false);
-
-    f_name_input->setPlaceholderText("Enter First Name");
     l_name_input->setPlaceholderText("Enter Last Name");
+    l_name_input->setStyleSheet(inputStyle);
 
     nid_label = new QLabel("National ID", this);
     nid_input = new QLineEdit(this);
     nid_warn = new QLabel("●", this);
-    nid_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
+    nid_warn->setStyleSheet("color:#ff4c4c; font-size:18px");
     nid_warn->setVisible(false);
     nid_input->setPlaceholderText("Enter National ID");
+    nid_input->setStyleSheet(inputStyle);
 
     dob_label = new QLabel("Date of Birth", this);
     dob_input = new QDateEdit(this);
     dob_warn = new QLabel("●", this);
-    dob_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
+    dob_warn->setStyleSheet("color:#ff4c4c; font-size:18px");
     dob_warn->setVisible(false);
-
     dob_input->setDisplayFormat("yyyy-MM-dd");
     dob_input->setCalendarPopup(true);
     dob_input->setMaximumDate(QDate::currentDate().addYears(-18));
     dob_input->setMinimumDate(QDate(1900, 1, 1));
     dob_input->setDate(QDate(2000, 1, 1));
+    dob_input->setStyleSheet(inputStyle);
 
     gender_label = new QLabel("Gender", this);
     gender_input = new QComboBox(this);
     gender_warn = new QLabel("●", this);
-    gender_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
+    gender_warn->setStyleSheet("color:#ff4c4c; font-size:18px");
     gender_warn->setVisible(false);
-
     gender_input->addItem("-- Select Gender --");
     gender_input->addItem("Male");
     gender_input->addItem("Female");
     gender_input->addItem("Other");
+    gender_input->setStyleSheet(inputStyle);
 
     photo_label = new QLabel("Photo", this);
-
     photo_btn = new QPushButton("Upload Photo", this);
     photo_btn->setCursor(Qt::PointingHandCursor);
-    photo_btn->setStyleSheet(
-        "QPushButton {"
-        "   background-color: #3498db;"
-        "   color: white;"
-        "   padding: 8px;"
-        "   border: none;"
-        "   border-radius: 6px;"
-        "   font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "   background-color: #2980b9;"
-        "}"
-        );
+    photo_btn->setStyleSheet("background-color:#3498db; color:white; padding:8px; border-radius:5px; font-size: 13px;");
 
     photo_warn = new QLabel("●", this);
-    photo_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
+    photo_warn->setStyleSheet("color:#ff4c4c; font-size:18px");
     photo_warn->setVisible(false);
 
     photo_preview = new QLabel(this);
     photo_preview->setFixedSize(80, 80);
-    photo_preview->setStyleSheet("border: 2px dashed #888888; border-radius: 6px; color: #ffffff; background: rgba(0,0,0,50);");
+    photo_preview->setStyleSheet("border:2px dashed #9cb4d8; border-radius:6px; color: #e2e8f0; font-weight: normal;");
     photo_preview->setAlignment(Qt::AlignCenter);
     photo_preview->setText("No Photo");
     photo_preview->setScaledContents(true);
@@ -123,31 +109,18 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     pass_label = new QLabel("Password", this);
     pass_input = new QLineEdit(this);
     pass_warn = new QLabel("●", this);
-    pass_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
+    pass_warn->setStyleSheet("color:#ff4c4c; font-size:18px");
     pass_warn->setVisible(false);
-
     pass_input->setPlaceholderText("Enter Password");
+    pass_input->setStyleSheet(inputStyle);
     pass_input->setEchoMode(QLineEdit::Password);
 
     reg_btn = new QPushButton("Register", this);
     reg_btn->setCursor(Qt::PointingHandCursor);
-    reg_btn->setStyleSheet(
-        "QPushButton {"
-        "   background-color: #2ecc71;"
-        "   color: white;"
-        "   padding: 10px;"
-        "   border: none;"
-        "   border-radius: 6px;"
-        "   font-weight: bold;"
-        "   font-size: 14px;"
-        "}"
-        "QPushButton:hover {"
-        "   background-color: #27ae60;"
-        "}"
-        );
+    reg_btn->setStyleSheet("background-color:#10b981; color:white; padding:12px; border-radius:5px; font-size: 15px; font-weight: bold;");
 
     QFont msg_font;
-    msg_font.setPointSize(15);
+    msg_font.setPointSize(12);
     msg_font.setBold(true);
     msg_font.setItalic(true);
 
@@ -156,55 +129,57 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     msg->setFont(msg_font);
     msg->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-    back_btn = new QPushButton("< Previous", this);
-    back_btn->setCursor(Qt::PointingHandCursor);
-    back_btn->setFixedSize(120, 35);
+    back_btn = new QPushButton("< Back", this);
     back_btn->setStyleSheet(
-        "QPushButton {"
-        "   background-color: rgba(255, 255, 255, 0.1);"
-        "   color: #ffffff;"
-        "   border: 1px solid #ffffff;"
-        "   border-radius: 6px;"
-        "   padding: 6px 16px;"
-        "   font-size: 13px;"
-        "   font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "   background-color: rgba(255, 255, 255, 0.2);"
-        "}"
+        "background: transparent;"
+        "color: #93c5fd;"
+        "border: 1px solid #93c5fd;"
+        "border-radius: 5px;"
+        "padding: 6px 14px;"
+        "font-size: 13px;"
+        "font-weight: bold;"
         );
+    back_btn->setCursor(Qt::PointingHandCursor);
 
     grid = new QGridLayout(this);
-    grid->setContentsMargins(50, 30, 50, 30);
-    grid->setHorizontalSpacing(20);
-    grid->setVerticalSpacing(14);
+    grid->setContentsMargins(50, 25, 50, 20);
+    grid->setHorizontalSpacing(15);
+    grid->setVerticalSpacing(10);
 
     grid->addWidget(title, 0, 0, 1, 3);
+
     grid->addWidget(f_name_label, 1, 0);
     grid->addWidget(f_name_input, 1, 1);
     grid->addWidget(f_name_warn, 1, 2);
+
     grid->addWidget(l_name_label, 2, 0);
     grid->addWidget(l_name_input, 2, 1);
     grid->addWidget(l_name_warn, 2, 2);
+
     grid->addWidget(nid_label, 3, 0);
     grid->addWidget(nid_input, 3, 1);
     grid->addWidget(nid_warn, 3, 2);
+
     grid->addWidget(dob_label, 4, 0);
     grid->addWidget(dob_input, 4, 1);
     grid->addWidget(dob_warn, 4, 2);
+
     grid->addWidget(gender_label, 5, 0);
     grid->addWidget(gender_input, 5, 1);
     grid->addWidget(gender_warn, 5, 2);
+
     grid->addWidget(photo_label, 6, 0);
     grid->addWidget(photo_btn, 6, 1);
     grid->addWidget(photo_warn, 6, 2);
-    grid->addWidget(photo_preview, 7, 1);
+    grid->addWidget(photo_preview, 7, 1, Qt::AlignLeft);
+
     grid->addWidget(pass_label, 8, 0);
     grid->addWidget(pass_input, 8, 1);
     grid->addWidget(pass_warn, 8, 2);
+
     grid->addWidget(msg, 9, 0, 1, 3);
     grid->addWidget(reg_btn, 10, 0, 1, 3);
-    grid->addWidget(back_btn, 11, 0, 1, 1);
+    grid->addWidget(back_btn, 11, 0, 1, 3, Qt::AlignLeft);
 
     connect(reg_btn,  &QPushButton::clicked, this, &VoterRegisterWindow::register_user);
     connect(back_btn, &QPushButton::clicked, this, &VoterRegisterWindow::back_login);
@@ -240,11 +215,11 @@ void VoterRegisterWindow::register_user()
         v.nid = nid_input->text().toStdString();
         break;
     case length:
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("NID must be 8 characters long!!");
         return;
     case not_unique:
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("Voter already registetered!!");
         return;
     }
@@ -265,34 +240,34 @@ void VoterRegisterWindow::register_user()
 
         admin.add_voter(v);
 
-        msg->setStyleSheet("color: #2ecc71;");
+        msg->setStyleSheet("color: #10b981;");
         msg->setText("Registered Successfully");
 
         clear_fields();
         break;
 
     case letter:
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("Password must be at least 7 characters.");
         break;
 
     case number:
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("At least 3 digits required.");
         break;
 
     case capital:
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("At least 1 capital letter required.");
         break;
 
     case name:
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("Password must not be same as your name");
         break;
 
     case special:
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("At least 1 special character required.");
         break;
     }

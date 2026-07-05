@@ -14,16 +14,35 @@ RoleSelection::RoleSelection(QWidget *parent)
     setFixedSize(720, 630);
 
     this->setAttribute(Qt::WA_StyledBackground, true);
-    this->setStyleSheet("background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, "
-                        "stop:0 #e0f2fe, stop:1 #e6fbf7);");
+    this->setStyleSheet(
+        "background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
+        "stop:0 #e2e8f0,"
+        "stop:0.25 #64748b,"
+        "stop:0.55 #1e293b,"
+        "stop:0.8 #0f172a,"
+        "stop:1 #020617);"
+        );
 
     titleLabel = new QLabel("Welcome to the Electronic Voting Portal.", this);
     titleLabel->setAlignment(Qt::AlignCenter);
-    titleLabel->setStyleSheet("font-size: 36px; font-weight: 600; color: #1e293b; font-family: 'Segoe UI', Arial;");
+    titleLabel->setStyleSheet(
+        "font-size: 36px;"
+        "font-weight: 600;"
+        "color: #ffffff;"
+        "font-family: 'Segoe UI', Arial;"
+        "background: transparent;"
+        "margin: 0px;"
+        );
 
-    subLabel = new QLabel("Please select your role to proceed.", this);
+    subLabel = new QLabel("Select your role to proceed.", this);
     subLabel->setAlignment(Qt::AlignCenter);
-    subLabel->setStyleSheet("font-size: 20px; color: #475569; font-family: 'Segoe UI', Arial;");
+    subLabel->setStyleSheet(
+        "font-size: 25px;"
+        "color: #cbd5e1;"
+        "font-family: 'Segoe UI', Arial;"
+        "background: transparent;"
+        "margin: 0px;"
+        );
 
     QFrame *voterCard = new QFrame(this);
     voterCard->setFixedSize(270, 320);

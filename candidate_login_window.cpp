@@ -6,85 +6,92 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QPixmap>
 
 CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
     : QWidget(parent)
 {
     setWindowTitle("Candidate Login");
-    //setFixedSize(450, 300);
+    //setFixedSize(720, 660);
 
-    //title
-    title = new QLabel("Candidate Login", this);
+    this->setAttribute(Qt::WA_StyledBackground, true);
+    this->setObjectName("candidateLoginWindow");
 
-    //title design
-    QFont titleFont;
-    titleFont.setPointSize(24);
-    titleFont.setBold(true);
+    this->setStyleSheet(
+        "#candidateLoginWindow { background-color: #1c1c22; }"
+        "QLabel { color: #ffffff; font-weight: bold; }"
+        );
 
-    title->setFont(titleFont);
+    QLabel *logo = new QLabel(this);
+    QPixmap pix("C:/Users/Lenovo/Desktop/final/Voter/icons/new.png");
+    logo->setPixmap(pix.scaled(140, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    logo->setAlignment(Qt::AlignCenter);
+
+    title = new QLabel("CANDIDATE LOGIN", this);
+
+    title->setStyleSheet(
+        "font-size: 38px;"
+        "font-weight: bold;"
+        "color: white;"
+        );
+
     title->setAlignment(Qt::AlignCenter);
 
-    //nid and password
+    QLabel *subtitle = new QLabel("Manage Your Campaign. Reach Every Voter.", this);
+    subtitle->setAlignment(Qt::AlignCenter);
+    subtitle->setStyleSheet(
+        "color: #cbd5e1;"
+        "font-weight: 600;"
+        "margin-bottom: 20px;"
+        "font-size: 19px;"
+        );
+
     nid_label = new QLabel("National ID", this);
     nid_input = new QLineEdit(this);
+    nid_label->setStyleSheet("margin-top: 10px; font-size: 16px;");
+    nid_input->setPlaceholderText("Enter National ID");
+    nid_input->setStyleSheet("font-size: 16px; padding: 15px; background-color: #ffffff; color: #1e293b; border-radius: 5px; border: none; font-weight: normal;");
 
     pass_label = new QLabel("Password", this);
     pass_input = new QLineEdit(this);
-
-    //nid and password design
-    nid_input->setPlaceholderText("Enter National ID");
-    nid_input->setStyleSheet("padding:6px;");
-
+    pass_label->setStyleSheet("margin-top: 10px; font-size: 16px;");
     pass_input->setPlaceholderText("Enter Password");
     pass_input->setEchoMode(QLineEdit::Password);
-    pass_input->setStyleSheet("padding:6px;");
+    pass_input->setStyleSheet("font-size: 16px; padding: 15px; background-color: #ffffff; color: #1e293b; border-radius: 5px; border: none; font-weight: normal; margin-bottom: 20px;");
 
-    //login and reg button
     login_btn = new QPushButton("Login", this);
     reg_btn = new QPushButton("Register", this);
 
-    //login and reg button design
-    login_btn->setStyleSheet(
-        "background-color:#3498db; color:white; padding:8px; border-radius:6px;");
+    login_btn->setStyleSheet("background-color: #3b82f6; color: white; padding: 12px; border-radius: 5px; font-size: 15px; font-weight: bold; border: 2px solid #ffffff;");
     login_btn->setCursor(Qt::PointingHandCursor);
 
-    reg_btn->setStyleSheet(
-        "background-color:#2ecc71; color:white; padding:8px; border-radius:6px;");
+    reg_btn->setStyleSheet("background-color: #10b981; color: white; padding: 12px; border-radius: 5px; font-size: 15px; font-weight: bold; border: 2px solid #ffffff;");
     reg_btn->setCursor(Qt::PointingHandCursor);
 
-    //warning message
     QFont msg_font;
-    msg_font.setPointSize(13);
-    msg_font.setBold(true);
+    msg_font.setPointSize(11);
     msg_font.setItalic(true);
 
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
     msg->setFont(msg_font);
 
-    // layout
     grid = new QGridLayout(this);
+    grid->setContentsMargins(50, 30, 50, 30);
+    grid->setHorizontalSpacing(15);
+    grid->setVerticalSpacing(5);
 
-    //layout design
-    grid->setContentsMargins(40, 20, 40, 20);
-    grid->setHorizontalSpacing(10);
-    grid->setVerticalSpacing(10);
+    grid->addWidget(logo, 0, 0, 1, 2);
+    grid->addWidget(title, 1, 0, 1, 2);
+    grid->addWidget(subtitle, 2, 0, 1, 2);
+    grid->addWidget(nid_label, 3, 0, 1, 2);
+    grid->addWidget(nid_input, 4, 0, 1, 2);
+    grid->addWidget(pass_label, 5, 0, 1, 2);
+    grid->addWidget(pass_input, 6, 0, 1, 2);
+    grid->addWidget(login_btn, 7, 0, 1, 1);
+    grid->addWidget(reg_btn, 7, 1, 1, 1);
+    grid->addWidget(msg, 8, 0, 1, 2);
 
-    //adding other objects to layout
-    grid->addWidget(title, 0, 0, 1, 2);
-
-    grid->addWidget(nid_label, 1, 0);
-    grid->addWidget(nid_input, 1, 1);
-
-    grid->addWidget(pass_label, 2, 0);
-    grid->addWidget(pass_input, 2, 1);
-
-    grid->addWidget(login_btn, 3, 0, 1, 2);
-    grid->addWidget(reg_btn, 4, 0, 1, 2);
-
-    grid->addWidget(msg, 5, 0, 1, 2);
-
-    //slots and signal connection
     connect(login_btn, &QPushButton::clicked, this, &CandidateLoginWindow::login);
     connect(reg_btn, &QPushButton::clicked, this, [this](){emit register_requested();});
 }
@@ -92,22 +99,20 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
 void CandidateLoginWindow::login()
 {
     if (nid_input->text().isEmpty() && pass_input->text().isEmpty()) {
-        msg->setStyleSheet("color: red;");
-        msg->setText("enter details!");
+        msg->setStyleSheet("color: #e53e3e; font-size: 24px;");
+        msg->setText("Enter details!");
         return;
     } else if (nid_input->text().isEmpty()) {
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("nid field : empty");
         return;
     } else if (pass_input->text().isEmpty()) {
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("password field: empty!");
         return;
     }
 
-    std::string nid
-        = nid_input->text()
-              .toStdString(); //because nid_input has Qstring, it needs to be converted to string explici
+    std::string nid = nid_input->text().toStdString();
     std::string pass = pass_input->text().toStdString();
 
     int rsp = admin.login_candidate(nid, pass);
@@ -119,20 +124,18 @@ void CandidateLoginWindow::login()
         clear_fields();
         break;
     }
-    case not_found: {
-        msg->setStyleSheet("color: red;");
+    case not_found:
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("Candidate Not Found");
         clear_fields();
         break;
-    }
     case wrong_pass:
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("Wrong Password");
         clear_fields();
         break;
-
     case acc_locked:
-        msg->setStyleSheet("color: red;");
+        msg->setStyleSheet("color: #ffcccc;");
         msg->setText("Account Locked. Contact Admin");
         clear_fields();
         break;
