@@ -92,7 +92,7 @@ login_btn->setStyleSheet("background-color: #3b82f6; color: white; padding: 12px
 void VoterLoginWindow::login()
 {
     if (nid_input->text().isEmpty() && pass_input->text().isEmpty()) {
-        msg->setStyleSheet("color: #e53e3e;font-size:24 px;");
+        msg->setStyleSheet("color: #e53e3e;font-size:32 px;");
         msg->setText("Enter details!");
         return;
     } else if (nid_input->text().isEmpty()) {
