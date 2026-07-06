@@ -74,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent)
             voter_register_page->clear_fields();
             voter_register_page->clear_msg();
             stack->setCurrentWidget(voter_register_page);
-            setFixedSize(720,630);
+            setFixedSize(600,660);
             center_window();
         }
         );
