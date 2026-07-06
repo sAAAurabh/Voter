@@ -14,8 +14,6 @@ RoleSelection::RoleSelection(QWidget *parent)
     setFixedSize(720, 630);
 
     this->setAttribute(Qt::WA_StyledBackground, true);
-    //this->setStyleSheet("background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, "
-     //                   "stop:0 #e0f2fe, stop:1 #e6fbf7);");
 
     titleLabel = new QLabel("Welcome to the Electronic Voting Portal.", this);
     titleLabel->setAlignment(Qt::AlignCenter);

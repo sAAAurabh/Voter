@@ -31,11 +31,11 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
         "}"
         );
 
-    QRect screen = QGuiApplication::primaryScreen()->availableGeometry();
-    move(screen.center() - QPoint(width() / 2, height() / 2));
-
     setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint
                    | Qt::WindowMaximizeButtonHint);
+
+    setMinimumSize(480, 640);
+    resize(520, 700);
 
     title = new QLabel("Voter Registration", this);
 
@@ -51,12 +51,14 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     f_name_warn = new QLabel("●", this);
     f_name_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     f_name_warn->setVisible(false);
+    f_name_warn->setFixedWidth(18);
 
     l_name_label = new QLabel("Last Name", this);
     l_name_input = new QLineEdit(this);
     l_name_warn = new QLabel("●", this);
     l_name_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     l_name_warn->setVisible(false);
+    l_name_warn->setFixedWidth(18);
 
     f_name_input->setPlaceholderText("Enter First Name");
     l_name_input->setPlaceholderText("Enter Last Name");
@@ -66,6 +68,7 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     nid_warn = new QLabel("●", this);
     nid_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     nid_warn->setVisible(false);
+    nid_warn->setFixedWidth(18);
     nid_input->setPlaceholderText("Enter National ID");
 
     dob_label = new QLabel("Date of Birth", this);
@@ -73,6 +76,7 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     dob_warn = new QLabel("●", this);
     dob_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     dob_warn->setVisible(false);
+    dob_warn->setFixedWidth(18);
 
     dob_input->setDisplayFormat("yyyy-MM-dd");
     dob_input->setCalendarPopup(true);
@@ -85,6 +89,7 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     gender_warn = new QLabel("●", this);
     gender_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     gender_warn->setVisible(false);
+    gender_warn->setFixedWidth(18);
 
     gender_input->addItem("-- Select Gender --");
     gender_input->addItem("Male");
@@ -112,19 +117,27 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     photo_warn = new QLabel("●", this);
     photo_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     photo_warn->setVisible(false);
+    photo_warn->setFixedWidth(18);
 
     photo_preview = new QLabel(this);
-    photo_preview->setFixedSize(80, 80);
+    photo_preview->setFixedSize(64, 64);
     photo_preview->setStyleSheet("border: 2px dashed #888888; border-radius: 6px; color: #ffffff; background: rgba(0,0,0,50);");
     photo_preview->setAlignment(Qt::AlignCenter);
     photo_preview->setText("No Photo");
     photo_preview->setScaledContents(true);
+
+    QHBoxLayout *photo_row = new QHBoxLayout();
+    photo_row->setSpacing(12);
+    photo_row->addWidget(photo_btn);
+    photo_row->addWidget(photo_preview);
+    photo_row->addStretch(1);
 
     pass_label = new QLabel("Password", this);
     pass_input = new QLineEdit(this);
     pass_warn = new QLabel("●", this);
     pass_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     pass_warn->setVisible(false);
+    pass_warn->setFixedWidth(18);
 
     pass_input->setPlaceholderText("Enter Password");
     pass_input->setEchoMode(QLineEdit::Password);
@@ -154,57 +167,77 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
     msg->setFont(msg_font);
+    msg->setWordWrap(true);
     msg->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-    back_btn = new QPushButton("< Previous", this);
+    back_btn = new QPushButton("← Back to Login", this);
+    back_btn->setStyleSheet("background: transparent;"
+                            "color: #3498db;"
+                            "border: none;"
+                            "font-size: 12px;"
+                            "text-align: left;");
+    back_btn->setFixedSize(120, 20);
     back_btn->setCursor(Qt::PointingHandCursor);
-    back_btn->setFixedSize(120, 35);
-    back_btn->setStyleSheet(
-        "QPushButton {"
-        "   background-color: rgba(255, 255, 255, 0.1);"
-        "   color: #ffffff;"
-        "   border: 1px solid #ffffff;"
-        "   border-radius: 6px;"
-        "   padding: 6px 16px;"
-        "   font-size: 13px;"
-        "   font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "   background-color: rgba(255, 255, 255, 0.2);"
-        "}"
-        );
 
     grid = new QGridLayout(this);
     grid->setContentsMargins(50, 30, 50, 30);
     grid->setHorizontalSpacing(20);
     grid->setVerticalSpacing(14);
+    grid->setColumnStretch(0, 0);
+    grid->setColumnStretch(1, 1);
+    grid->setColumnStretch(2, 0);
+    grid->setColumnMinimumWidth(0, 110);
 
-    grid->addWidget(title, 0, 0, 1, 3);
-    grid->addWidget(f_name_label, 1, 0);
-    grid->addWidget(f_name_input, 1, 1);
-    grid->addWidget(f_name_warn, 1, 2);
-    grid->addWidget(l_name_label, 2, 0);
-    grid->addWidget(l_name_input, 2, 1);
-    grid->addWidget(l_name_warn, 2, 2);
-    grid->addWidget(nid_label, 3, 0);
-    grid->addWidget(nid_input, 3, 1);
-    grid->addWidget(nid_warn, 3, 2);
-    grid->addWidget(dob_label, 4, 0);
-    grid->addWidget(dob_input, 4, 1);
-    grid->addWidget(dob_warn, 4, 2);
-    grid->addWidget(gender_label, 5, 0);
-    grid->addWidget(gender_input, 5, 1);
-    grid->addWidget(gender_warn, 5, 2);
-    grid->addWidget(photo_label, 6, 0);
-    grid->addWidget(photo_btn, 6, 1);
-    grid->addWidget(photo_warn, 6, 2);
-    grid->addWidget(photo_preview, 7, 1);
-    grid->addWidget(pass_label, 8, 0);
-    grid->addWidget(pass_input, 8, 1);
-    grid->addWidget(pass_warn, 8, 2);
-    grid->addWidget(msg, 9, 0, 1, 3);
-    grid->addWidget(reg_btn, 10, 0, 1, 3);
-    grid->addWidget(back_btn, 11, 0, 1, 1);
+    int row = 0;
+    grid->addWidget(title, row, 0, 1, 3);
+    row++;
+
+    grid->addWidget(f_name_label, row, 0);
+    grid->addWidget(f_name_input, row, 1);
+    grid->addWidget(f_name_warn, row, 2);
+    row++;
+
+    grid->addWidget(l_name_label, row, 0);
+    grid->addWidget(l_name_input, row, 1);
+    grid->addWidget(l_name_warn, row, 2);
+    row++;
+
+    grid->addWidget(nid_label, row, 0);
+    grid->addWidget(nid_input, row, 1);
+    grid->addWidget(nid_warn, row, 2);
+    row++;
+
+    grid->addWidget(dob_label, row, 0);
+    grid->addWidget(dob_input, row, 1);
+    grid->addWidget(dob_warn, row, 2);
+    row++;
+
+    grid->addWidget(gender_label, row, 0);
+    grid->addWidget(gender_input, row, 1);
+    grid->addWidget(gender_warn, row, 2);
+    row++;
+
+    grid->addWidget(photo_label, row, 0);
+    grid->addLayout(photo_row, row, 1);
+    grid->addWidget(photo_warn, row, 2);
+    row++;
+
+    grid->addWidget(pass_label, row, 0);
+    grid->addWidget(pass_input, row, 1);
+    grid->addWidget(pass_warn, row, 2);
+    row++;
+
+    grid->addWidget(msg, row, 0, 1, 3);
+    row++;
+
+    grid->addWidget(reg_btn, row, 0, 1, 3);
+    row++;
+
+    grid->addWidget(back_btn, row, 0, 1, 1, Qt::AlignLeft);
+    row++;
+
+    setLayout(grid);
+
 
     connect(reg_btn,  &QPushButton::clicked, this, &VoterRegisterWindow::register_user);
     connect(back_btn, &QPushButton::clicked, this, &VoterRegisterWindow::back_login);
