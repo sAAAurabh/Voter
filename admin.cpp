@@ -16,6 +16,8 @@ using namespace std;
 string Admin::gen_salt()
 {
     string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    string salt;
+    int i ;
     for (i = 0; i < 6; i++)
         salt += chars[rand() % chars.size()];
 
