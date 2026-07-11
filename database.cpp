@@ -54,4 +54,7 @@ void Database::init()
            "is_locked INTEGER DEFAULT 0,"
            "attempts_left INTEGER DEFAULT 5"
            ")");
+
+    // adds manifesto column if it doesn't exist yet
+    q.exec("ALTER TABLE candidates ADD COLUMN manifesto TEXT DEFAULT ''");
 }

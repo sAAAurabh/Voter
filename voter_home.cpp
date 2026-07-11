@@ -1,5 +1,7 @@
 #include "voter_home.h"
 #include "voter_login_window.h"
+#include "voting_page.h"
+#include "view_candidates_window.h"
 
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -8,6 +10,7 @@
 #include <QPushButton>
 #include <QFont>
 #include <QFrame>
+#include <QPixmap>
 
 VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     : QWidget(parent), voter_nid(nid)
@@ -15,9 +18,7 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     setWindowTitle("Voter Dashboard");
     setFixedSize(600, 480);
 
-
-
-    // tile
+    // title
     title = new QLabel("Voter Dashboard", this);
 
     QFont titleFont;
@@ -35,7 +36,6 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
 
     // profile box
     QFrame *profile_box = new QFrame(this);
-
     profile_box->setStyleSheet(
         "QFrame {"
         "border:1px solid #e0e0e0;"
@@ -62,13 +62,9 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     photo_label->setStyleSheet("background: transparent; border: none;");
 
     QPixmap pix(QString::fromStdString(v.photo_path));
-
     photo_label->setPixmap(
-        pix.scaled(photo_label->size(),
-                   Qt::KeepAspectRatio,
-                   Qt::SmoothTransformation)
+        pix.scaled(photo_label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation)
         );
-
 
     name_label = new QLabel(
         QString::fromStdString("Name: " + v.first + " " + v.last)
@@ -89,16 +85,18 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     dob_label->setStyleSheet(info_style);
 
     profile_layout->addWidget(photo_label, 0, 0, 4, 1, Qt::AlignTop);
-    profile_layout->addWidget(name_label, 0, 1);
-    profile_layout->addWidget(nid_label, 1, 1);
+    profile_layout->addWidget(name_label,   0, 1);
+    profile_layout->addWidget(nid_label,    1, 1);
     profile_layout->addWidget(gender_label, 2, 1);
-    profile_layout->addWidget(dob_label, 3, 1);
+    profile_layout->addWidget(dob_label,    3, 1);
 
-    //buttons
+    // buttons
     view_candidates_btn = new QPushButton("View Candidates", this);
     view_candidates_btn->setCursor(Qt::PointingHandCursor);
+
     vote_candidates_btn = new QPushButton("Vote Candidates", this);
     vote_candidates_btn->setCursor(Qt::PointingHandCursor);
+
     logout_btn = new QPushButton("Logout", this);
 
     QString base =
@@ -108,7 +106,6 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
 
     view_candidates_btn->setStyleSheet(base + "background:#3498db; color:white;");
     vote_candidates_btn->setStyleSheet(base + "background:#2ecc71; color:white;");
-
 
     logout_btn->setStyleSheet(
         "background:transparent;"
@@ -131,22 +128,20 @@ VoterHomeWindow::VoterHomeWindow(const QString& nid, QWidget *parent)
     grid->setContentsMargins(30, 20, 30, 20);
     grid->setVerticalSpacing(12);
 
-    grid->addWidget(title, 0, 0, 1, 2);
-    grid->addWidget(divider, 1, 0, 1, 2);
-    grid->addWidget(profile_box, 2, 0, 1, 2);
+    grid->addWidget(title,              0, 0, 1, 2);
+    grid->addWidget(divider,            1, 0, 1, 2);
+    grid->addWidget(profile_box,        2, 0, 1, 2);
+    grid->addWidget(view_candidates_btn,3, 0);
+    grid->addWidget(vote_candidates_btn,3, 1);
+    grid->addWidget(msg,                4, 0, 1, 2);
 
-    grid->addWidget(view_candidates_btn, 3, 0);
-    grid->addWidget(vote_candidates_btn, 3, 1);
-
-    grid->addWidget(msg, 4, 0, 1, 2);
-
-    //lagout button
+    // logout button (top right corner)
     logout_btn->setParent(this);
     logout_btn->setGeometry(width() - 70, 5, 60, 25);
 
-    connect(logout_btn, &QPushButton::clicked, this, &VoterHomeWindow::logout);
-
+    connect(logout_btn,          &QPushButton::clicked, this, &VoterHomeWindow::logout);
     connect(vote_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::vote);
+    connect(view_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::view_candidates);
 }
 
 
@@ -155,12 +150,15 @@ void VoterHomeWindow::logout()
     this->close();
 }
 
-void VoterHomeWindow::vote(){
-
+void VoterHomeWindow::vote()
+{
     this->hide();
     VotingPage *w = new VotingPage(voter_nid);
     w->show();
-
 }
 
-
+void VoterHomeWindow::view_candidates()
+{
+    ViewCandidatesWindow *w = new ViewCandidatesWindow();
+    w->show();
+}

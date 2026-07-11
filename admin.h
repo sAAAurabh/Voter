@@ -3,6 +3,7 @@
 #include "candidate.h"
 #include <string>
 #include <cctype>
+#include <vector>   // NEW
 
 enum login_result{
     login_success,
@@ -14,7 +15,6 @@ enum login_result{
 enum pass_val{
     number, letter, capital, is_valid, name, special
 };
-
 
 class Admin
 {
@@ -39,10 +39,13 @@ public:
 
     std::string get_manifesto(const std::string &nid);
 
+    void update_manifesto(const std::string& nid, const std::string& manifesto);  // NEW
+    std::vector<Candidate> get_all_candidates();                                   // NEW
 
     login_result login_voter(const std::string& nid, const std::string& pass);
     login_result login_candidate(const std::string& nid, const std::string& pass);
 
     pass_val is_valid_pass(std::string pass, std::string nm);
 
+    int calculateAge(const std::string& dob);
 };

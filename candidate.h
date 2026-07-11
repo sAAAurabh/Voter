@@ -13,8 +13,8 @@ struct Candidate
     std::string dob;
     std::string gender;
     std::string photo_path;
+    std::string manifesto;   // NEW
 
     bool is_locked = false;
     int attempts_left = 5;
-
 };
