@@ -14,6 +14,8 @@
 #include "view_candidates_window.h"
 #include "roleselection.h"
 #include "manifesto_edit_window.h"
+#include "status_page.h"
+#include "result_page.h"
 
 class MainWindow : public QMainWindow
 {

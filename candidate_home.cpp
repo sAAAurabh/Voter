@@ -124,6 +124,26 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
         "QPushButton:pressed { background-color:#1c6c9c; }"
         );
 
+
+
+    status_btn = new QPushButton("View Status", this);
+    status_btn->setCursor(Qt::PointingHandCursor);
+    status_btn->setMinimumHeight(46);
+    status_btn->setStyleSheet(
+        "QPushButton {"
+        "background-color:#008f66;"
+        "color:#ffffff;"
+        "padding:12px;"
+        "border-radius:10px;"
+        "font-weight:600;"
+        "font-size:15px;"
+        "font-family:'Segoe UI';"
+        "border:none;"
+        "}"
+        "QPushButton:hover { background-color:#00a878; }"
+        );
+
+
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
     msg->setStyleSheet("color:#4fc3f7; font-weight:bold; background:transparent; font-family:'Segoe UI';");
@@ -136,7 +156,8 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     grid->addWidget(divider,       1, 0, 1, 2);
     grid->addWidget(profile_box,   2, 0, 1, 2);
     grid->addWidget(edit_btn,      3, 0, 1, 2);
-    grid->addWidget(msg,           4, 0, 1, 2);
+    grid->addWidget(status_btn,    4, 0, 1, 2);
+    grid->addWidget(msg,           5, 0, 1, 2);
 
     connect(edit_btn, &QPushButton::clicked, this, &CandidateHomeWindow::edit_manifesto);
 

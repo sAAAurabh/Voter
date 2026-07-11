@@ -1,5 +1,6 @@
 QT += widgets
 QT += sql
+QT += charts
 
 CONFIG += c++17
 
@@ -16,7 +17,9 @@ SOURCES += \
     database.cpp \
     main.cpp \
     main_window.cpp \
+    result_page.cpp \
     roleselection.cpp \
+    status_page.cpp \
     voter.cpp \
     voter_home.cpp \
     voter_login_window.cpp \
@@ -35,7 +38,9 @@ HEADERS += \
     database.h \
     main_window.h \
     picosh.h \
+    result_page.h \
     roleselection.h \
+    status_page.h \
     voter.h \
     voter_home.h \
     voter_login_window.h \

@@ -29,6 +29,7 @@ private:
 
     QPushButton *edit_btn;
     QPushButton *logout_btn;
+    QPushButton *status_btn;
 
     QGridLayout *grid;
 

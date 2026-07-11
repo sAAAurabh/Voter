@@ -15,8 +15,9 @@ using namespace std;
 // generates salt
 string Admin::gen_salt()
 {
+    string salt;
     string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-    for (i = 0; i < 6; i++)
+    for (int i = 0; i < 6; i++)
         salt += chars[rand() % chars.size()];
 
     return salt;
@@ -458,4 +459,70 @@ std::vector<Candidate> Admin::get_all_candidates()
     }
     return candidates;
 }
+
+
+int Admin::total_candidates()
+{
+    QSqlQuery query("SELECT COUNT(*) FROM candidates");
+
+    return (query.next()) ? query.value(0).toInt() : 0;
+}
+
+
+int Admin::total_votes()
+{
+    QSqlQuery query("SELECT SUM(votes) FROM candidates");
+    return (query.next()) ? query.value(0).toInt() : 0;
+
+}
+
+int Admin::total_voters()
+{
+    QSqlQuery query("SELECT COUNT(*) FROM voters");
+
+    return (query.next()) ? query.value(0).toInt() : 0;
+}
+
+int Admin::calculate_position(const std::string &nid){
+    QSqlQuery query("SELECT nid FROM candidates ORDER BY votes DESC");
+
+    int position = 1;
+
+    while (query.next())
+    {
+        if (query.value(0).toString().toStdString() == nid)
+            return position;
+            position++;
+    }
+}
+
+bool Admin::find_winner(Candidate &winner)
+{
+    QSqlQuery query(
+        "SELECT * FROM candidates "
+        "ORDER BY votes DESC "
+        "LIMIT 1"
+        );
+
+    if (!query.next())
+        return false;
+
+
+    winner.first = query.value("first").toString().toStdString();
+    winner.last = query.value("last").toString().toStdString();
+    winner.party = query.value("party").toString().toStdString();
+    winner.photo_path = query.value("photo_path").toString().toStdString();
+    winner.party_symbol_path = query.value("party_symbol_path").toString().toStdString();
+    winner.votes = query.value("votes").toInt();
+
+    return true;
+}
+
+
+
+
+
+
+
+
 
