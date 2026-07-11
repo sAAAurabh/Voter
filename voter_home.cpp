@@ -3,6 +3,7 @@
 #include "main_window.h"
 #include "voting_page.h"
 #include "view_candidates_window.h"
+#include "election_config.h"
 
 #include <QFont>
 #include <QFrame>
@@ -15,6 +16,7 @@
 #include <QPainter>
 #include <QGraphicsDropShadowEffect>
 #include <QPainterPath>
+#include <QMessageBox>
 
 
 VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
@@ -206,7 +208,26 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     grid->addWidget(msg,                 4, 0, 1, 2);
 
     connect(logout_btn, &QPushButton::clicked, this, [this](){emit logout_requested();});
-    connect(vote_candidates_btn, &QPushButton::clicked, this, [this](){emit vote_page_requested(voter_nid);});
+    connect(vote_candidates_btn, &QPushButton::clicked, this, [this](){
+
+        if (!ElectionConfig::isVotingOpen()) {
+            qDebug() << "Voting Start:"
+                     << ElectionConfig::votingStart();
+
+            qDebug() << "Voting End:"
+                     << ElectionConfig::votingEnd();
+
+            qDebug() << "Voting Open:"
+                     << ElectionConfig::isVotingOpen();
+
+            QMessageBox::warning(this, "Voting Closed",
+                                 QString("Voting is only open from %1 to %2.")
+                                     .arg(ElectionConfig::votingStart().toString("MMM d, yyyy"))
+                                     .arg(ElectionConfig::votingEnd().toString("MMM d, yyyy")));
+            return;
+        }
+        emit vote_page_requested(voter_nid);
+    });
     connect(view_candidates_btn, &QPushButton::clicked, this, [this](){emit candidate_view_requested();});
 }
 

@@ -1,6 +1,7 @@
 #include "voter_login_window.h"
 #include "voter_home.h"
 #include "voter_register_window.h"
+#include "election_config.h"
 
 #include <QGridLayout>
 #include <QVBoxLayout>
@@ -10,6 +11,7 @@
 #include <QIcon>
 #include <QAction>
 #include <QPixmap>
+#include <QMessageBox>
 
 VoterLoginWindow::VoterLoginWindow(QWidget *parent)
     : QWidget(parent)
@@ -86,7 +88,16 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
     grid->addWidget(msg, 8, 0, 1, 2);
 
     connect(login_btn, &QPushButton::clicked, this, &VoterLoginWindow::login);
-    connect(reg_btn, &QPushButton::clicked, this, [this](){emit register_requested();});
+    connect(reg_btn, &QPushButton::clicked, this, [this](){
+        if (!ElectionConfig::isRegistrationOpen()) {
+            QMessageBox::warning(this, "Registration Closed",
+                                 QString("Registration is only open from %1 to %2.")
+                                     .arg(ElectionConfig::registrationStart().toString("MMM d, yyyy"))
+                                     .arg(ElectionConfig::registrationEnd().toString("MMM d, yyyy")));
+            return;
+        }
+        emit register_requested();
+    });
 }
 
 void VoterLoginWindow::login()
