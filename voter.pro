@@ -33,6 +33,7 @@ HEADERS += \
     candidate_login_window.h \
     candidate_register_window.h \
     database.h \
+    electionconfig.h \
     main_window.h \
     picosh.h \
     roleselection.h \

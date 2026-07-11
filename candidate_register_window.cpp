@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QVBoxLayout>
 #include "admin.h"
+#include "electionconfig.h"
 
 
 CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
@@ -256,6 +257,15 @@ void CandidateRegisterWindow::register_user()
 {
     Candidate c;
     Admin a;
+
+    if (!ElectionConfig::isRegistrationOpen()) {
+        msg->setStyleSheet("color: red;");
+        msg->setText(QString("Registration is only open from %1 to %2.")
+                         .arg(ElectionConfig::registrationStart().toString("MMM d, yyyy"))
+                         .arg(ElectionConfig::registrationEnd().toString("MMM d, yyyy")));
+        return;
+    }
+
 
     bool f_empty = f_name_input->text().isEmpty();
     bool l_empty = l_name_input->text().isEmpty();

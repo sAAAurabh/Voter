@@ -1,3 +1,4 @@
+#include "electionconfig.h"
 #include "voting_page.h"
 #include "database.h"
 
@@ -327,6 +328,14 @@ void VotingPage::load_candidates()
                                 "}");
 
         connect(vote_btn, &QPushButton::clicked, this, [=]() {
+            if (!ElectionConfig::isVotingOpen()) {
+                QMessageBox::warning(this, "Voting Closed",
+                                     QString("Voting is only open from %1 to %2.")
+                                         .arg(ElectionConfig::votingStart().toString("MMM d, yyyy"))
+                                         .arg(ElectionConfig::votingEnd().toString("MMM d, yyyy")));
+                return;
+            }
+
             QSqlQuery check_voter(Database::db);
             check_voter.prepare("Select has_voted from voters WHERE nid = ?");
             check_voter.addBindValue(current_voter_nid);
@@ -525,6 +534,13 @@ void VotingPage::load_candidates(QString party, QString gender, QString age )
 
         connect(vote_btn, &QPushButton::clicked, this, [=]()
                 {
+            if (!ElectionConfig::isVotingOpen()) {
+                QMessageBox::warning(this, "Voting Closed",
+                                     QString("Voting is only open from %1 to %2.")
+                                         .arg(ElectionConfig::votingStart().toString("MMM d, yyyy"))
+                                         .arg(ElectionConfig::votingEnd().toString("MMM d, yyyy")));
+                return;
+            }
                     QSqlQuery check_voter(Database::db);
                     check_voter.prepare("Select has_voted from voters WHERE nid = ?");
                     check_voter.addBindValue(current_voter_nid);

@@ -5,6 +5,7 @@
 #include <QScreen>
 #include <QVBoxLayout>
 #include "admin.h"
+#include "electionconfig.h"
 
 VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     : QWidget(parent)
@@ -248,6 +249,14 @@ void VoterRegisterWindow::register_user()
 {
     Voter v;
     Admin a;
+
+    if (!ElectionConfig::isRegistrationOpen()) {
+        msg->setStyleSheet("color: red;");
+        msg->setText(QString("Registration is only open from %1 to %2.")
+                         .arg(ElectionConfig::registrationStart().toString("MMM d, yyyy"))
+                         .arg(ElectionConfig::registrationEnd().toString("MMM d, yyyy")));
+        return;
+    }
 
     bool f_empty = f_name_input->text().isEmpty();
     bool l_empty = l_name_input->text().isEmpty();
