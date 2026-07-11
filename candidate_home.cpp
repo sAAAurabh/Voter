@@ -1,5 +1,6 @@
 #include "manifesto_edit_window.h"
 #include "candidate_home.h"
+#include "election_config.h"
 
 #include <QFont>
 #include <QFrame>
@@ -126,7 +127,7 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
 
 
 
-    status_btn = new QPushButton("View Status", this);
+    status_btn = new QPushButton("View Status/Result", this);
     status_btn->setCursor(Qt::PointingHandCursor);
     status_btn->setMinimumHeight(46);
     status_btn->setStyleSheet(
@@ -166,7 +167,16 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     });
 
     connect(status_btn, &QPushButton::clicked, this, [this](){
-        emit status_requested(candidate_nid);
+
+        qDebug() << "Now:" << QDateTime::currentDateTime();
+        qDebug() << "Start:" << ElectionConfig::votingStart();
+        qDebug() << "End:" << ElectionConfig::votingEnd();
+        qDebug() << "Open:" << ElectionConfig::isVotingOpen();
+
+        if (ElectionConfig::isVotingOpen())
+            emit status_requested(candidate_nid);
+        else
+            emit result_page_requested();
     });
 }
 void CandidateHomeWindow::edit_manifesto()

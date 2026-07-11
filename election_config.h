@@ -6,10 +6,10 @@ class ElectionConfig
 public:
 
     static QDateTime votingStart() {
-        return QDateTime(QDate(2026, 7, 10), QTime(0, 0));
+        return QDateTime(QDate(2026, 7, 7), QTime(0, 0));
     }
     static QDateTime votingEnd() {
-        return QDateTime(QDate(2026, 7, 28), QTime(23, 59, 59));
+        return QDateTime(QDate(2026, 7, 19), QTime(23, 59, 59));
     }
 
 

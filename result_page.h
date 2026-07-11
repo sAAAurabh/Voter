@@ -8,5 +8,8 @@ class ResultPage : public QWidget
 
 public:
     ResultPage(QWidget *parent=nullptr);
+
+signals:
+    void back_requested();
 };
 

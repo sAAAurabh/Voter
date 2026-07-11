@@ -166,9 +166,42 @@ MainWindow::MainWindow(QWidget *parent)
                 }
                 );
 
+            connect(
+                voter_home,
+                &VoterHomeWindow::result_page_requested,
+                this,
+                [this, voter_home]()
+                {
+                    ResultPage *result_page = new ResultPage;
+                    stack->addWidget(result_page);
+                    stack->setCurrentWidget(result_page);
+                    setFixedSize(700,560);
+                    center_window();
+
+                    connect(
+                        result_page,
+                        &ResultPage::back_requested,
+                        this,
+                        [this, voter_home, result_page]()
+                        {
+                            stack->addWidget(voter_home);
+                            stack->setCurrentWidget(voter_home);
+                            setFixedSize(720,630);
+                            center_window();
+
+                            stack->removeWidget(result_page);
+                            delete result_page;
+
+                        }
+                        );
+                }
+                );
+
 
         }
     );
+
+
 
     connect(
         voter_register_page,
@@ -248,6 +281,36 @@ MainWindow::MainWindow(QWidget *parent)
                             setFixedSize(700,480);
                             stack->removeWidget(status_page);
                             delete status_page;
+                            center_window();
+                        }
+                        );
+                }
+                );
+
+
+
+            connect(
+                candidate_home,
+                &CandidateHomeWindow::result_page_requested,
+                this,
+                [this, candidate_home]()
+                {
+                    ResultPage *result_page = new ResultPage();
+                    stack->addWidget(result_page);
+                    stack->setCurrentWidget(result_page);
+                    setFixedSize(700,500);
+                    center_window();
+
+                    connect(
+                        result_page,
+                        &ResultPage::back_requested,
+                        this,
+                        [this, candidate_home, result_page](){
+                            stack->addWidget(candidate_home);
+                            stack->setCurrentWidget(candidate_home);
+                            setFixedSize(700,480);
+                            stack->removeWidget(result_page);
+                            delete result_page;
                             center_window();
                         }
                         );

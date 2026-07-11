@@ -1,4 +1,5 @@
 #include "status_page.h"
+#include "election_config.h"
 #include "admin.h"
 #include <QLabel>
 #include <QPushButton>
@@ -115,7 +116,17 @@ CandidateStatusWindow::CandidateStatusWindow(const QString &nid, QWidget *parent
     total_votes_label = new QLabel("Total Votes Cast : " + QString::number(vote_total));
     total_candidates_label = new QLabel("Total Registered Voters : " + QString::number(voter_total));
     status_label = new QLabel("Number of Voters Yet to Vote : " + QString::number(voter_total-vote_total));
-    time_label = new QLabel("Time Remaining : 2 Days 15 Hours");
+
+    QDateTime now = QDateTime::currentDateTime();
+    QDateTime end = ElectionConfig::votingEnd();
+    qint64 seconds = now.secsTo(end);
+    int days = seconds / 86400;
+    int hours = (seconds % 86400) / 3600;
+    time_label = new QLabel(
+        "Time Remaining : "
+        + QString::number(days) + " Days "
+        + QString::number(hours) + " Hours"
+        );
 
     total_votes_label->setStyleSheet(infoStyle);
     total_candidates_label->setStyleSheet(infoStyle);

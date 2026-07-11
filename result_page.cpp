@@ -166,7 +166,7 @@ ResultPage::ResultPage(QWidget *parent)
         "QPushButton:hover{background:#008f66;}"
         );
 
-    connect(back,&QPushButton::clicked,this,&QWidget::close);
+    connect(back,&QPushButton::clicked,this,[this](){emit back_requested();});
 
 
 
