@@ -53,4 +53,14 @@ public:
     nid_val is_valid_nid_candidate(std::string nid);
 
     std::string calculate_age(const std::string& dob);
+
+    int total_candidates();
+    int total_votes();
+    int total_voters();
+    int calculate_position(const std::string &nid);
+    bool find_winner(Candidate &winner);
+
 };
+
+
+

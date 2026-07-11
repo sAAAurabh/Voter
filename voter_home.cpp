@@ -3,6 +3,7 @@
 #include "main_window.h"
 #include "voting_page.h"
 #include "view_candidates_window.h"
+#include "election_config.h"
 
 #include <QFont>
 #include <QFrame>
@@ -15,6 +16,7 @@
 #include <QPainter>
 #include <QGraphicsDropShadowEffect>
 #include <QPainterPath>
+#include <QMessageBox>
 
 
 VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
@@ -186,8 +188,28 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
 
     view_candidates_btn->setStyleSheet(secondary_btn_style);
 
+    view_result_btn = new QPushButton("View Results", this);
+    view_result_btn->setCursor(Qt::PointingHandCursor);
+    view_result_btn->setMinimumHeight(46);
+
+    view_result_btn->setStyleSheet(
+        "QPushButton {"
+        "background-color:#8b5cf6;"
+        "color:white;"
+        "padding:12px;"
+        "border-radius:10px;"
+        "font-weight:600;"
+        "font-size:15px;"
+        "font-family:'Segoe UI';"
+        "border:none;"
+        "}"
+        "QPushButton:hover { background-color:#7c3aed; }"
+        "QPushButton:pressed { background-color:#6d28d9; }"
+        );
+
     view_candidates_btn->setMinimumHeight(46);
     vote_candidates_btn->setMinimumHeight(46);
+    view_candidates_btn->setMinimumHeight(46);
 
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
@@ -203,10 +225,33 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     grid->addWidget(profile_box,         2, 0, 1, 2);
     grid->addWidget(view_candidates_btn, 3, 0);
     grid->addWidget(vote_candidates_btn, 3, 1);
-    grid->addWidget(msg,                 4, 0, 1, 2);
+    grid->addWidget(view_result_btn,     4, 0, 1, 2);
+    grid->addWidget(msg,                 5, 0, 1, 2);
 
     connect(logout_btn, &QPushButton::clicked, this, [this](){emit logout_requested();});
-    connect(vote_candidates_btn, &QPushButton::clicked, this, [this](){emit vote_page_requested(voter_nid);});
+
+    connect(vote_candidates_btn, &QPushButton::clicked, this, [this](){
+        if (!ElectionConfig::isVotingOpen()) {
+            QMessageBox::warning(this, "Voting Closed",
+                                 QString("Voting is only open from %1 to %2.")
+                                     .arg(ElectionConfig::votingStart().toString("MMM d, yyyy"))
+                                     .arg(ElectionConfig::votingEnd().toString("MMM d, yyyy")));
+            return;
+        }
+        emit vote_page_requested(voter_nid);
+    });
+
+    connect(view_result_btn, &QPushButton::clicked, this, [this](){
+        if (ElectionConfig::isVotingOpen()) {
+            QMessageBox::warning(this, "Voting Still Going on",
+                                 QString("Voting is open from %1 to %2.")
+                                     .arg(ElectionConfig::votingStart().toString("MMM d, yyyy"))
+                                     .arg(ElectionConfig::votingEnd().toString("MMM d, yyyy")));
+            return;
+        }
+        emit result_page_requested();
+    });
+
     connect(view_candidates_btn, &QPushButton::clicked, this, [this](){emit candidate_view_requested();});
 }
 

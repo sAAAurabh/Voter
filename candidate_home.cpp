@@ -1,5 +1,6 @@
 #include "manifesto_edit_window.h"
 #include "candidate_home.h"
+#include "election_config.h"
 
 #include <QFont>
 #include <QFrame>
@@ -124,6 +125,26 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
         "QPushButton:pressed { background-color:#1c6c9c; }"
         );
 
+
+
+    status_btn = new QPushButton("View Status/Result", this);
+    status_btn->setCursor(Qt::PointingHandCursor);
+    status_btn->setMinimumHeight(46);
+    status_btn->setStyleSheet(
+        "QPushButton {"
+        "background-color:#008f66;"
+        "color:#ffffff;"
+        "padding:12px;"
+        "border-radius:10px;"
+        "font-weight:600;"
+        "font-size:15px;"
+        "font-family:'Segoe UI';"
+        "border:none;"
+        "}"
+        "QPushButton:hover { background-color:#00a878; }"
+        );
+
+
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
     msg->setStyleSheet("color:#4fc3f7; font-weight:bold; background:transparent; font-family:'Segoe UI';");
@@ -136,12 +157,26 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     grid->addWidget(divider,       1, 0, 1, 2);
     grid->addWidget(profile_box,   2, 0, 1, 2);
     grid->addWidget(edit_btn,      3, 0, 1, 2);
-    grid->addWidget(msg,           4, 0, 1, 2);
+    grid->addWidget(status_btn,    4, 0, 1, 2);
+    grid->addWidget(msg,           5, 0, 1, 2);
 
     connect(edit_btn, &QPushButton::clicked, this, &CandidateHomeWindow::edit_manifesto);
 
     connect(logout_btn, &QPushButton::clicked, this, [this](){
         emit logout_requested();
+    });
+
+    connect(status_btn, &QPushButton::clicked, this, [this](){
+
+        qDebug() << "Now:" << QDateTime::currentDateTime();
+        qDebug() << "Start:" << ElectionConfig::votingStart();
+        qDebug() << "End:" << ElectionConfig::votingEnd();
+        qDebug() << "Open:" << ElectionConfig::isVotingOpen();
+
+        if (ElectionConfig::isVotingOpen())
+            emit status_requested(candidate_nid);
+        else
+            emit result_page_requested();
     });
 }
 void CandidateHomeWindow::edit_manifesto()

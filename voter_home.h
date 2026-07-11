@@ -27,6 +27,7 @@ private:
 
     QPushButton *view_candidates_btn;
     QPushButton *vote_candidates_btn;
+    QPushButton *view_result_btn;
     QPushButton *logout_btn;
 
     QGridLayout *grid;
@@ -37,5 +38,6 @@ signals:
     void logout_requested();
     void vote_page_requested(QString nid);
     void candidate_view_requested();
+    void result_page_requested();
 
 };

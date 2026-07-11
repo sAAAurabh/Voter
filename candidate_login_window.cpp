@@ -1,11 +1,13 @@
 #include "candidate_login_window.h"
 #include "candidate_home.h"
 #include "candidate_register_window.h"
+#include "election_config.h"
 
 #include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QMessageBox>
 
 CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
     : QWidget(parent)
@@ -157,6 +159,13 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
     connect(reg_btn, &QPushButton::clicked,
             this, [this]()
             {
+                if (!ElectionConfig::isRegistrationOpen()) {
+                    QMessageBox::warning(this, "Registration Closed",
+                                         QString("Registration is only open from %1 to %2.")
+                                             .arg(ElectionConfig::registrationStart().toString("MMM d, yyyy"))
+                                             .arg(ElectionConfig::registrationEnd().toString("MMM d, yyyy")));
+                    return;
+                }
                 emit register_requested();
             });
 }
