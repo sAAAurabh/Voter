@@ -36,9 +36,7 @@ int main(int argc, char *argv[])
     }
     Database::init();
 
-    ResultPage w;
+    MainWindow w;
     w.show();
-    //MainWindow w;
-    //w.show();
     return a.exec();
 }

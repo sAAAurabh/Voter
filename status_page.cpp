@@ -151,7 +151,10 @@ CandidateStatusWindow::CandidateStatusWindow(const QString &nid, QWidget *parent
         "}"
         );
 
-    connect(back_btn,&QPushButton::clicked,this,&QWidget::close);
+    connect(back_btn, &QPushButton::clicked, this, [this]() {
+        emit back_requested();
+    });
+
 
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);

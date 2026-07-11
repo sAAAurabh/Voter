@@ -18,12 +18,11 @@ private:
 
     QLabel *title;
 
-    // Current Status
+
     QLabel *votes_label;
     QLabel *position_label;
     QLabel *share_label;
 
-    // Election Information
     QLabel *total_votes_label;
     QLabel *total_candidates_label;
     QLabel *status_label;
@@ -32,4 +31,7 @@ private:
     QProgressBar *share_bar;
 
     QPushButton *back_btn;
+
+signals:
+    void back_requested();
 };

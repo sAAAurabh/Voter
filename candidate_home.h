@@ -40,4 +40,5 @@ private slots:
 
 signals:
     void logout_requested();
+    void status_requested(const QString &nid);
 };

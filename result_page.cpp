@@ -6,8 +6,11 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QPixmap>
-
-#include <QPieSeries>
+#include <QSqlQuery>
+#include <QBarSeries>
+#include <QBarSet>
+#include <QBarCategoryAxis>
+#include <QValueAxis>
 #include <QChart>
 #include <QChartView>
 
@@ -43,7 +46,7 @@ ResultPage::ResultPage(QWidget *parent)
     title->setAlignment(Qt::AlignCenter);
     title->setStyleSheet("color:white;font-size:22px;font-weight:bold;");
 
-    // ---------------- Winner ----------------
+
 
     QGroupBox *winnerBox = new QGroupBox("Winner");
     winnerBox->setStyleSheet(boxStyle);
@@ -78,58 +81,96 @@ ResultPage::ResultPage(QWidget *parent)
     winnerLayout->addWidget(photo);
     winnerLayout->addLayout(info);
 
-    // ---------------- Summary ----------------
+    //election summary
 
     QGroupBox *summary = new QGroupBox("Election Summary");
     summary->setStyleSheet(boxStyle);
 
     QVBoxLayout *summaryLayout = new QVBoxLayout(summary);
-    summaryLayout->addWidget(new QLabel("Total Votes Cast : 500"));
-    summaryLayout->addWidget(new QLabel("Total Candidates : 6"));
-
-    // Make labels white
+    summaryLayout->addWidget(new QLabel("Total Votes Cast : " + QString::number(a.total_votes())));
+    summaryLayout->addWidget(new QLabel("Total Candidates : "+ QString::number(a.total_candidates())));
     for(auto lbl : summary->findChildren<QLabel*>())
         lbl->setStyleSheet("color:white;");
 
-    // ---------------- Pie Chart ----------------
 
-    QPieSeries *series = new QPieSeries;
-    series->append("Ram",180);
-    series->append("Hari",150);
-    series->append("Sita",100);
-    series->append("John",70);
+
+
+
+    //bar chart result
+
+    QBarSet *set = new QBarSet("Votes");
+    QStringList names;
+
+    QSqlQuery query(
+        "SELECT first, votes FROM candidates "
+        "ORDER BY votes DESC LIMIT 5"
+        );
+
+    while (query.next())
+    {
+        names << query.value(0).toString();
+        *set << query.value(1).toInt();
+    }
+
+    QBarSeries *series = new QBarSeries;
+    series->append(set);
 
     QChart *chart = new QChart;
     chart->addSeries(series);
-    chart->setTitle("Vote Distribution");
+    chart->legend()->hide();
     chart->setBackgroundBrush(QColor("#1a2532"));
-    chart->legend()->setLabelColor(Qt::white);
+    chart->setTitle("Top Candidates");
     chart->setTitleBrush(Qt::white);
+
+    QBarCategoryAxis *axisX = new QBarCategoryAxis;
+    axisX->append(names);
+    QFont font;
+    font.setPointSize(10);
+
+    axisX->setLabelsFont(font);
+    axisX->setLabelsColor(Qt::white);
+
+
+    QValueAxis *axisY = new QValueAxis;
+
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
+
+    axisX->setGridLineVisible(false);
+    axisX->setLineVisible(false);
+    axisY->setVisible(false);
+
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setStyleSheet("border:none;background:#1a2532;");
+    chartView->setStyleSheet("background:#1a2532;border:none;");
 
-    // ---------------- Back ----------------
+
+
+
 
     QPushButton *back = new QPushButton("Back");
 
     back->setStyleSheet(
         "QPushButton{"
-        "background:#2f9bda;"
+        "background:#00a878;"
         "color:white;"
         "border:none;"
         "border-radius:8px;"
         "padding:10px;"
         "font-weight:bold;"
         "}"
-        "QPushButton:hover{background:#2585bd;}"
+        "QPushButton:hover{background:#008f66;}"
         );
 
     connect(back,&QPushButton::clicked,this,&QWidget::close);
 
-    // ---------------- Main Layout ----------------
 
+
+    //mainlayout
     QVBoxLayout *main = new QVBoxLayout(this);
     main->addWidget(title);
     main->addWidget(winnerBox);

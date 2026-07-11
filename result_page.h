@@ -7,6 +7,6 @@ class ResultPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit ResultPage(QWidget *parent=nullptr);
+    ResultPage(QWidget *parent=nullptr);
 };
 

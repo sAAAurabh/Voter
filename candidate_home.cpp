@@ -164,6 +164,10 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     connect(logout_btn, &QPushButton::clicked, this, [this](){
         emit logout_requested();
     });
+
+    connect(status_btn, &QPushButton::clicked, this, [this](){
+        emit status_requested(candidate_nid);
+    });
 }
 void CandidateHomeWindow::edit_manifesto()
 {

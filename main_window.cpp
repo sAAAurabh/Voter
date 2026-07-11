@@ -219,12 +219,42 @@ MainWindow::MainWindow(QWidget *parent)
                 {
                     stack->addWidget(candidate_login_page);
                     stack->setCurrentWidget(candidate_login_page);
-                    setFixedSize(720,630);
+                    setFixedSize(720,560);
                     center_window();
                     stack->removeWidget(candidate_home);
                     delete candidate_home;
                 }
                 );
+
+            connect(
+                candidate_home,
+                &CandidateHomeWindow::status_requested,
+                this,
+                [this, candidate_home](QString nid)
+                {
+                    CandidateStatusWindow *status_page = new CandidateStatusWindow(nid);
+                    stack->addWidget(status_page);
+                    stack->setCurrentWidget(status_page);
+                    setFixedSize(700,500);
+                    center_window();
+
+                    connect(
+                        status_page,
+                        &CandidateStatusWindow::back_requested,
+                        this,
+                        [this, candidate_home, status_page](){
+                            stack->addWidget(candidate_home);
+                            stack->setCurrentWidget(candidate_home);
+                            setFixedSize(700,480);
+                            stack->removeWidget(status_page);
+                            delete status_page;
+                            center_window();
+                        }
+                        );
+                }
+                );
+
+
 
 
         }
