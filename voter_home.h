@@ -34,19 +34,9 @@ private:
 
     QString voter_nid;
 
-<<<<<<< Updated upstream
+
 signals:
     void logout_requested();
     void vote_page_requested(QString nid);
     void candidate_view_requested();
     void result_page_requested();
-
-=======
-
-private slots:
-    void logout();
-    void vote();
-    void view_candidates();
-
->>>>>>> Stashed changes
-};
