@@ -17,14 +17,7 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
     : QWidget(parent)
 {
     setWindowTitle("Login");
-
-    //this->setAttribute(Qt::WA_StyledBackground, true);
     this->setObjectName("loginWindow");
-
-    this->setStyleSheet(
-        "#loginWindow { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0.0 #0c1e3d, stop:0.3 #1d3966, stop:0.55 #2c4a7c, stop:0.8 #4a6da3, stop:1.0 #6f8fc7); }"
-        "QLabel { color: #ffffff; font-weight: bold; }"
-        );
 
     QLabel *logo = new QLabel(this);
     QPixmap pix("C:/Users/Saurav/Desktop/vottter/icons/evote.png");
@@ -46,21 +39,21 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
     nid_input = new QLineEdit(this);
     nid_label->setStyleSheet("margin-top: 10px;font-size: 16px;");
     nid_input->setPlaceholderText("Enter National ID");
-    nid_input->setStyleSheet("font-size: 16px; padding: 15px; background-color: #ffffff; color: #1e293b; border-radius: 5px; border: none; font-weight: normal;");
+    nid_input->setStyleSheet("font-size: 16px; padding: 15px;");
 
     pass_label = new QLabel("Password", this);
     pass_input = new QLineEdit(this);
     pass_label->setStyleSheet("margin-top: 10px;font-size: 16px;");
     pass_input->setPlaceholderText("Enter Password");
     pass_input->setEchoMode(QLineEdit::Password);
-    pass_input->setStyleSheet("font-size: 16px; padding: 15px; background-color: #ffffff; color: #1e293b; border-radius: 5px; border: none; font-weight: normal; margin-bottom: 20px;");
+    pass_input->setStyleSheet("font-size: 16px; padding: 15px; margin-bottom: 20px;");
 
     login_btn = new QPushButton("Login", this);
     reg_btn = new QPushButton("Register", this);
-    login_btn->setStyleSheet("background-color: #3b82f6; color: white; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold;");;
+    login_btn->setStyleSheet("background-color: #3b82f6; padding: 12px; font-size: 15px; font-weight: bold;");;
     login_btn->setCursor(Qt::PointingHandCursor);
 
-    reg_btn->setStyleSheet("background-color: #10b981; color: white; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold;");
+    reg_btn->setStyleSheet("background-color: #10b981; padding: 12px; font-size: 15px; font-weight: bold;");
     reg_btn->setCursor(Qt::PointingHandCursor);
 
     QFont msg_font;

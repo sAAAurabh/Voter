@@ -21,13 +21,6 @@ CandidateStatusWindow::CandidateStatusWindow(const QString &nid, QWidget *parent
     double vote_share = ((double)c.votes/vote_total)*100;
 
     setWindowTitle("Election Status");
-    resize(650,500);
-
-    setAttribute(Qt::WA_StyledBackground,true);
-
-    setStyleSheet(
-        "background:#131a24;"
-        );
 
     title = new QLabel("Election Status");
 
@@ -37,14 +30,7 @@ CandidateStatusWindow::CandidateStatusWindow(const QString &nid, QWidget *parent
 
     title->setFont(titleFont);
     title->setAlignment(Qt::AlignCenter);
-    title->setStyleSheet(
-        "color:white;"
-        "background:transparent;"
-        );
 
-    //
-    // YOUR STATUS
-    //
 
     QGroupBox *statusBox = new QGroupBox("Your Current Status");
 
@@ -57,13 +43,11 @@ CandidateStatusWindow::CandidateStatusWindow(const QString &nid, QWidget *parent
         "border-radius:10px;"
         "margin-top:12px;"
         "padding-top:10px;"
-        "background:#1a2532;"
         "}"
 
-        "QGroupBox::title{"
-        "subcontrol-origin:margin;"
-        "left:12px;"
-        "padding:0 5px;"
+        "QGroupBox::title {"
+        "    subcontrol-origin: margin;"
+        "    subcontrol-position: top left;"
         "}"
         );
 
@@ -73,8 +57,7 @@ CandidateStatusWindow::CandidateStatusWindow(const QString &nid, QWidget *parent
 
     QString infoStyle =
         "color:#d8dee9;"
-        "font-size:14px;"
-        "background:transparent;";
+        "font-size:14px;";
 
     votes_label->setStyleSheet(infoStyle);
     position_label->setStyleSheet(infoStyle);
@@ -87,11 +70,9 @@ CandidateStatusWindow::CandidateStatusWindow(const QString &nid, QWidget *parent
     share_bar->setStyleSheet(
         "QProgressBar{"
         "border:none;"
-        "background:#243243;"
         "height:18px;"
         "border-radius:9px;"
         "text-align:center;"
-        "color:white;"
         "}"
 
         "QProgressBar::chunk{"
@@ -149,10 +130,8 @@ CandidateStatusWindow::CandidateStatusWindow(const QString &nid, QWidget *parent
     back_btn->setStyleSheet(
         "QPushButton{"
         "background:#2f9bda;"
-        "color:white;"
         "font-size:14px;"
         "font-weight:600;"
-        "border:none;"
         "border-radius:8px;"
         "padding:8px;"
         "}"

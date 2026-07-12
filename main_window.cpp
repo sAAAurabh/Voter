@@ -175,7 +175,7 @@ MainWindow::MainWindow(QWidget *parent)
                     ResultPage *result_page = new ResultPage;
                     stack->addWidget(result_page);
                     stack->setCurrentWidget(result_page);
-                    setFixedSize(700,560);
+                    setFixedSize(600,700);
                     center_window();
 
                     connect(
@@ -298,7 +298,7 @@ MainWindow::MainWindow(QWidget *parent)
                     ResultPage *result_page = new ResultPage();
                     stack->addWidget(result_page);
                     stack->setCurrentWidget(result_page);
-                    setFixedSize(700,500);
+                    setFixedSize(600,685);
                     center_window();
 
                     connect(

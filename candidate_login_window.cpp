@@ -14,23 +14,9 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
 {
     setWindowTitle("Candidate Login");
 
-    this->setAttribute(Qt::WA_StyledBackground, true);
-
-    this->setObjectName("candidateLoginWindow");
-
-    this->setStyleSheet(
-        "#candidateLoginWindow {"
-        "background-color: none;"
-        "}"
-        "QLabel {"
-        "color: white;"
-        "font-weight: bold;"
-        "}"
-        );
-
     // Logo
     QLabel *logo = new QLabel(this);
-    QPixmap pix("C:/Users/Saurav/Desktop/vottter/icons/candidate.png");
+    QPixmap pix("C:/Users/Saurav/Desktop/vottter/icons/ok.png");
     logo->setPixmap(pix.scaled(110,110,
                                Qt::KeepAspectRatio,
                                Qt::SmoothTransformation));
@@ -38,13 +24,14 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
 
     // Title
     title = new QLabel("CANDIDATE PORTAL", this);
+    title->setAlignment(Qt::AlignCenter);
 
     QFont titleFont;
     titleFont.setPointSize(26);
     titleFont.setBold(true);
 
     title->setFont(titleFont);
-    title->setAlignment(Qt::AlignCenter);
+
 
     // Subtitle
     QLabel *subtitle =
@@ -52,7 +39,6 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
 
     subtitle->setAlignment(Qt::AlignCenter);
     subtitle->setStyleSheet(
-        "color:#ede9fe;"
         "font-size:20px;"
         "font-weight:600;"
         "margin-bottom:20px;"
@@ -70,11 +56,6 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
     nid_input->setStyleSheet(
         "font-size:16px;"
         "padding:15px;"
-        "background:white;"
-        "color:#1e293b;"
-        "border:none;"
-        "border-radius:5px;"
-        "font-weight:normal;"
         );
 
     // Password
@@ -90,11 +71,6 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
     pass_input->setStyleSheet(
         "font-size:16px;"
         "padding:15px;"
-        "background:white;"
-        "color:#1e293b;"
-        "border:none;"
-        "border-radius:5px;"
-        "font-weight:normal;"
         "margin-bottom:20px;"
         );
 
@@ -104,23 +80,19 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
 
     login_btn->setStyleSheet(
         "background-color:#3b82f6;"
-        "color:white;"
         "padding:12px;"
-        "border-radius:10px;"
         "font-size:15px;"
         "font-weight:bold;"
         );
-    login_btn->setCursor(Qt::PointingHandCursor);
+
 
     reg_btn->setStyleSheet(
         "background-color:#10b981;"
-        "color:white;"
         "padding:12px;"
-        "border-radius:10px;"
         "font-size:15px;"
         "font-weight:bold;"
         );
-    reg_btn->setCursor(Qt::PointingHandCursor);
+
 
     // Message
     QFont msgFont;
@@ -128,7 +100,6 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
     msgFont.setItalic(true);
 
     msg = new QLabel(this);
-    msg->setAlignment(Qt::AlignCenter);
     msg->setFont(msgFont);
 
     // Layout

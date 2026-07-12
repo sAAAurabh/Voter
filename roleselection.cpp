@@ -11,47 +11,40 @@ RoleSelection::RoleSelection(QWidget *parent)
     : QWidget(parent)
 {
     setWindowTitle(" E-Voting System Portal");
-    setFixedSize(720, 630);
-
-    this->setAttribute(Qt::WA_StyledBackground, true);
+    //setFixedSize(720, 630);
 
     titleLabel = new QLabel("Welcome to the Electronic Voting Portal.", this);
     titleLabel->setAlignment(Qt::AlignCenter);
-    titleLabel->setStyleSheet("font-size: 36px; font-weight: 600; color: white; font-family: 'Segoe UI', Arial;");
+    titleLabel->setStyleSheet("font-size: 36px; font-weight: 600; font-family:Arial;");
 
     subLabel = new QLabel("Please select your role to proceed.", this);
     subLabel->setAlignment(Qt::AlignCenter);
-    subLabel->setStyleSheet("font-size: 20px; color: white; font-family: 'Segoe UI', Arial;");
+    subLabel->setStyleSheet("font-size: 20px; font-family: Arial;");
 
     QFrame *voterCard = new QFrame(this);
     voterCard->setFixedSize(270, 320);
     voterCard->setStyleSheet(
         "QFrame { "
         "   background-color: #0B1849; "
-        "   border: none; "
-        "   border-top: 5px solid #0084ff; "
-        "   border-radius: 12px; "
         "}"
         );
 
     QLabel *voterIcon = new QLabel(voterCard);
     voterIcon->setAlignment(Qt::AlignCenter);
     voterIcon->setPixmap(QPixmap("C:/Users/Saurav/Desktop/vottter/icons/vot.png").scaled(180, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    voterIcon->setStyleSheet("border: none; background: transparent;");
 
-    QLabel *voterTitle = new QLabel("I AM A VOTER", voterCard);
+
+    QLabel *voterTitle = new QLabel("I AM A VOTER");
     voterTitle->setAlignment(Qt::AlignCenter);
-    voterTitle->setStyleSheet("font-size: 24px; font-weight: bold; color: white; border: none; background: transparent;");
+    voterTitle->setStyleSheet("font-size: 24px; font-weight: bold;");
 
     QLabel *voterDesc = new QLabel(
-        "Register, view candidates, and cast your vote",
-        voterCard
-        );
+        "Register, view candidates, and cast your vote"
+    );
     voterDesc->setAlignment(Qt::AlignCenter);
-    voterDesc->setWordWrap(true);
-    voterDesc->setStyleSheet("font-size: 17px; color: white; border: none; background: transparent; font-family: 'Calibri';");
+    voterDesc->setStyleSheet("font-size: 17px; color: white; font-family: 'Calibri';");
 
-    voterBtn = new QPushButton("Proceed as Voter", voterCard);
+    voterBtn = new QPushButton("Proceed as Voter");
     voterBtn->setFixedHeight(36);
     voterBtn->setStyleSheet(
         "QPushButton { background-color: #0084ff; color: white; font-weight: 600; font-size: 17px; border-radius: 8px; border: none; font-family: 'Calibri';}"
@@ -67,35 +60,30 @@ RoleSelection::RoleSelection(QWidget *parent)
     voterCardLayout->addStretch();
     voterCardLayout->addWidget(voterBtn);
 
+
     QFrame *candidateCard = new QFrame(this);
     candidateCard->setFixedSize(270, 320);
     candidateCard->setStyleSheet(
         "QFrame { "
         "   background-color: #458393; "
-        "   border: none; "
-        "   border-top: 5px solid #00a878; "
-        "   border-radius: 12px; "
         "}"
         );
 
     QLabel *candidateIcon = new QLabel(candidateCard);
     candidateIcon->setAlignment(Qt::AlignCenter);
     candidateIcon->setPixmap(QPixmap("C:/Users/Saurav/Desktop/vottter/icons/can.png").scaled(180, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    candidateIcon->setStyleSheet("border: none; background: transparent;");
 
-    QLabel *candidateTitle = new QLabel("I AM A CANDIDATE", candidateCard);
+    QLabel *candidateTitle = new QLabel("I AM A CANDIDATE");
     candidateTitle->setAlignment(Qt::AlignCenter);
-    candidateTitle->setStyleSheet("font-size: 24px; font-weight: bold; color: white; border: none; background: transparent;");
+    candidateTitle->setStyleSheet("font-size: 24px; font-weight: bold;");
 
     QLabel *candidateDesc = new QLabel(
-        "Register candidacy, manage profile, and view results",
-        candidateCard
+        "Register candidacy, manage profile, and view results"
         );
     candidateDesc->setAlignment(Qt::AlignCenter);
-    candidateDesc->setWordWrap(true);
-    candidateDesc->setStyleSheet("font-size: 17px; color: white; border: none; background: transparent; font-family: 'Calibri';");
+    candidateDesc->setStyleSheet("font-size: 17px; font-family: 'Calibri';");
 
-    candidateBtn = new QPushButton("Proceed as Candidate", candidateCard);
+    candidateBtn = new QPushButton("Proceed as Candidate");
     candidateBtn->setFixedHeight(36);
     candidateBtn->setStyleSheet(
         "QPushButton { background-color: #00a878; color: white; font-weight: 600; font-size: 17px; border-radius: 8px; border: none; }"
