@@ -15,11 +15,6 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     setWindowTitle("Candidate Registration");
     //setFixedSize(550, 680);
 
-    QRect screen = QGuiApplication::primaryScreen()->availableGeometry();
-    move(screen.center() - QPoint(width() / 2, height() / 2));
-
-    setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint
-                   | Qt::WindowMaximizeButtonHint);
 
     //title
     title = new QLabel("Candidate Registration", this);
@@ -102,10 +97,10 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     photo_btn->setCursor(Qt::PointingHandCursor);
     photo_btn->setStyleSheet(
         "background-color:#3498db;"
-        "color:white;"
         "padding:6px;"
         "border-radius:6px;"
         );
+
     photo_warn = new QLabel("●", this);
     photo_warn->setStyleSheet("color:red; font-size:18px");
     photo_warn->setVisible(false);
@@ -113,7 +108,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     photo_preview = new QLabel(this);
     photo_preview->setFixedSize(80, 80);
     photo_preview->setStyleSheet(
-        "border:2px dashed #aaa;"
+        "border:2px;"
         "border-radius:6px;"
         );
     photo_preview->setAlignment(Qt::AlignCenter);
@@ -127,7 +122,6 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     party_symbol_btn->setCursor(Qt::PointingHandCursor);
     party_symbol_btn->setStyleSheet(
         "background-color:#3498db;"
-        "color:white;"
         "padding:6px;"
         "border-radius:6px;"
         );
@@ -139,7 +133,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     party_symbol_preview = new QLabel(this);
     party_symbol_preview->setFixedSize(80, 80);
     party_symbol_preview->setStyleSheet(
-        "border:2px dashed #aaa;"
+        "border:2px;"
         "border-radius:6px;"
         );
     party_symbol_preview->setAlignment(Qt::AlignCenter);
@@ -179,7 +173,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     reg_btn = new QPushButton("Register", this);
     reg_btn->setCursor(Qt::PointingHandCursor);
     reg_btn->setStyleSheet(
-        "background-color:#2ecc71; color:white; padding:8px; border-radius:6px;");
+        "background-color:#2ecc71; padding:8px; border-radius:6px;");
 
     //warning message
     QFont msg_font;
@@ -190,7 +184,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
     msg->setFont(msg_font);
-    msg->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
 
     //back to login
     back_btn = new QPushButton("← Back to Login", this);
@@ -201,6 +195,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
                             "text-align: left;");
     back_btn->setFixedSize(120, 20);
     back_btn->setCursor(Qt::PointingHandCursor);
+
 
     // grid layout
     grid = new QGridLayout(this);
@@ -314,14 +309,6 @@ void CandidateRegisterWindow::register_user()
 
         msg->setStyleSheet("color: green;");
         msg->setText("Registered Successfully");
-
-        back_btn->setStyleSheet("background: transparent;"
-                                "color: #3498db;"
-                                "border: none;"
-                                "font-size: 13px;"
-                                "text-align: center;"
-                                "font-weight: bold;"
-                                "font-style: italic;");
 
         clear_fields();
         break;

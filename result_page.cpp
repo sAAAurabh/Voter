@@ -22,34 +22,18 @@ ResultPage::ResultPage(QWidget *parent)
 
     a.find_winner(c);
 
-    resize(700,650);
     setWindowTitle("Election Results");
 
-    setStyleSheet("background:#131a24;");
-
-    QString boxStyle =
-        "QGroupBox{"
-        "background:#1a2532;"
-        "border:1px solid #2d3d52;"
-        "border-radius:10px;"
-        "margin-top:10px;"
-        "padding-top:10px;"
-        "color:white;"
-        "font-weight:bold;"
-        "}"
-        "QGroupBox::title{"
-        "subcontrol-origin:margin;"
-        "left:10px;"
-        "}";
 
     QLabel *title = new QLabel("Election Results");
     title->setAlignment(Qt::AlignCenter);
-    title->setStyleSheet("color:white;font-size:22px;font-weight:bold;");
+    title->setStyleSheet("font-size:26px;font-weight:bold;");
+
 
 
 
     QGroupBox *winnerBox = new QGroupBox("Winner");
-    winnerBox->setStyleSheet(boxStyle);
+    winnerBox->setStyleSheet("font-size: 17px;");
 
 
 
@@ -66,8 +50,8 @@ ResultPage::ResultPage(QWidget *parent)
         );
 
 
-    QLabel *name = new QLabel("Name :" + QString::fromStdString(c.first) + " " + QString::fromStdString(c.last));
-    QLabel *party = new QLabel("Party :" + QString::fromStdString(c.party));
+    QLabel *name = new QLabel(QString::fromStdString(c.first) + " " + QString::fromStdString(c.last));
+    QLabel *party = new QLabel(QString::fromStdString(c.party));
 
     name->setStyleSheet("color:white;");
     party->setStyleSheet("color:white;");
@@ -84,14 +68,12 @@ ResultPage::ResultPage(QWidget *parent)
     //election summary
 
     QGroupBox *summary = new QGroupBox("Election Summary");
-    summary->setStyleSheet(boxStyle);
+    summary->setStyleSheet("font-size: 15px;");
+
 
     QVBoxLayout *summaryLayout = new QVBoxLayout(summary);
     summaryLayout->addWidget(new QLabel("Total Votes Cast : " + QString::number(a.total_votes())));
     summaryLayout->addWidget(new QLabel("Total Candidates : "+ QString::number(a.total_candidates())));
-    for(auto lbl : summary->findChildren<QLabel*>())
-        lbl->setStyleSheet("color:white;");
-
 
 
 
@@ -118,9 +100,7 @@ ResultPage::ResultPage(QWidget *parent)
     QChart *chart = new QChart;
     chart->addSeries(series);
     chart->legend()->hide();
-    chart->setBackgroundBrush(QColor("#1a2532"));
-    chart->setTitle("Top Candidates");
-    chart->setTitleBrush(Qt::white);
+    chart->setBackgroundVisible(false);
 
     QBarCategoryAxis *axisX = new QBarCategoryAxis;
     axisX->append(names);
@@ -145,10 +125,7 @@ ResultPage::ResultPage(QWidget *parent)
 
 
     QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setStyleSheet("background:#1a2532;border:none;");
-
-
+    chartView->setBackgroundBrush(QBrush(QColor(35, 35, 35)));
 
 
 
@@ -157,8 +134,6 @@ ResultPage::ResultPage(QWidget *parent)
     back->setStyleSheet(
         "QPushButton{"
         "background:#00a878;"
-        "color:white;"
-        "border:none;"
         "border-radius:8px;"
         "padding:10px;"
         "font-weight:bold;"

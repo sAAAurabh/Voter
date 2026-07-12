@@ -9,7 +9,7 @@ public:
         return QDateTime(QDate(2026, 7, 10), QTime(0, 0));
     }
     static QDateTime votingEnd() {
-        return QDateTime(QDate(2026, 7, 20), QTime(23, 59, 59));
+        return QDateTime(QDate(2026, 7, 11), QTime(23, 59, 59));
     }
 
 
