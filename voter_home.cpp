@@ -244,8 +244,7 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     connect(view_result_btn, &QPushButton::clicked, this, [this](){
         if (ElectionConfig::isVotingOpen()) {
             QMessageBox::warning(this, "Voting Still Going on",
-                                 QString("Voting is open from %1 to %2.")
-                                     .arg(ElectionConfig::votingStart().toString("MMM d, yyyy"))
+                                 QString("Election Ongoing: Please Come back after %1")
                                      .arg(ElectionConfig::votingEnd().toString("MMM d, yyyy")));
             return;
         }

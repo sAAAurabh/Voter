@@ -490,9 +490,8 @@ int Admin::calculate_position(const std::string &nid){
 
     while (query.next())
     {
-        if (query.value(0).toString().toStdString() == nid)
-            return position;
-            position++;
+        if (query.value(0).toString().toStdString() == nid) return position;
+        position++;
     }
 }
 
