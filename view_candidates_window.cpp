@@ -65,10 +65,16 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
         card_layout->setHorizontalSpacing(16);
         card_layout->setVerticalSpacing(6);
 
+
+        //
         QLabel *photo = new QLabel;
         photo->setFixedSize(85, 95);
         photo->setAlignment(Qt::AlignCenter);
-        photo->setStyleSheet("border:1px solid #453f52; border-radius:8px; background:#332f3d;");
+        photo->setStyleSheet(
+            "border:1px solid #453f52;"
+            "border-radius:8px;"
+            "background:#332f3d;"
+            );
 
         QPixmap pix(QString::fromStdString(c.photo_path));
         if (!pix.isNull())
@@ -76,15 +82,32 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
         else
             photo->setText("No Photo");
 
-        QString info_style = "font-size:13px; border:none; background:transparent; color:#cdc8d6; font-family:'Segoe UI';";
+        QLabel *party_symbol = new QLabel;
+        party_symbol->setFixedSize(55, 55);
+        party_symbol->setAlignment(Qt::AlignCenter);
+        party_symbol->setStyleSheet(
+            "border:1px solid #453f52;"
+            "border-radius:8px;"
+            "background:#332f3d;"
+            );
+
+        QPixmap symbol(QString::fromStdString(c.party_symbol_path));
+        if (!symbol.isNull())
+            party_symbol->setPixmap(symbol.scaled(
+                party_symbol->size(),
+                Qt::KeepAspectRatio,
+                Qt::SmoothTransformation));
+        else
+            party_symbol->setText("N/A");
+
+        QString info_style =
+            "font-size:13px; border:none; background:transparent; "
+            "color:#cdc8d6; font-family:'Segoe UI';";
 
         QLabel *name   = new QLabel(QString::fromStdString(c.first + " " + c.last));
         QLabel *party  = new QLabel(QString::fromStdString("Party: " + c.party));
         QLabel *gender = new QLabel(QString::fromStdString("Gender: " + c.gender));
-
-        // If Candidate has a direct age field, use this line instead:
-        // QLabel *age = new QLabel("Age: " + QString::number(c.age));
-        QLabel *age = new QLabel("Age: " + QString::fromStdString(admin.calculate_age(c.dob)));
+        QLabel *age    = new QLabel("Age: " + QString::fromStdString(admin.calculate_age(c.dob)));
 
         name->setStyleSheet(info_style + "font-weight:bold; font-size:15px; color:#ffffff;");
         party->setStyleSheet(info_style);
@@ -97,23 +120,28 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
 
         QLabel *manifesto_title = new QLabel("Manifesto:");
         manifesto_title->setStyleSheet(
-            "font-weight:bold; font-size:12px; color:#9891a3; border:none; background:transparent;"
+            "font-weight:bold; font-size:12px; color:#9891a3;"
+            "border:none; background:transparent;"
             );
 
         QLabel *manifesto = new QLabel(manifesto_text);
         manifesto->setWordWrap(true);
         manifesto->setStyleSheet(
-            "font-size:12px; color:#cdc8d6; border:none;"
-            "background:#332f3d; padding:8px; border-radius:6px;"
+            "font-size:12px; color:#cdc8d6;"
+            "border:none; background:#332f3d;"
+            "padding:8px; border-radius:6px;"
             );
+        //
 
-        card_layout->addWidget(photo,           0, 0, 4, 1, Qt::AlignTop);
-        card_layout->addWidget(name,            0, 1);
-        card_layout->addWidget(party,           1, 1);
-        card_layout->addWidget(gender,          2, 1);
-        card_layout->addWidget(age,             3, 1);
-        card_layout->addWidget(manifesto_title, 4, 0, 1, 2);
-        card_layout->addWidget(manifesto,       5, 0, 1, 2);
+        card_layout->setColumnStretch(1, 1);
+        card_layout->addWidget(photo,         0, 0, 4, 1, Qt::AlignTop);
+        card_layout->addWidget(name,          0, 1);
+        card_layout->addWidget(party,         1, 1);
+        card_layout->addWidget(gender,        2, 1);
+        card_layout->addWidget(age,           3, 1);
+        card_layout->addWidget(party_symbol,  0, 2, Qt::AlignTop | Qt::AlignRight);
+        card_layout->addWidget(manifesto_title, 4, 0, 1, 3);
+        card_layout->addWidget(manifesto,       5, 0, 1, 3);
 
         container_layout->addWidget(card);
     }
