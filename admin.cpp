@@ -493,6 +493,7 @@ int Admin::calculate_position(const std::string &nid){
         if (query.value(0).toString().toStdString() == nid) return position;
         position++;
     }
+    return -1;
 }
 
 bool Admin::find_winner(Candidate &winner)
