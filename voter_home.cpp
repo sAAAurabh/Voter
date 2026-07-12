@@ -1,6 +1,11 @@
 #include "voter_home.h"
 #include "voter_login_window.h"
+<<<<<<< Updated upstream
 #include "main_window.h"
+=======
+
+
+>>>>>>> Stashed changes
 #include "voting_page.h"
 #include "view_candidates_window.h"
 #include "election_config.h"
@@ -8,6 +13,7 @@
 #include <QFont>
 #include <QFrame>
 #include <QPixmap>
+<<<<<<< Updated upstream
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -17,6 +23,8 @@
 #include <QGraphicsDropShadowEffect>
 #include <QPainterPath>
 #include <QMessageBox>
+=======
+>>>>>>> Stashed changes
 
 
 VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
@@ -24,10 +32,14 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     , voter_nid(nid)
 {
     setWindowTitle("Voter Dashboard");
+<<<<<<< Updated upstream
 
     setAttribute(Qt::WA_StyledBackground, true);
     setStyleSheet("background-color:#1b1f27;");
 
+=======
+    //setFixedSize(600, 480);
+>>>>>>> Stashed changes
     title = new QLabel("Voter Dashboard", this);
 
     QFont titleFont;
@@ -228,6 +240,7 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     grid->addWidget(view_result_btn,     4, 0, 1, 2);
     grid->addWidget(msg,                 5, 0, 1, 2);
 
+<<<<<<< Updated upstream
     connect(logout_btn, &QPushButton::clicked, this, [this](){emit logout_requested();});
 
     connect(vote_candidates_btn, &QPushButton::clicked, this, [this](){
@@ -252,14 +265,40 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     });
 
     connect(view_candidates_btn, &QPushButton::clicked, this, [this](){emit candidate_view_requested();});
+=======
+    // logout button (top right corner)
+    logout_btn->setParent(this);
+    logout_btn->setGeometry(width() - 70, 5, 60, 25);
+
+    connect(logout_btn,          &QPushButton::clicked, this, &VoterHomeWindow::logout);
+    connect(vote_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::vote);
+    connect(view_candidates_btn, &QPushButton::clicked, this, &VoterHomeWindow::view_candidates);
+>>>>>>> Stashed changes
 }
 
 void VoterHomeWindow::refreshVoteStatus()
 {
+<<<<<<< Updated upstream
     Admin a;
     Voter v;
     a.find_voter(voter_nid.toStdString(), v);
     vote_candidates_btn->setText(v.has_voted ? "Already Voted" : "Vote Candidates");
     vote_candidates_btn->setEnabled(!v.has_voted);
     vote_candidates_btn->setCursor(v.has_voted ? Qt::ForbiddenCursor : Qt::PointingHandCursor);
+=======
+    this->close();
+}
+
+void VoterHomeWindow::vote()
+{
+    this->hide();
+    VotingPage *w = new VotingPage(voter_nid);
+    w->show();
+}
+
+void VoterHomeWindow::view_candidates()
+{
+    ViewCandidatesWindow *w = new ViewCandidatesWindow();
+    w->show();
+>>>>>>> Stashed changes
 }
