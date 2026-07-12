@@ -11,7 +11,13 @@
 
 
 CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
+<<<<<<< Updated upstream
     : QWidget(parent), candidate_nid(nid)
+=======
+
+    : QWidget(parent), candidate_nid(nid)   // ADD candidate_nid(nid)
+
+>>>>>>> Stashed changes
 {
     setWindowTitle("Candidate Dashboard");
     //setFixedSize(700, 480);
