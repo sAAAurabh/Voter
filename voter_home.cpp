@@ -29,8 +29,6 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     , voter_nid(nid)
 {
     setWindowTitle("Voter Dashboard");
-    setAttribute(Qt::WA_StyledBackground, true);
-    setStyleSheet("background-color:#1b1f27;");
     //setFixedSize(600, 480);
 
     title = new QLabel("Voter Dashboard", this);
@@ -41,12 +39,11 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
 
     title->setFont(titleFont);
     title->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
-    title->setStyleSheet("color:#f5f6fa; background:transparent; font-family:'Segoe UI';");
+
 
     QLabel *vote_icon = new QLabel(this);
     vote_icon->setFixedSize(38, 38);
     vote_icon->setAlignment(Qt::AlignCenter);
-    vote_icon->setStyleSheet("background:transparent;");
     QPixmap icon_pix("C:/Users/Saurav/Desktop/vottter/icons/evote.png");
     vote_icon->setPixmap(
         icon_pix.scaled(38, 38, Qt::KeepAspectRatio, Qt::SmoothTransformation)
@@ -58,12 +55,9 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     logout_btn->setStyleSheet(
         "QPushButton {"
         "background-color:#e74c3c;"
-        "color:#ffffff;"
-        "border: none;"
         "border-radius:8px;"
         "font-size:13px;"
         "font-weight:600;"
-        "font-family:'Segoe UI';"
         "}"
         "QPushButton:hover { background-color:#d43a2c; }"
         "QPushButton:pressed { background-color:#b8321f; }"
@@ -75,10 +69,6 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     header_layout->addWidget(title, 1, Qt::AlignVCenter);
     header_layout->addWidget(logout_btn, 0, Qt::AlignVCenter);
 
-    QFrame *divider = new QFrame(this);
-    divider->setFrameShape(QFrame::HLine);
-    divider->setFixedHeight(1);
-    divider->setStyleSheet("background-color: rgba(255,255,255,30); border:none;");
 
     QFrame *profile_box = new QFrame(this);
     profile_box->setMinimumHeight(320);
@@ -96,7 +86,7 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     card_layout->setSpacing(0);
 
     QFrame *content_area = new QFrame(profile_box);
-    content_area->setStyleSheet("background: transparent; border: none;");
+
 
     QGridLayout *profile_layout = new QGridLayout(content_area);
     profile_layout->setContentsMargins(36, 34, 36, 34);
@@ -110,15 +100,15 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     a.find_voter(voter_nid.toStdString(), v);
 
     QString info_style =
-        "font-size:15px; color:#c8ccd6; font-family:'Segoe UI'; background:transparent;";
+        "font-size:15px; background:transparent;";
     QString info_style_bold =
-        "font-size:18px; font-weight:600; color:#ffffff; font-family:'Segoe UI'; background:transparent;";
+        "font-size:18px; font-weight:600; background:transparent;";
 
     photo_label = new QLabel(content_area);
     photo_label->setAlignment(Qt::AlignCenter);
     photo_label->setFixedSize(140, 160);
     photo_label->setStyleSheet(
-        "background:#2c313d; border:1px solid #3a3f4b; border-radius:10px;"
+        "background:#2c313d; border-radius:10px;"
         );
 
     QPixmap pix(QString::fromStdString(v.photo_path));
@@ -163,13 +153,10 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     QString primary_btn_style =
         "QPushButton {"
         "background-color:#10b981;"
-        "color:white;"
         "padding:12px;"
         "border-radius:10px;"
         "font-weight:600;"
         "font-size:15px;"
-        "font-family:'Segoe UI';"
-        "border:none;"
         "}"
         "QPushButton:hover { background-color:#0ea271; }"
         "QPushButton:pressed { background-color:#0c8a5f; }"
@@ -180,13 +167,10 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     QString secondary_btn_style =
         "QPushButton {"
         "background-color:#2f9bda;"
-        "color:#ffffff;"
         "padding:12px;"
         "border-radius:10px;"
         "font-weight:600;"
         "font-size:15px;"
-        "font-family:'Segoe UI';"
-        "border:none;"
         "}"
         "QPushButton:hover { background-color:#2585bd; }"
         "QPushButton:pressed { background-color:#1c6c9c; }";
@@ -200,13 +184,10 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     view_result_btn->setStyleSheet(
         "QPushButton {"
         "background-color:#8b5cf6;"
-        "color:white;"
         "padding:12px;"
         "border-radius:10px;"
         "font-weight:600;"
         "font-size:15px;"
-        "font-family:'Segoe UI';"
-        "border:none;"
         "}"
         "QPushButton:hover { background-color:#7c3aed; }"
         "QPushButton:pressed { background-color:#6d28d9; }"
@@ -218,7 +199,7 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
 
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
-    msg->setStyleSheet("color:#4f9dff; font-weight:bold; background:transparent; font-family:'Segoe UI';");
+    msg->setStyleSheet("color:#4f9dff; font-weight:bold; background:transparent;");
 
     grid = new QGridLayout(this);
     grid->setContentsMargins(40, 24, 40, 24);
@@ -226,7 +207,6 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     grid->setHorizontalSpacing(20);
 
     grid->addLayout(header_layout,       0, 0, 1, 2);
-    grid->addWidget(divider,             1, 0, 1, 2);
     grid->addWidget(profile_box,         2, 0, 1, 2);
     grid->addWidget(view_candidates_btn, 3, 0);
     grid->addWidget(vote_candidates_btn, 3, 1);

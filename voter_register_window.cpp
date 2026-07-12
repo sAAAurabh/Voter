@@ -13,26 +13,13 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     setObjectName("VoterRegisterWindow");
 
     setStyleSheet(
-        "#VoterRegisterWindow {"
-        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #0f2027, stop:0.5 #203a43, stop:1 #2c5364);"
-        "}"
-        "QLabel {"
-        "   color: #ffffff;"
-        "}"
         "QLineEdit, QDateEdit, QComboBox {"
-        "   background-color: rgba(20, 30, 48, 150);"
         "   color: #ffffff;"
         "   border: 1px solid #555555;"
         "   border-radius: 5px;"
         "   padding: 6px;"
         "}"
-        "QLineEdit:focus, QDateEdit:focus, QComboBox:focus {"
-        "   border: 1px solid #3498db;"
-        "}"
         );
-
-    setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint
-                   | Qt::WindowMaximizeButtonHint);
 
     setMinimumSize(480, 640);
     resize(520, 700);
@@ -103,7 +90,6 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     photo_btn->setStyleSheet(
         "QPushButton {"
         "   background-color: #3498db;"
-        "   color: white;"
         "   padding: 8px;"
         "   border: none;"
         "   border-radius: 6px;"
@@ -121,7 +107,7 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
 
     photo_preview = new QLabel(this);
     photo_preview->setFixedSize(64, 64);
-    photo_preview->setStyleSheet("border: 2px dashed #888888; border-radius: 6px; color: #ffffff; background: rgba(0,0,0,50);");
+    photo_preview->setStyleSheet("border: 2px dashed #888888; border-radius: 6px;");
     photo_preview->setAlignment(Qt::AlignCenter);
     photo_preview->setText("No Photo");
     photo_preview->setScaledContents(true);
