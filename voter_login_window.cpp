@@ -20,7 +20,7 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
     this->setObjectName("loginWindow");
 
     QLabel *logo = new QLabel(this);
-    QPixmap pix("C:/Users/Saurav/Desktop/vottter/icons/evote.png");
+    QPixmap pix(":icons//icons/evote.png");
     logo->setPixmap(pix.scaled(110, 110, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     logo->setAlignment(Qt::AlignCenter);
 
