@@ -21,6 +21,5 @@ build/
 # SQLite databases
 *.db
 
-voter.pro
 
-Makefile*
+voter.pro
