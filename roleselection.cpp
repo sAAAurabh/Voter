@@ -31,7 +31,7 @@ RoleSelection::RoleSelection(QWidget *parent)
 
     QLabel *voterIcon = new QLabel(voterCard);
     voterIcon->setAlignment(Qt::AlignCenter);
-    voterIcon->setPixmap(QPixmap("C:/Users/Saurav/Desktop/vottter/icons/vot.png").scaled(180, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    voterIcon->setPixmap(QPixmap(":/icons/icons/vot.png").scaled(180, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
 
     QLabel *voterTitle = new QLabel("I AM A VOTER");
@@ -71,7 +71,7 @@ RoleSelection::RoleSelection(QWidget *parent)
 
     QLabel *candidateIcon = new QLabel(candidateCard);
     candidateIcon->setAlignment(Qt::AlignCenter);
-    candidateIcon->setPixmap(QPixmap("C:/Users/Saurav/Desktop/vottter/icons/can.png").scaled(180, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    candidateIcon->setPixmap(QPixmap(":/icons/icons/can.png").scaled(180, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     QLabel *candidateTitle = new QLabel("I AM A CANDIDATE");
     candidateTitle->setAlignment(Qt::AlignCenter);

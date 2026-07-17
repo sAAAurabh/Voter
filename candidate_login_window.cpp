@@ -16,7 +16,7 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
 
     // Logo
     QLabel *logo = new QLabel(this);
-    QPixmap pix("C:/Users/Saurav/Desktop/vottter/icons/ok.png");
+    QPixmap pix(":/icons/icons/ok.png");
     logo->setPixmap(pix.scaled(110,110,
                                Qt::KeepAspectRatio,
                                Qt::SmoothTransformation));
