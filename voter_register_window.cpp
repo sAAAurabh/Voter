@@ -33,6 +33,19 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     title->setFont(title_font);
     title->setAlignment(Qt::AlignCenter);
 
+    QLabel *dash_icon = new QLabel(this);
+    QPixmap dash_pixmap(":/icons/icons/dash.png");
+    dash_icon->setPixmap(dash_pixmap.scaled(86, 75, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    dash_icon->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+    dash_icon->setContentsMargins(0, 0, 0, 10);
+    QHBoxLayout *title_row = new QHBoxLayout();
+    title_row->setAlignment(Qt::AlignCenter);
+    title_row->setSpacing(20);
+    title_row->addStretch(5);
+    title_row->addWidget(title);
+    title_row->addSpacing(20);
+    title_row->addWidget(dash_icon);
+    title_row->addStretch(2);
     f_name_label = new QLabel("First Name", this);
     f_name_input = new QLineEdit(this);
     f_name_warn = new QLabel("●", this);
@@ -175,7 +188,7 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     grid->setColumnMinimumWidth(0, 110);
 
     int row = 0;
-    grid->addWidget(title, row, 0, 1, 3);
+  grid->addLayout(title_row, row, 0, 1, 3);
     row++;
 
     grid->addWidget(f_name_label, row, 0);

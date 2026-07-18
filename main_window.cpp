@@ -88,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent)
             VoterHomeWindow *voter_home = new VoterHomeWindow(nid);
             stack->addWidget(voter_home);
             stack->setCurrentWidget(voter_home);
-            setFixedSize(720,630);
+            setFixedSize(740,650);
             center_window();
 
             connect(
@@ -155,7 +155,7 @@ MainWindow::MainWindow(QWidget *parent)
                             stack->addWidget(voter_home);
                             voter_home->refreshVoteStatus();
                             stack->setCurrentWidget(voter_home);
-                            setFixedSize(720,630);
+                            setFixedSize(720,690);
                             center_window();
 
                             stack->removeWidget(candidate_view_page);
@@ -226,7 +226,7 @@ MainWindow::MainWindow(QWidget *parent)
             candidate_register_page->clear_msg();
             candidate_register_page->clear_fields();
             stack->setCurrentWidget(candidate_register_page);
-            setFixedSize(720,680);
+            setFixedSize(720,780);
             center_window();
         }
         );
@@ -252,7 +252,7 @@ MainWindow::MainWindow(QWidget *parent)
                 {
                     stack->addWidget(candidate_login_page);
                     stack->setCurrentWidget(candidate_login_page);
-                    setFixedSize(720,560);
+                    setFixedSize(720,630);
                     center_window();
                     stack->removeWidget(candidate_home);
                     delete candidate_home;
@@ -308,7 +308,7 @@ MainWindow::MainWindow(QWidget *parent)
                         [this, candidate_home, result_page](){
                             stack->addWidget(candidate_home);
                             stack->setCurrentWidget(candidate_home);
-                            setFixedSize(700,480);
+                            setFixedSize(700,600);
                             stack->removeWidget(result_page);
                             delete result_page;
                             center_window();
@@ -333,7 +333,7 @@ MainWindow::MainWindow(QWidget *parent)
         {
             stack->addWidget(candidate_login_page);
             stack->setCurrentWidget(candidate_login_page);
-            setFixedSize(720,630);
+            setFixedSize(720,670);
             center_window();
 
         }

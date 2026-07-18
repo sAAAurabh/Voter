@@ -6,6 +6,8 @@
 #include <QScreen>
 #include <QDebug>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QCheckBox>
 #include "admin.h"
 
 
@@ -13,7 +15,19 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     : QWidget(parent)
 {
     setWindowTitle("Candidate Registration");
-    //setFixedSize(550, 680);
+    setObjectName("CandidateRegisterWindow");
+
+    setStyleSheet(
+        "QLineEdit, QDateEdit, QComboBox {"
+        "   color: #ffffff;"
+        "   border: 1px solid #555555;"
+        "   border-radius: 5px;"
+        "   padding: 6px;"
+        "}"
+        );
+
+    setMinimumSize(560, 760);
+    resize(600, 820);
 
 
     //title
@@ -26,69 +40,83 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     title->setFont(title_font);
     title->setAlignment(Qt::AlignCenter);
 
+    QLabel *candi_logo = new QLabel(this);
+    QPixmap candi_pix(":/icons/icons/candi.png");
+    candi_logo->setPixmap(candi_pix.scaled(92, 88, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    candi_logo->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+    candi_logo->setContentsMargins(0, 0, 0, 10);
+
+    QHBoxLayout *title_row = new QHBoxLayout();
+    title_row->setAlignment(Qt::AlignCenter);
+    title_row->setSpacing(20);
+    title_row->addStretch(5);
+    title_row->addWidget(title);
+    title_row->addSpacing(20);
+    title_row->addWidget(candi_logo);
+    title_row->addStretch(2);
+
     //names
     f_name_label = new QLabel("First Name", this);
     f_name_input = new QLineEdit(this);
     f_name_warn = new QLabel("●", this);
-    f_name_warn->setStyleSheet("color:red; font-size:18px");
+    f_name_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     f_name_warn->setVisible(false);
+    f_name_warn->setFixedWidth(18);
 
     l_name_label = new QLabel("Last Name", this);
     l_name_input = new QLineEdit(this);
     l_name_warn = new QLabel("●", this);
-    l_name_warn->setStyleSheet("color:red; font-size:18px");
+    l_name_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     l_name_warn->setVisible(false);
+    l_name_warn->setFixedWidth(18);
 
     f_name_input->setPlaceholderText("Enter First Name");
-    f_name_input->setStyleSheet("padding:6px;");
-
     l_name_input->setPlaceholderText("Enter Last Name");
-    l_name_input->setStyleSheet("padding:6px;");
 
     //nid
     nid_label = new QLabel("National ID", this);
     nid_input = new QLineEdit(this);
     nid_warn = new QLabel("●", this);
-    nid_warn->setStyleSheet("color:red; font-size:18px");
+    nid_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     nid_warn->setVisible(false);
+    nid_warn->setFixedWidth(18);
     nid_input->setPlaceholderText("Enter National ID");
-    nid_input->setStyleSheet("padding:6px;");
 
     //date of birth
     dob_label = new QLabel("Date of Birth", this);
     dob_input = new QDateEdit(this);
     dob_warn = new QLabel("●", this);
-    dob_warn->setStyleSheet("color:red; font-size:18px");
+    dob_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     dob_warn->setVisible(false);
+    dob_warn->setFixedWidth(18);
 
     dob_input->setDisplayFormat("yyyy-MM-dd");
     dob_input->setCalendarPopup(true);
     dob_input->setMaximumDate(QDate::currentDate().addYears(-18));
     dob_input->setMinimumDate(QDate(1900, 1, 1));
     dob_input->setDate(QDate(2000, 1, 1));
-    dob_input->setStyleSheet("padding:6px;");
 
     //party
     party_label = new QLabel("Party", this);
     party_input = new QLineEdit(this);
     party_warn = new QLabel("●", this);
-    party_warn->setStyleSheet("color:red; font-size:18px");
+    party_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     party_warn->setVisible(false);
+    party_warn->setFixedWidth(18);
     party_input->setPlaceholderText("Enter Your Party");
-    party_input->setStyleSheet("padding:6px;");
 
     //gender
     gender_label = new QLabel("Gender", this);
     gender_input = new QComboBox(this);
     gender_warn = new QLabel("●", this);
-    gender_warn->setStyleSheet("color:red; font-size:18px");
+    gender_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     gender_warn->setVisible(false);
+    gender_warn->setFixedWidth(18);
 
     gender_input->addItem("-- Select Gender --");
     gender_input->addItem("Male");
     gender_input->addItem("Female");
     gender_input->addItem("Other");
-    gender_input->setStyleSheet("padding:6px;");
 
     //photo
     photo_label = new QLabel("Photo", this);
@@ -96,21 +124,26 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     photo_btn = new QPushButton("Upload Photo", this);
     photo_btn->setCursor(Qt::PointingHandCursor);
     photo_btn->setStyleSheet(
-        "background-color:#3498db;"
-        "padding:6px;"
-        "border-radius:6px;"
+        "QPushButton {"
+        "   background-color: #3498db;"
+        "   padding: 8px;"
+        "   border: none;"
+        "   border-radius: 6px;"
+        "   font-weight: bold;"
+        "}"
+        "QPushButton:hover {"
+        "   background-color: #2980b9;"
+        "}"
         );
 
     photo_warn = new QLabel("●", this);
-    photo_warn->setStyleSheet("color:red; font-size:18px");
+    photo_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     photo_warn->setVisible(false);
+    photo_warn->setFixedWidth(18);
 
     photo_preview = new QLabel(this);
-    photo_preview->setFixedSize(80, 80);
-    photo_preview->setStyleSheet(
-        "border:2px;"
-        "border-radius:6px;"
-        );
+    photo_preview->setFixedSize(64, 64);
+    photo_preview->setStyleSheet("border: 2px dashed #888888; border-radius: 6px;");
     photo_preview->setAlignment(Qt::AlignCenter);
     photo_preview->setText("No Photo");
     photo_preview->setScaledContents(true);
@@ -121,21 +154,26 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     party_symbol_btn = new QPushButton("Upload Symbol", this);
     party_symbol_btn->setCursor(Qt::PointingHandCursor);
     party_symbol_btn->setStyleSheet(
-        "background-color:#3498db;"
-        "padding:6px;"
-        "border-radius:6px;"
+        "QPushButton {"
+        "   background-color: #3498db;"
+        "   padding: 8px;"
+        "   border: none;"
+        "   border-radius: 6px;"
+        "   font-weight: bold;"
+        "}"
+        "QPushButton:hover {"
+        "   background-color: #2980b9;"
+        "}"
         );
 
     party_symbol_warn = new QLabel("●", this);
-    party_symbol_warn->setStyleSheet("color:red; font-size:18px");
+    party_symbol_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     party_symbol_warn->setVisible(false);
+    party_symbol_warn->setFixedWidth(18);
 
     party_symbol_preview = new QLabel(this);
-    party_symbol_preview->setFixedSize(80, 80);
-    party_symbol_preview->setStyleSheet(
-        "border:2px;"
-        "border-radius:6px;"
-        );
+    party_symbol_preview->setFixedSize(64, 64);
+    party_symbol_preview->setStyleSheet("border: 2px dashed #888888; border-radius: 6px;");
     party_symbol_preview->setAlignment(Qt::AlignCenter);
     party_symbol_preview->setText("No Symbol");
     party_symbol_preview->setScaledContents(true);
@@ -162,20 +200,44 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     pass_label = new QLabel("Password", this);
     pass_input = new QLineEdit(this);
     pass_warn = new QLabel("●", this);
-    pass_warn->setStyleSheet("color:red; font-size:18px");
+    pass_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     pass_warn->setVisible(false);
+    pass_warn->setFixedWidth(18);
 
     pass_input->setPlaceholderText("Enter Password");
-    pass_input->setStyleSheet("padding:6px");
     pass_input->setEchoMode(QLineEdit::Password);
+
+
+    declare_checkbox = new QCheckBox(
+        "I hereby declare that all the information provided are factual and correct.",
+        this
+        );
+    declare_checkbox->setStyleSheet("color:#cccccc; font-size:12px;");
+    declare_checkbox->setCursor(Qt::PointingHandCursor);
+
+    declare_warn = new QLabel("Please confirm the declaration before registering.", this);
+    declare_warn->setStyleSheet("color:red; font-size:12px; background: transparent;");
+    declare_warn->setVisible(false);
 
     //registration button
     reg_btn = new QPushButton("Register", this);
     reg_btn->setCursor(Qt::PointingHandCursor);
     reg_btn->setStyleSheet(
-        "background-color:#2ecc71; padding:8px; border-radius:6px;");
+        "QPushButton {"
+        "   background-color: #2ecc71;"
+        "   color: white;"
+        "   padding: 10px;"
+        "   border: none;"
+        "   border-radius: 6px;"
+        "   font-weight: bold;"
+        "   font-size: 14px;"
+        "}"
+        "QPushButton:hover {"
+        "   background-color: #27ae60;"
+        "}"
+        );
 
-    //warning message
+
     QFont msg_font;
     msg_font.setPointSize(15);
     msg_font.setBold(true);
@@ -184,9 +246,11 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     msg = new QLabel(this);
     msg->setAlignment(Qt::AlignCenter);
     msg->setFont(msg_font);
+    msg->setWordWrap(true);
+    msg->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
 
-    //back to login
+
     back_btn = new QPushButton("← Back to Login", this);
     back_btn->setStyleSheet("background: transparent;"
                             "color: #3498db;"
@@ -202,43 +266,67 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     grid->setContentsMargins(50, 30, 50, 30);
     grid->setHorizontalSpacing(20);
     grid->setVerticalSpacing(10);
+    grid->setColumnStretch(0, 0);
+    grid->setColumnStretch(1, 1);
+    grid->setColumnStretch(2, 0);
+    grid->setColumnMinimumWidth(0, 110);
 
-    grid->addWidget(title, 0, 0, 1, 3);
+    int row = 0;
+    grid->addLayout(title_row, row, 0, 1, 3);
+    row++;
 
-    grid->addWidget(f_name_label, 1, 0);
-    grid->addWidget(f_name_input, 1, 1);
-    grid->addWidget(f_name_warn, 1, 2);
+    grid->addWidget(f_name_label, row, 0);
+    grid->addWidget(f_name_input, row, 1);
+    grid->addWidget(f_name_warn, row, 2);
+    row++;
 
-    grid->addWidget(l_name_label, 2, 0);
-    grid->addWidget(l_name_input, 2, 1);
-    grid->addWidget(l_name_warn, 2, 2);
+    grid->addWidget(l_name_label, row, 0);
+    grid->addWidget(l_name_input, row, 1);
+    grid->addWidget(l_name_warn, row, 2);
+    row++;
 
-    grid->addWidget(nid_label, 3, 0);
-    grid->addWidget(nid_input, 3, 1);
-    grid->addWidget(nid_warn, 3, 2);
+    grid->addWidget(nid_label, row, 0);
+    grid->addWidget(nid_input, row, 1);
+    grid->addWidget(nid_warn, row, 2);
+    row++;
 
-    grid->addWidget(dob_label, 4, 0);
-    grid->addWidget(dob_input, 4, 1);
-    grid->addWidget(dob_warn, 4, 2);
+    grid->addWidget(dob_label, row, 0);
+    grid->addWidget(dob_input, row, 1);
+    grid->addWidget(dob_warn, row, 2);
+    row++;
 
-    grid->addWidget(gender_label, 5, 0);
-    grid->addWidget(gender_input, 5, 1);
-    grid->addWidget(gender_warn, 5, 2);
+    grid->addWidget(gender_label, row, 0);
+    grid->addWidget(gender_input, row, 1);
+    grid->addWidget(gender_warn, row, 2);
+    row++;
 
-    grid->addWidget(party_label, 6, 0);
-    grid->addWidget(party_input, 6, 1);
-    grid->addWidget(party_warn, 6, 2);
+    grid->addWidget(party_label, row, 0);
+    grid->addWidget(party_input, row, 1);
+    grid->addWidget(party_warn, row, 2);
+    row++;
 
-    grid->addWidget(pass_label, 7, 0);
-    grid->addWidget(pass_input, 7, 1);
-    grid->addWidget(pass_warn, 7, 2);
+    grid->addWidget(pass_label, row, 0);
+    grid->addWidget(pass_input, row, 1);
+    grid->addWidget(pass_warn, row, 2);
+    row++;
 
-    grid->addWidget(uploadWidget, 8, 0, 2, 3);
+    grid->addWidget(uploadWidget, row, 0, 1, 3);
+    row++;
 
+    grid->addWidget(declare_checkbox, row, 0, 1, 3);
+    row++;
 
-    grid->addWidget(msg, 10, 0, 1, 3);
-    grid->addWidget(reg_btn, 11, 0, 1, 3);
-    grid->addWidget(back_btn, 12, 0, 1, 1);
+    grid->addWidget(declare_warn, row, 0, 1, 3);
+    row++;
+
+    grid->addWidget(msg, row, 0, 1, 3);
+    row++;
+
+    grid->addWidget(reg_btn, row, 0, 1, 3);
+    row++;
+
+    grid->addWidget(back_btn, row, 0, 1, 1, Qt::AlignLeft);
+    row++;
 
     //signals and slots
     connect(reg_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::register_user);
@@ -261,6 +349,7 @@ void CandidateRegisterWindow::register_user()
     bool p_empty = pass_input->text().isEmpty();
     bool photo_empty = photo_path.isEmpty();
     bool party_symbol_empty = party_symbol_path.isEmpty();
+    bool declare_unchecked = !declare_checkbox->isChecked();
 
     f_name_warn->setVisible(f_empty);
     l_name_warn->setVisible(l_empty);
@@ -270,9 +359,11 @@ void CandidateRegisterWindow::register_user()
     gender_warn->setVisible(gender_empty);
     pass_warn->setVisible(p_empty);
     photo_warn->setVisible(photo_empty);
+    party_symbol_warn->setVisible(party_symbol_empty);
+    declare_warn->setVisible(declare_unchecked);
 
 
-    if(f_empty || l_empty || n_empty || dob_default || gender_empty || photo_empty || party_symbol_empty|| p_empty) return;
+    if(f_empty || l_empty || n_empty || dob_default || gender_empty || photo_empty || party_symbol_empty|| p_empty || declare_unchecked) return;
 
     switch(a.is_valid_nid_candidate(nid_input->text().toStdString())){
     case is_valid_nid:
@@ -356,6 +447,7 @@ void CandidateRegisterWindow::clear_fields()
     party_symbol_path.clear();
     party_symbol_preview->clear();
     party_symbol_preview->setText("No Photo");
+    declare_checkbox->setChecked(false);
 
 
     f_name_warn->hide();
@@ -367,6 +459,7 @@ void CandidateRegisterWindow::clear_fields()
     photo_warn->hide();
     party_warn->hide();
     party_symbol_warn->hide();
+    declare_warn->hide();
 }
 
 void CandidateRegisterWindow::clear_msg(){

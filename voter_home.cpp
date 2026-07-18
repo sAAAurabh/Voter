@@ -38,16 +38,8 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     titleFont.setBold(true);
 
     title->setFont(titleFont);
-    title->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+    title->setAlignment(Qt::AlignVCenter |Qt::AlignHCenter);
 
-
-    QLabel *vote_icon = new QLabel(this);
-    vote_icon->setFixedSize(38, 38);
-    vote_icon->setAlignment(Qt::AlignCenter);
-    QPixmap icon_pix("C:/Users/Saurav/Desktop/vottter/icons/evote.png");
-    vote_icon->setPixmap(
-        icon_pix.scaled(38, 38, Qt::KeepAspectRatio, Qt::SmoothTransformation)
-        );
 
     logout_btn = new QPushButton("Logout", this);
     logout_btn->setCursor(Qt::PointingHandCursor);
@@ -63,11 +55,11 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
         "QPushButton:pressed { background-color:#b8321f; }"
         );
 
-    QHBoxLayout *header_layout = new QHBoxLayout;
-    header_layout->setSpacing(14);
-    header_layout->addWidget(vote_icon, 0, Qt::AlignVCenter);
-    header_layout->addWidget(title, 1, Qt::AlignVCenter);
-    header_layout->addWidget(logout_btn, 0, Qt::AlignVCenter);
+    // Logout button now lives on its own row. addStretch() pushes it
+    // all the way to the right, so it no longer shares a line with the title.
+    QHBoxLayout *logout_row = new QHBoxLayout;
+    logout_row->addStretch();
+    logout_row->addWidget(logout_btn);
 
 
     QFrame *profile_box = new QFrame(this);
@@ -90,7 +82,7 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
 
     QGridLayout *profile_layout = new QGridLayout(content_area);
     profile_layout->setContentsMargins(36, 34, 36, 34);
-    profile_layout->setHorizontalSpacing(32);
+    profile_layout->setHorizontalSpacing(100);
     profile_layout->setVerticalSpacing(14);
 
     card_layout->addWidget(content_area);
@@ -100,9 +92,9 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     a.find_voter(voter_nid.toStdString(), v);
 
     QString info_style =
-        "font-size:15px; background:transparent;";
+        "font-size:20px; background:transparent;";
     QString info_style_bold =
-        "font-size:18px; font-weight:600; background:transparent;";
+        "font-size:23px; font-weight:600; background:transparent;";
 
     photo_label = new QLabel(content_area);
     photo_label->setAlignment(Qt::AlignCenter);
@@ -206,7 +198,8 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
     grid->setVerticalSpacing(20);
     grid->setHorizontalSpacing(20);
 
-    grid->addLayout(header_layout,       0, 0, 1, 2);
+    grid->addLayout(logout_row,          0, 0, 1, 2);
+    grid->addWidget(title,               1, 0, 1, 2);
     grid->addWidget(profile_box,         2, 0, 1, 2);
     grid->addWidget(view_candidates_btn, 3, 0);
     grid->addWidget(vote_candidates_btn, 3, 1);
@@ -236,12 +229,6 @@ VoterHomeWindow::VoterHomeWindow(const QString &nid, QWidget *parent)
         emit result_page_requested();
     });
 
-
-    // logout button (top right corner)
-    logout_btn->setParent(this);
-    logout_btn->setGeometry(width() - 70, 5, 60, 25);
-
-
     connect(view_candidates_btn, &QPushButton::clicked, this, [this](){emit candidate_view_requested();});
 
 }
@@ -256,6 +243,3 @@ void VoterHomeWindow::refreshVoteStatus()
     vote_candidates_btn->setCursor(v.has_voted ? Qt::ForbiddenCursor : Qt::PointingHandCursor);
     this->close();
 }
-
-
-

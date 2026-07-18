@@ -145,7 +145,7 @@ void CandidateLoginWindow::login()
 {
     if (nid_input->text().isEmpty() && pass_input->text().isEmpty()) {
         msg->setStyleSheet("color: red;");
-        msg->setText("enter details!");
+        msg->setText("Enter details!");
         return;
     } else if (nid_input->text().isEmpty()) {
         msg->setStyleSheet("color: red;");

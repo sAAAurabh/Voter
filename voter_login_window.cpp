@@ -21,7 +21,7 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
 
     QLabel *logo = new QLabel(this);
     QPixmap pix(":icons//icons/evote.png");
-    logo->setPixmap(pix.scaled(110, 110, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    logo->setPixmap(pix.scaled(130, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     logo->setAlignment(Qt::AlignCenter);
 
     title = new QLabel("E-VOTE", this);

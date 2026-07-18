@@ -42,6 +42,7 @@ RoleSelection::RoleSelection(QWidget *parent)
         "Register, view candidates, and cast your vote"
     );
     voterDesc->setAlignment(Qt::AlignCenter);
+    voterDesc->setWordWrap(true);  // break line of text
     voterDesc->setStyleSheet("font-size: 17px; color: white; font-family: 'Calibri';");
 
     voterBtn = new QPushButton("Proceed as Voter");
@@ -81,6 +82,7 @@ RoleSelection::RoleSelection(QWidget *parent)
         "Register candidacy, manage profile, and view results"
         );
     candidateDesc->setAlignment(Qt::AlignCenter);
+    voterDesc->setWordWrap(true);
     candidateDesc->setStyleSheet("font-size: 17px; font-family: 'Calibri';");
 
     candidateBtn = new QPushButton("Proceed as Candidate");
