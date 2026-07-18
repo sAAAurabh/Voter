@@ -82,7 +82,7 @@ RoleSelection::RoleSelection(QWidget *parent)
         "Register candidacy, manage profile, and view results"
         );
     candidateDesc->setAlignment(Qt::AlignCenter);
-    voterDesc->setWordWrap(true);
+    candidateDesc->setWordWrap(true);
     candidateDesc->setStyleSheet("font-size: 17px; font-family: 'Calibri';");
 
     candidateBtn = new QPushButton("Proceed as Candidate");
