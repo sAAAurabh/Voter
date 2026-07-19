@@ -18,7 +18,7 @@ public:
         return QDateTime(QDate(2026, 7, 7), QTime(0, 0));
     }
     static QDateTime registrationEnd() {
-        return QDateTime(QDate(2026, 7, 13), QTime(23, 59, 59));
+        return QDateTime(QDate(2026, 7, 19), QTime(23, 59, 59));
     }
 
 
