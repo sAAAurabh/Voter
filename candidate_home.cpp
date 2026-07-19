@@ -16,7 +16,7 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
 
 {
     setWindowTitle("Candidate Dashboard");
-    //setFixedSize(700, 480);
+    //setFixedSize(700, 600);
 
 
 
@@ -27,7 +27,7 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     titleFont.setBold(true);
 
     title->setFont(titleFont);
-    title->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+    title->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
     title->setStyleSheet("color:#f5f6fa;");
 
     logout_btn = new QPushButton("Logout", this);
@@ -41,9 +41,11 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
         "}"
         );
 
-    QHBoxLayout *header_layout = new QHBoxLayout;
-    header_layout->addWidget(title, 1);
-    header_layout->addWidget(logout_btn, 0);
+    // Logout button sits alone on its own row, pushed to the right with addStretch()
+    // so it no longer shares a line with the title.
+    QHBoxLayout *logout_row = new QHBoxLayout;
+    logout_row->addStretch();
+    logout_row->addWidget(logout_btn);
 
 
 
@@ -52,7 +54,7 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
 
     QGridLayout *profile_layout = new QGridLayout(profile_box);
     profile_layout->setContentsMargins(24, 22, 24, 22);
-    profile_layout->setHorizontalSpacing(24);
+    profile_layout->setHorizontalSpacing(70);
     profile_layout->setVerticalSpacing(10);
 
 
@@ -128,7 +130,8 @@ CandidateHomeWindow::CandidateHomeWindow(const QString& nid, QWidget *parent)
     grid->setContentsMargins(40, 24, 40, 24);
     grid->setVerticalSpacing(20);
 
-    grid->addLayout(header_layout, 0, 0, 1, 2);
+    grid->addLayout(logout_row,    0, 0, 1, 2);
+    grid->addWidget(title,         1, 0, 1, 2);
     grid->addWidget(profile_box,   2, 0, 1, 2);
     grid->addWidget(edit_btn,      3, 0, 1, 2);
     grid->addWidget(status_btn,    4, 0, 1, 2);
@@ -153,5 +156,3 @@ void CandidateHomeWindow::edit_manifesto()
     ManifestoEditWindow *w = new ManifestoEditWindow(candidate_nid);
     w->show();
 }
-
-

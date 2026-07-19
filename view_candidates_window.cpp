@@ -50,15 +50,14 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
         QFrame *card = new QFrame;
         card->setStyleSheet(
             "QFrame {"
-            "border:1px solid #3a3644;"
-            "border-radius:12px;"
+            "background-color:#2E4756;"
+            "border-radius:14px;"
             "}"
             );
-
         QGridLayout *card_layout = new QGridLayout(card);
-        card_layout->setContentsMargins(16, 14, 16, 14);
-        card_layout->setHorizontalSpacing(16);
-        card_layout->setVerticalSpacing(6);
+        card_layout->setContentsMargins(22, 18, 20, 18);
+        card_layout->setHorizontalSpacing(50);
+        card_layout->setVerticalSpacing(8);
 
 
         //
@@ -96,14 +95,14 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
             party_symbol->setText("N/A");
 
         QString info_style =
-            "font-size:13px; border:none; background:transparent;";
+            "font-size:16px; border:none; background:transparent;";
 
         QLabel *name   = new QLabel(QString::fromStdString(c.first + " " + c.last));
         QLabel *party  = new QLabel(QString::fromStdString("Party: " + c.party));
         QLabel *gender = new QLabel(QString::fromStdString("Gender: " + c.gender));
         QLabel *age    = new QLabel("Age: " + QString::fromStdString(admin.calculate_age(c.dob)));
 
-        name->setStyleSheet(info_style + "font-weight:bold; font-size:17px;");
+        name->setStyleSheet(info_style + "font-weight:bold; font-size:20px;");
         party->setStyleSheet(info_style);
         gender->setStyleSheet(info_style);
         age->setStyleSheet(info_style);
@@ -114,7 +113,7 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
 
         QLabel *manifesto_title = new QLabel("Manifesto:");
         manifesto_title->setStyleSheet(
-            "font-weight:bold; font-size:15px;"
+            "font-weight:bold; font-size:18px;"
             "border-radius: 10px;"
             "border:none;"
             );
@@ -122,9 +121,9 @@ ViewCandidatesWindow::ViewCandidatesWindow(QWidget *parent)
         QLabel *manifesto = new QLabel(manifesto_text);
         manifesto->setWordWrap(true);
         manifesto->setStyleSheet(
-            "font-size:14px;"
+            "font-size:16px;"
             "border:none;"
-            "background:#332f3d;"
+            "background:#636369;"
             );
         //
 

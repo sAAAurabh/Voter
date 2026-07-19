@@ -13,7 +13,7 @@
 #include <QWidget>
 #include "admin.h"
 #include <fstream>
-
+#include <QCheckBox>
 #include <QTextEdit>
 #include <QDateEdit>
 #include <QComboBox>
@@ -55,6 +55,8 @@ private:
     QLabel *photo_warn;
     QLabel *photo_preview;
     QString photo_path;
+    QCheckBox *declare_checkbox;
+    QLabel *declare_warn;
 
     QLabel *party_symbol_label;
     QPushButton *party_symbol_btn;
@@ -62,12 +64,14 @@ private:
     QLabel *party_symbol_preview;
     QString party_symbol_path;
 
+
     QWidget *uploadWidget;
     QGridLayout *uploadGrid;
 
     QPushButton *reg_btn, *back_btn;
     QGridLayout *grid;
     Admin admin;
+
 
 signals:
     void back_to_login_requested();
