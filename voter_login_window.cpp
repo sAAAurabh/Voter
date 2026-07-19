@@ -21,7 +21,7 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
 
     QLabel *logo = new QLabel(this);
     QPixmap pix(":icons//icons/evote.png");
-    logo->setPixmap(pix.scaled(110, 110, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    logo->setPixmap(pix.scaled(130, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     logo->setAlignment(Qt::AlignCenter);
 
     title = new QLabel("E-VOTE", this);
@@ -96,7 +96,7 @@ VoterLoginWindow::VoterLoginWindow(QWidget *parent)
 void VoterLoginWindow::login()
 {
     if (nid_input->text().isEmpty() && pass_input->text().isEmpty()) {
-        msg->setStyleSheet("color: #e53e3e;font-size:24 px;");
+        msg->setStyleSheet("color: #e53e3e;font-size:32 px;");
         msg->setText("Enter details!");
         return;
     } else if (nid_input->text().isEmpty()) {

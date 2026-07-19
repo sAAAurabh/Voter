@@ -65,9 +65,13 @@ VotingPage::VotingPage(const QString &voter_nid, QWidget *parent)
 
     party_filter->addItems({
         "All Parties",
-        "NC",
-        "UML",
-        "RSP"
+        "Nepali Congress",
+        "CPN-UML",
+        "Rastra Swotantra Party",
+        "Nepali Communist Party",
+        "Rastra Prajatantra Party",
+        "Shram Sanskriti Party",
+        "Independent"
     });
 
     gender_filter->addItems({
@@ -209,7 +213,7 @@ VotingPage::VotingPage(const QString &voter_nid, QWidget *parent)
                 QString ag = age_filter->currentText();
 
                 clear_candidate_cards();
-                load_candidates(pty, gen, ag);
+                load_candidates(pty.toUpper(), gen.toUpper(), ag);
             });
 
     connect(reset_button, &QPushButton::clicked, this, [this]()
@@ -391,8 +395,8 @@ void VotingPage::load_candidates(QString party, QString gender, QString age )
     q.prepare(
         "SELECT nid, first, last, dob, party, photo_path, party_symbol_path "
         "FROM candidates "
-        "WHERE (:p = 'All Parties' OR party = :p) "
-        "AND (:g = 'All' OR gender = :g)"
+        "WHERE (:p = 'ALL PARTIES' OR party = :p) "
+        "AND (:g = 'ALL' OR gender = :g)"
         );
 
     q.bindValue(":p", party);
