@@ -226,7 +226,7 @@ MainWindow::MainWindow(QWidget *parent)
             candidate_register_page->clear_msg();
             candidate_register_page->clear_fields();
             stack->setCurrentWidget(candidate_register_page);
-            setFixedSize(720,780);
+            setFixedSize(680,690);
             center_window();
         }
         );

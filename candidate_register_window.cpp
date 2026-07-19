@@ -26,8 +26,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
         "}"
         );
 
-    setMinimumSize(560, 760);
-    resize(600, 820);
+    setMinimumSize(560, 700);
 
 
     //title
@@ -103,7 +102,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     party_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
     party_warn->setVisible(false);
     party_warn->setFixedWidth(18);
-    party_input->setPlaceholderText("Enter Your Party");
+    party_input->setPlaceholderText("Enter the Full Name of your party");
 
     //gender
     gender_label = new QLabel("Gender", this);
@@ -136,11 +135,6 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
         "}"
         );
 
-    photo_warn = new QLabel("●", this);
-    photo_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
-    photo_warn->setVisible(false);
-    photo_warn->setFixedWidth(18);
-
     photo_preview = new QLabel(this);
     photo_preview->setFixedSize(64, 64);
     photo_preview->setStyleSheet("border: 2px dashed #888888; border-radius: 6px;");
@@ -166,10 +160,6 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
         "}"
         );
 
-    party_symbol_warn = new QLabel("●", this);
-    party_symbol_warn->setStyleSheet("color:red; font-size:18px; background: transparent;");
-    party_symbol_warn->setVisible(false);
-    party_symbol_warn->setFixedWidth(18);
 
     party_symbol_preview = new QLabel(this);
     party_symbol_preview->setFixedSize(64, 64);
@@ -187,14 +177,14 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     uploadGrid->setVerticalSpacing(8);
     uploadGrid->setContentsMargins(0,0,0,0);
 
-    uploadGrid->addWidget(photo_label, 0, 0);
-    uploadGrid->addWidget(party_symbol_label, 0, 1);
+    uploadGrid->addWidget(photo_label, 0, 1);
+    uploadGrid->addWidget(party_symbol_label, 0, 3);
 
-    uploadGrid->addWidget(photo_btn, 1, 0);
-    uploadGrid->addWidget(party_symbol_btn, 1, 1);
+    uploadGrid->addWidget(photo_btn, 1, 0, Qt::AlignLeft);
+    uploadGrid->addWidget(party_symbol_btn, 1, 2, Qt::AlignRight);
 
-    uploadGrid->addWidget(photo_preview, 2, 0, Qt::AlignCenter);
-    uploadGrid->addWidget(party_symbol_preview, 2, 1, Qt::AlignCenter);
+    uploadGrid->addWidget(photo_preview, 1, 1);
+    uploadGrid->addWidget(party_symbol_preview, 1, 3);
 
     //pass
     pass_label = new QLabel("Password", this);
@@ -214,10 +204,6 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
         );
     declare_checkbox->setStyleSheet("color:#cccccc; font-size:12px;");
     declare_checkbox->setCursor(Qt::PointingHandCursor);
-
-    declare_warn = new QLabel("Please confirm the declaration before registering.", this);
-    declare_warn->setStyleSheet("color:red; font-size:12px; background: transparent;");
-    declare_warn->setVisible(false);
 
     //registration button
     reg_btn = new QPushButton("Register", this);
@@ -239,7 +225,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
 
 
     QFont msg_font;
-    msg_font.setPointSize(15);
+    msg_font.setPointSize(8);
     msg_font.setBold(true);
     msg_font.setItalic(true);
 
@@ -316,17 +302,13 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     grid->addWidget(declare_checkbox, row, 0, 1, 3);
     row++;
 
-    grid->addWidget(declare_warn, row, 0, 1, 3);
-    row++;
-
-    grid->addWidget(msg, row, 0, 1, 3);
-    row++;
-
     grid->addWidget(reg_btn, row, 0, 1, 3);
     row++;
 
     grid->addWidget(back_btn, row, 0, 1, 1, Qt::AlignLeft);
+    grid->addWidget(msg, row, 1, 1, 1);
     row++;
+
 
     //signals and slots
     connect(reg_btn, &QPushButton::clicked, this, &CandidateRegisterWindow::register_user);
@@ -358,10 +340,11 @@ void CandidateRegisterWindow::register_user()
     dob_warn->setVisible(dob_default);
     gender_warn->setVisible(gender_empty);
     pass_warn->setVisible(p_empty);
-    photo_warn->setVisible(photo_empty);
-    party_symbol_warn->setVisible(party_symbol_empty);
-    declare_warn->setVisible(declare_unchecked);
 
+    if (declare_unchecked){
+        msg->setStyleSheet("color: red; font-size: 15px;");
+        msg->setText("Please check the declaration before registration!");
+    }
 
     if(f_empty || l_empty || n_empty || dob_default || gender_empty || photo_empty || party_symbol_empty|| p_empty || declare_unchecked) return;
 
@@ -382,9 +365,10 @@ void CandidateRegisterWindow::register_user()
 
     c.first = f_name_input->text().toStdString();
     c.last = l_name_input->text().toStdString();
-    c.party = party_input->text().toStdString();
+    c.party = party_input->text().toUpper().toStdString();
+
     c.dob = dob_input->date().toString("dd/MM/yyyy").toStdString();
-    c.gender = gender_input->currentText().toStdString();
+    c.gender = gender_input->currentText().toUpper().toStdString();
     c.photo_path = photo_path.toStdString();
     c.party_symbol_path = party_symbol_path.toStdString();
 
@@ -456,10 +440,7 @@ void CandidateRegisterWindow::clear_fields()
     dob_warn->hide();
     gender_warn->hide();
     pass_warn->hide();
-    photo_warn->hide();
     party_warn->hide();
-    party_symbol_warn->hide();
-    declare_warn->hide();
 }
 
 void CandidateRegisterWindow::clear_msg(){
