@@ -12,6 +12,7 @@
 #include <QPushButton>
 #include <QWidget>
 #include "admin.h"
+#include <QCheckBox>
 
 class VoterRegisterWindow : public QWidget
 {
@@ -47,6 +48,7 @@ private:
     QPushButton *reg_btn, *back_btn;
     QGridLayout *grid;
     Admin admin;
+    QCheckBox *declare_checkbox;
 
 signals:
     void back_to_login_requested();

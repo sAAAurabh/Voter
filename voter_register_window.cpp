@@ -178,6 +178,15 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     back_btn->setFixedSize(120, 20);
     back_btn->setCursor(Qt::PointingHandCursor);
 
+
+    declare_checkbox = new QCheckBox(
+        "I hereby declare that all the information provided are factual and correct.",
+        this
+        );
+    declare_checkbox->setStyleSheet("color:#cccccc; font-size:12px;");
+    declare_checkbox->setCursor(Qt::PointingHandCursor);
+
+
     grid = new QGridLayout(this);
     grid->setContentsMargins(50, 30, 50, 30);
     grid->setHorizontalSpacing(20);
@@ -224,6 +233,9 @@ VoterRegisterWindow::VoterRegisterWindow(QWidget *parent)
     grid->addWidget(pass_label, row, 0);
     grid->addWidget(pass_input, row, 1);
     grid->addWidget(pass_warn, row, 2);
+    row++;
+
+    grid->addWidget(declare_checkbox, row, 0, 1, 3);
     row++;
 
     grid->addWidget(msg, row, 0, 1, 3);
@@ -289,6 +301,11 @@ void VoterRegisterWindow::register_user()
 
     switch (a.is_valid_pass(pass_input->text().toStdString(), v.first)) {
     case is_valid:
+        if (!declare_checkbox->isChecked()){
+            msg->setStyleSheet("color: red; font-size: 15px;");
+            msg->setText("Please check the declaration before registration!");
+            break;
+        }
         v.salt = admin.gen_salt();
         v.hash = admin.hash_pass(pass_input->text().toStdString(), v.salt);
 
@@ -328,6 +345,7 @@ void VoterRegisterWindow::register_user()
         msg->setText("At least 1 special character required.");
         break;
     }
+
 }
 
 void VoterRegisterWindow::back_login(){
