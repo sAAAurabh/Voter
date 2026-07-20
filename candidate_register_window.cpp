@@ -42,17 +42,18 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
     QLabel *candi_logo = new QLabel(this);
     QPixmap candi_pix(":/icons/icons/candi.png");
     candi_logo->setPixmap(candi_pix.scaled(92, 88, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    candi_logo->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+    candi_logo->setAlignment(Qt::AlignLeft);
     candi_logo->setContentsMargins(0, 0, 0, 10);
 
     QHBoxLayout *title_row = new QHBoxLayout();
-    title_row->setAlignment(Qt::AlignCenter);
+    title_row->setAlignment(Qt::AlignLeft);
     title_row->setSpacing(20);
     title_row->addStretch(5);
     title_row->addWidget(title);
     title_row->addSpacing(20);
     title_row->addWidget(candi_logo);
     title_row->addStretch(2);
+
 
     //names
     f_name_label = new QLabel("First Name", this);
@@ -225,7 +226,7 @@ CandidateRegisterWindow::CandidateRegisterWindow(QWidget *parent)
 
 
     QFont msg_font;
-    msg_font.setPointSize(8);
+    msg_font.setPointSize(15);
     msg_font.setBold(true);
     msg_font.setItalic(true);
 
@@ -341,11 +342,6 @@ void CandidateRegisterWindow::register_user()
     gender_warn->setVisible(gender_empty);
     pass_warn->setVisible(p_empty);
 
-    if (declare_unchecked){
-        msg->setStyleSheet("color: red; font-size: 15px;");
-        msg->setText("Please check the declaration before registration!");
-    }
-
     if(f_empty || l_empty || n_empty || dob_default || gender_empty || photo_empty || party_symbol_empty|| p_empty || declare_unchecked) return;
 
     switch(a.is_valid_nid_candidate(nid_input->text().toStdString())){
@@ -374,6 +370,12 @@ void CandidateRegisterWindow::register_user()
 
     switch (a.is_valid_pass(pass_input->text().toStdString(), c.first)) {
     case is_valid:
+
+        if (declare_unchecked){
+            msg->setStyleSheet("color: red; font-size: 15px;");
+            msg->setText("Please check the declaration before registration!");
+            break;
+        }
         c.salt = admin.gen_salt();
         c.hash = admin.hash_pass(pass_input->text().toStdString(), c.salt);
 
