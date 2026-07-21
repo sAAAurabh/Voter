@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     role_selection_page = new RoleSelection;
 
-    voter_login_page = new VoterLoginWindow;
+    voter_login_page = new VoterLoginWindow;               // we are not passing any parents in the constructor
     voter_register_page = new VoterRegisterWindow;
 
     candidate_login_page = new CandidateLoginWindow;
@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     stack->addWidget(role_selection_page);
     stack->addWidget(voter_login_page);
-    stack->addWidget(voter_register_page);
+    stack->addWidget(voter_register_page);                   //but whenever you add object to the stack, it becomes a child of Qstackedwidget
     stack->addWidget(candidate_login_page);
     stack->addWidget(candidate_register_page);
 
