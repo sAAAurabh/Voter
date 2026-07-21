@@ -9,7 +9,7 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
+CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)        //Candidateloginwindow is a qwidget(Inheritance). It belongs to parent (QT ownership)
     : QWidget(parent)
 {
     setWindowTitle("Candidate Login");
@@ -23,7 +23,7 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
     logo->setAlignment(Qt::AlignCenter);
 
     // Title
-    title = new QLabel("CANDIDATE PORTAL", this);
+    title = new QLabel("CANDIDATE PORTAL", this);       //you create dynamic objects. QT automatically deletes them when window is closed
     title->setAlignment(Qt::AlignCenter);
 
     QFont titleFont;
@@ -55,7 +55,7 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)
     nid_input->setPlaceholderText("Enter National ID");
     nid_input->setStyleSheet(
         "font-size:16px;"
-        "padding:15px;"
+        "padding:15px;"      //this is CSS like styling called QSS (Qt Style Sheets)
         );
 
     // Password
