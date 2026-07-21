@@ -9,7 +9,7 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)        //Candidateloginwindow is a qwidget(Inheritance). It belongs to parent (QT ownership)
+CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)        
     : QWidget(parent)
 {
     setWindowTitle("Candidate Login");
@@ -23,7 +23,7 @@ CandidateLoginWindow::CandidateLoginWindow(QWidget *parent)        //Candidatelo
     logo->setAlignment(Qt::AlignCenter);
 
     // Title
-    title = new QLabel("CANDIDATE PORTAL", this);       //you create dynamic objects. QT automatically deletes them when window is closed
+    title = new QLabel("CANDIDATE PORTAL", this);       
     title->setAlignment(Qt::AlignCenter);
 
     QFont titleFont;
